@@ -51,7 +51,14 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
             else
+            {
+                foreach (var item in castCollisions)
+                {
+                    print(item.ToString());
+                }
                 return false;
+
+            }
         }
         else
             return false;
