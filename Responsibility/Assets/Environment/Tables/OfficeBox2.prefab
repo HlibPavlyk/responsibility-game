@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 115986665370608518, guid: 8752ae7511b363c4bbc6a7e50b5beee6, type: 3}
       propertyPath: m_Name
-      value: BackgroundOfficeBox Variant
+      value: OfficeBox2
       objectReference: {fileID: 0}
     - target: {fileID: 6102516411098706836, guid: 8752ae7511b363c4bbc6a7e50b5beee6, type: 3}
       propertyPath: m_Sprite
@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7825097015230425015, guid: 8752ae7511b363c4bbc6a7e50b5beee6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.461
+      value: 0.3185377
       objectReference: {fileID: 0}
     - target: {fileID: 7825097015230425015, guid: 8752ae7511b363c4bbc6a7e50b5beee6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.3102389
       objectReference: {fileID: 0}
     - target: {fileID: 7825097015230425015, guid: 8752ae7511b363c4bbc6a7e50b5beee6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.0039266446
       objectReference: {fileID: 0}
     - target: {fileID: 7825097015230425015, guid: 8752ae7511b363c4bbc6a7e50b5beee6, type: 3}
       propertyPath: m_LocalRotation.w
