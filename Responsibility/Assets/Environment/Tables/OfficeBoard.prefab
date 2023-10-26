@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 485809657782934286}
   - component: {fileID: 8990797063282107989}
-  - component: {fileID: 6052992934660602871}
+  - component: {fileID: 320019165189765578}
   m_Layer: 0
   m_Name: OfficeBoard
   m_TagString: Environment
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1835330169
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 111990435, guid: bf8ef0fb45aa76541bff5497d8754c1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!60 &6052992934660602871
-PolygonCollider2D:
+--- !u!61 &320019165189765578
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,25 +117,16 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.71961737}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.56}
-    oldSize: {x: 0.32, y: 0.25}
+    oldSize: {x: 2, y: 1.5625}
     newSize: {x: 0.32, y: 0.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.089984134, y: -0.09980172}
-      - {x: -0.16040349, y: -0.09944165}
-      - {x: -0.16081461, y: -0.13011281}
-      - {x: -0.09012899, y: -0.12989089}
-      - {x: -0.09001559, y: -0.10354933}
-      - {x: 0.08996421, y: -0.102069914}
-      - {x: 0.08997342, y: -0.12994768}
-      - {x: 0.16020843, y: -0.13010001}
-      - {x: 0.16012217, y: -0.099733055}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 1.9772964, y: 0.16337276}
+  m_EdgeRadius: 0
