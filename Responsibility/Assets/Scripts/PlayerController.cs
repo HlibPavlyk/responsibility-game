@@ -10,16 +10,41 @@ public class PlayerController : MonoBehaviour
 
     public float idleFriction = 0.9f;
     Rigidbody2D rb;
-/*    Animator animator;
-    SpriteRenderer spriteRenderer;*/
+
+    private Controls controls; // for Olya inputManager
+    private InputManager inputManager;
+    /*    Animator animator;
+        SpriteRenderer spriteRenderer;*/
     Vector2 moveInput = Vector2.zero;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        inputManager = InputManager.GetInstance();
+
         /*animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();*/
+    }
+
+    private void Awake()
+    {
+        controls = new Controls();
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+        controls.Player.Interact.started += context => inputManager.InteractButtonPressed(context);
+        controls.Player.Interact.performed += context => inputManager.InteractButtonPressed(context);
+        controls.Player.Interact.canceled += context => inputManager.InteractButtonPressed(context);
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
+        controls.Player.Interact.started -= context => inputManager.InteractButtonPressed(context);
     }
 
     void FixedUpdate()
@@ -44,6 +69,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, idleFriction);
         }
+
+        if (DialogueManager.GetInstance().isDialoguePlaying)
+        {
+            return; //stop character movement while he talk
+        }
     }
 
     void OnMove(InputValue value)
@@ -56,4 +86,6 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("moveX", moveInput.x);
         animator.SetFloat("moveY", moveInput.y);
     }*/
+
+  
 }
