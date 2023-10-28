@@ -5,56 +5,87 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 movementInput;
-    Rigidbody2D rb;
-    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+    public float moveSpeed = 150f;
+    public float maxSpeed = 5f;
 
-    public float moveSpeed = 1f;
-    public ContactFilter2D movementFilter;
-    public float collisionOffset = 0.001f;
+    public float idleFriction = 0.9f;
+    Rigidbody2D rb;
+
+    private Controls controls; // for Olya inputManager
+    private InputManager inputManager;
+    /*    Animator animator;
+        SpriteRenderer spriteRenderer;*/
+    Vector2 moveInput = Vector2.zero;
+
+
     void Start()
-    { 
+    {
         rb = GetComponent<Rigidbody2D>();
+
+        inputManager = InputManager.GetInstance();
+
+        /*animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();*/
+    }
+
+    private void Awake()
+    {
+        controls = new Controls();
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+        controls.Player.Interact.started += context => inputManager.InteractButtonPressed(context);
+        controls.Player.Interact.performed += context => inputManager.InteractButtonPressed(context);
+        controls.Player.Interact.canceled += context => inputManager.InteractButtonPressed(context);
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
+        controls.Player.Interact.started -= context => inputManager.InteractButtonPressed(context);
     }
 
     void FixedUpdate()
     {
-        if (movementInput != Vector2.zero)
+
+        if (moveInput != Vector2.zero)
         {
-            bool success = TryMove(movementInput);
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity + (moveInput * moveSpeed * Time.deltaTime), maxSpeed);
 
-            if (!success)
-                success = TryMove(new Vector2(movementInput.x, 0));
-
-            if (!success)
-                success = TryMove(new Vector2(0, movementInput.y));
-        }
-
-    }
-
-
-    void OnMove(InputValue movementValue)
-    {
-        movementInput = movementValue.Get<Vector2>();
-    }
-
-    private bool TryMove(Vector2 direction)
-    {
-        if (direction != Vector2.zero)
-        {
-            int count = rb.Cast(direction, movementFilter, castCollisions,
-                moveSpeed * Time.fixedDeltaTime + collisionOffset);
-
-            if (count == 0)
+            /*if (moveInput.x > 0)
             {
-                rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
-                return true;
+                spriteRenderer.flipX = false;
             }
-            else
-                return false;
+            else if (moveInput.x < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+
+            UpdateAnimatorParameters();*/
         }
         else
-            return false;
-    }    
-        
+        {
+            rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, idleFriction);
+        }
+
+        if (DialogueManager.GetInstance().isDialoguePlaying)
+        {
+            return; //stop character movement while he talk
+        }
+    }
+
+    void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+
+    /*void UpdateAnimatorParameters()
+    {
+        animator.SetFloat("moveX", moveInput.x);
+        animator.SetFloat("moveY", moveInput.y);
+    }*/
+
+  
 }
