@@ -73,8 +73,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, idleFriction);
         }
-
-
     }
 
     void OnMove(InputValue value)
