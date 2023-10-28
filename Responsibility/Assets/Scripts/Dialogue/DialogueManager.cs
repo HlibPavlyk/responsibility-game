@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     private Story currentStory;
-    public bool isDialoguePlaying;
+    public bool isDialoguePlaying { get; private set; }
     private static DialogueManager instance;
 
     private void Awake()
@@ -51,7 +51,6 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         isDialoguePlaying = true;
         dialoguePanel.SetActive(true);
-
     }
 
     private void ExitDialogueMode()

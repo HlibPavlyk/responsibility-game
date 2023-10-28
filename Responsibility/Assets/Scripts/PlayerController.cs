@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (DialogueManager.GetInstance().isDialoguePlaying)
+        {
+            return; //stop character movement while he talk
+        }
 
         if (moveInput != Vector2.zero)
         {
@@ -70,10 +74,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, idleFriction);
         }
 
-        if (DialogueManager.GetInstance().isDialoguePlaying)
-        {
-            return; //stop character movement while he talk
-        }
+
     }
 
     void OnMove(InputValue value)
