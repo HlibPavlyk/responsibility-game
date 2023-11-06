@@ -1773,7 +1773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1078085908}
   m_Layer: 0
-  m_Name: Other
+  m_Name: Decoration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3249,7 +3249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1367137405}
   m_Layer: 0
-  m_Name: Tables
+  m_Name: PhysicObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3799,7 +3799,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1789248683}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 2.57
+    OrthographicSize: 2.15
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3919,7 +3919,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.28558204, g: 0.3286104, b: 0.3962264, a: 0}
+  m_BackGroundColor: {r: 0.227451, g: 0.227451, b: 0.3137255, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3944,7 +3944,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.57
+  orthographic size: 2.15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
