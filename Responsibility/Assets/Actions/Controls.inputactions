@@ -158,10 +158,32 @@
                 {
                     "name": "",
                     "id": "77da2ef1-675b-4ac5-8b92-f0679d679d1d",
-                    "path": "<Keyboard>/space",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1524359d-71f0-4781-9f5e-620b16ed64c2",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + Mouse",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edc239c1-f282-4ea5-994b-a84e577d87fb",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + Mouse",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false

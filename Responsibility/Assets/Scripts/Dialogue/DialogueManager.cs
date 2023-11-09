@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     private Story currentStory;
-    public bool isDialoguePlaying;
+    public bool isDialoguePlaying { get; private set; }
     private static DialogueManager instance;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
         {
             return;
         }
-        if (InputManager.GetInstance().GetSubmitPressed())
+        if (InputManager.GetInstance().GetSubmitPressed() && isDialoguePlaying)
         {
             ContinueStory();
         }
@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         isDialoguePlaying = true;
         dialoguePanel.SetActive(true);
-
+        ContinueStory();
     }
 
     private void ExitDialogueMode()
@@ -59,7 +59,6 @@ public class DialogueManager : MonoBehaviour
         isDialoguePlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        ContinueStory();
     }
 
     private void ContinueStory()
