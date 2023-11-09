@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 150f;
     public float maxSpeed = 5f;
-
     public float idleFriction = 0.9f;
     Rigidbody2D rb;
 

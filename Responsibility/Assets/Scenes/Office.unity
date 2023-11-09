@@ -594,7 +594,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 534978745}
   dialogueText: {fileID: 851517030}
-  isDialoguePlaying: 0
 --- !u!4 &312755444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 485809657782934286, guid: 8c52a60ba9a7dbb46b9917249ff8cfa5, type: 3}
@@ -3394,7 +3393,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1245889935}
@@ -3412,7 +3411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1554509914}
-  inkJSON: {fileID: 0}
+  inkJSON: {fileID: 4900000, guid: 9efc874b5b9545a42bd77de9001b8577, type: 3}
 --- !u!61 &1485345764
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3701,7 +3700,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.02, y: 0.63, z: 0.003926645}
-  m_LocalScale: {x: 0.2068, y: 0.1829057, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1245889935}
@@ -3747,12 +3746,12 @@ SpriteRenderer:
   m_SortingLayerID: -1527593177
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: e17c7866fe40db84c9d40cbd4e19795c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19994f19cee7d05468f93f77b9ca87f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.625, y: 0.625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
