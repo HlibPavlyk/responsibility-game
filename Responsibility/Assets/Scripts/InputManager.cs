@@ -50,8 +50,8 @@ public class InputManager : MonoBehaviour
             interactPressed = false;
         }
     }
-
-    public void SubmitPressed(InputAction.CallbackContext context)
+     
+    public void SubmitButtonPressed(InputAction.CallbackContext context)
     {
         if (context.performed)
         {

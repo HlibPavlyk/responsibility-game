@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
         {
             return;
         }
-        if (InputManager.GetInstance().GetSubmitPressed())
+        if (InputManager.GetInstance().GetSubmitPressed() && isDialoguePlaying)
         {
             ContinueStory();
         }
@@ -51,6 +51,7 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         isDialoguePlaying = true;
         dialoguePanel.SetActive(true);
+        ContinueStory();
     }
 
     private void ExitDialogueMode()

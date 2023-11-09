@@ -39,19 +39,24 @@ public class PlayerController : MonoBehaviour
         controls.Player.Interact.started += context => inputManager.InteractButtonPressed(context);
         controls.Player.Interact.performed += context => inputManager.InteractButtonPressed(context);
         controls.Player.Interact.canceled += context => inputManager.InteractButtonPressed(context);
+
+        controls.Player.Submit.started += context => inputManager.SubmitButtonPressed(context);
+        controls.Player.Submit.performed += context => inputManager.SubmitButtonPressed(context);
+        controls.Player.Submit.canceled += context => inputManager.SubmitButtonPressed(context);
     }
 
     private void OnDisable()
     {
         controls.Disable();
         controls.Player.Interact.started -= context => inputManager.InteractButtonPressed(context);
+        controls.Player.Submit.started -= context => inputManager.SubmitButtonPressed(context);
     }
 
     void FixedUpdate()
     {
         if (DialogueManager.GetInstance().isDialoguePlaying)
         {
-            return; //stop character movement while he talk
+            return; //stop character movement while he talks
         }
 
         if (moveInput != Vector2.zero)
@@ -86,5 +91,5 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("moveY", moveInput.y);
     }*/
 
-  
+
 }
