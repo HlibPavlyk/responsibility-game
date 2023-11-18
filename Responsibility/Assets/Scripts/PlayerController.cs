@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        inputManager = InputManager.GetInstance();
+        inputManager = GameManager.Instance.InputManager;
 
         /*animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();*/
@@ -53,9 +53,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (DialogueManager.GetInstance().isDialoguePlaying)
+        if (GameManager.Instance.DialogueManager.isDialoguePlaying)
         {
-            return; //stop character movement while he talks
+            moveInput = Vector2.zero; //stop character movement while he talks
         }
 
         if (moveInput != Vector2.zero)
