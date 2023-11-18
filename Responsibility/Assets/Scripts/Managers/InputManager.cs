@@ -3,41 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
+[CreateAssetMenu(fileName = "InputManager", menuName = "ScriptableObjects/Manager/InputManager", order = 1)]
 [RequireComponent(typeof(PlayerInput))]
-public class InputManager : MonoBehaviour
+public class InputManager : ScriptableObject
 {
-    //private Vector2 moveDirection = Vector2.zero;
     private bool interactPressed = false;
     private bool submitPressed = false;
-
-    private static InputManager instance;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogError("Found more than one Input Manager in the scene.");
-        }
-        instance = this;
-    }
-
-    public static InputManager GetInstance()
-    {
-        return instance;
-    }
-
-/*    public void MovePressed(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            moveDirection = context.ReadValue<Vector2>();
-        }
-        else if (context.canceled)
-        {
-            moveDirection = context.ReadValue<Vector2>();
-        }
-    }*/
+    
 
     public void InteractButtonPressed(InputAction.CallbackContext context)
     {
@@ -62,11 +34,6 @@ public class InputManager : MonoBehaviour
             submitPressed = false;
         }
     }
-
-/*    public Vector2 GetMoveDirection()
-    {
-        return moveDirection;
-    }*/
 
     public bool GetInteractPressed()
     {
