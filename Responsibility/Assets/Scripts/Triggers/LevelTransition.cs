@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -8,14 +9,14 @@ public class LevelTransition : MonoBehaviour
     [Header("VisualCue")]
     [SerializeField] private GameObject visualCue;
     private bool playerInRange;
-
     public string triggereTag = "Player";
     public string playerSpawnTransformName = "NOT SET";
-    //public float enterSpeed = 1f;
+
     public SceneAsset sceneToLoad;
-    /* public GameObject fadeAnimation;
-     private Canvas canvas;
-     private Animator transitionAnimator;*/
+
+    [SerializeField]
+    private Animator transitionAnimator;
+    public float transitionTime = 0.5f;
 
     private void Start()
     {
@@ -25,27 +26,34 @@ public class LevelTransition : MonoBehaviour
         }
         playerInRange = false;
         visualCue.SetActive(false);
-        // transistion animation
     }
 
     private void Update()
     {
-        // transistion animation
-
-        //        if (playerInRange && DialogueManager.GetInstance() != null && !DialogueManager.GetInstance().isDialoguePlaying)
-        if (playerInRange /*&& !GameManager.Instance.DialogueManager.isDialoguePlaying*/)
+        if (playerInRange)
 
         {
             visualCue.SetActive(true);
             if (GameManager.Instance.InputManager.GetInteractPressed())
             {
-                LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
+                StartCoroutine(LoadLevel());
             }
         }
         else
         {
             visualCue.SetActive(false);
         }
+    }
+
+    IEnumerator LoadLevel()
+    {
+        GameManager.Instance.LevelManager.isTransitionAnimationPlaying = true;
+        transitionAnimator.SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
+        GameManager.Instance.LevelManager.isTransitionAnimationPlaying = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

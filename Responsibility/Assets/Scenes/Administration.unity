@@ -409,6 +409,8 @@ MonoBehaviour:
   triggereTag: Player
   playerSpawnTransformName: FromAdministration
   sceneToLoad: {fileID: 102900000, guid: fdf7c923f2f244c42a516352b2c1712a, type: 3}
+  transitionAnimator: {fileID: 1475997261}
+  transitionTime: 0.5
 --- !u!4 &282234280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7632352772609329477, guid: 77019136f34607b4ab439a3b72e32351, type: 3}
@@ -1339,6 +1341,8 @@ MonoBehaviour:
   triggereTag: Player
   playerSpawnTransformName: FromAdministration
   sceneToLoad: {fileID: 102900000, guid: a5993297a3df1df4fa2f25aeef54a784, type: 3}
+  transitionAnimator: {fileID: 1475997261}
+  transitionTime: 0.5
 --- !u!1001 &764055154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1769,6 +1773,8 @@ MonoBehaviour:
   triggereTag: Player
   playerSpawnTransformName: FromAdministration
   sceneToLoad: {fileID: 102900000, guid: 81a810a285e201d47814f729b47bb361, type: 3}
+  transitionAnimator: {fileID: 1475997261}
+  transitionTime: 0.5
 --- !u!1001 &1146315080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2131,6 +2137,117 @@ PolygonCollider2D:
       - {x: -2.7471118, y: -3.8181505}
       - {x: 6.3507795, y: -3.8247325}
   m_UseDelaunayMesh: 0
+--- !u!1001 &1475997260
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1800935252}
+    m_Modifications:
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776446657469025963, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_Name
+      value: Crossfade
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776446657469025963, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+--- !u!95 &1475997261 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4013145303256492745, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+  m_PrefabInstance: {fileID: 1475997260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1475997262 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2698331849228556923, guid: cf3351d9414252c40b2558e460af30f1, type: 3}
+  m_PrefabInstance: {fileID: 1475997260}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1545542209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2363,6 +2480,8 @@ MonoBehaviour:
   triggereTag: Player
   playerSpawnTransformName: FromAdministration
   sceneToLoad: {fileID: 102900000, guid: 00762e97196b3b946ad286208621bab8, type: 3}
+  transitionAnimator: {fileID: 1475997261}
+  transitionTime: 0.5
 --- !u!1 &1784563081 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 407943933886700248, guid: f9421d5431ad28b4394298450a3107a9, type: 3}
@@ -2433,6 +2552,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1475997262}
   - {fileID: 889127378}
   - {fileID: 200253353}
   - {fileID: 539420273}
