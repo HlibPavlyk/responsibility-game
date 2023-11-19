@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (GameManager.Instance.DialogueManager.isDialoguePlaying)
+        if (GameManager.Instance.DialogueManager.isDialoguePlaying || GameManager.Instance.LevelManager.isTransitionAnimationPlaying)
         {
             moveInput = Vector2.zero; //stop character movement while he talks
         }
