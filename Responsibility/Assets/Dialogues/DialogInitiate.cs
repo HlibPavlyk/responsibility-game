@@ -7,11 +7,11 @@ public class DialogInitiate : MonoBehaviour
     
     void Start()
     {
-        DialogEvents.onDialogSpawned.Invoke(gameObject);
+        GameManager.Instance.DialogueManager.InitiateDialogueMenu(gameObject);
     }
 
     void Update()
     {
-        DialogEvents.onDioalogUpdate.Invoke();
+        GameManager.Instance.DialogueManager.DialogUpdate();
     }
 }

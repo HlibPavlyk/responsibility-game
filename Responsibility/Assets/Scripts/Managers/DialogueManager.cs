@@ -2,32 +2,22 @@ using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(fileName = "DialogueManager", menuName = "ScriptableObjects/Manager/DialogueManager", order = 1)]
 public class DialogueManager : ScriptableObject
 {
 
     [Header("Dialogue UI")]
-    [SerializeField] private GameObject dialoguePanelPrefab;
     private TextMeshProUGUI dialogueText;
     private GameObject dialoguePanel;
     private Story currentStory;
     public bool isDialoguePlaying { get; private set; }
-   
-    private void OnEnable()
-    {
-        DialogEvents.onDialogSpawned += SpawnDialogMenu;
-        DialogEvents.onDioalogUpdate += DialogUpdate;
-    }
 
-    private void OnDisable()
-    {
-        DialogEvents.onDialogSpawned -= SpawnDialogMenu;
-        DialogEvents.onDioalogUpdate -= DialogUpdate;
-    }
 
-    private void DialogUpdate()
+    public void DialogUpdate()
     {
         if (!isDialoguePlaying)
         {
@@ -39,12 +29,13 @@ public class DialogueManager : ScriptableObject
         }
     }
 
-    private void SpawnDialogMenu(GameObject canvas)
+
+    public void InitiateDialogueMenu(GameObject canvas)
     {
         isDialoguePlaying = false;
-        dialoguePanel = Instantiate(dialoguePanelPrefab);
-        dialoguePanel.transform.SetParent(canvas.transform, false);
-        Transform childObject = dialoguePanel.transform.Find("DialogueText");
+        UnityEngine.Transform childObject = canvas.transform.Find("DialoguePanel");
+        dialoguePanel = childObject.gameObject;
+        childObject = dialoguePanel.transform.Find("DialogueText");
         dialogueText = childObject.GetComponent<TextMeshProUGUI>();
         dialoguePanel.SetActive(false);
     }
