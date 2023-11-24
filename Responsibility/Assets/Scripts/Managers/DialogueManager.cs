@@ -11,6 +11,8 @@ public class DialogueManager : ScriptableObject
 {
 
     [Header("Dialogue UI")]
+    [SerializeField] private float typingSpeed = 0.04f;
+
     private TextMeshProUGUI dialogueText;
     private GameObject dialoguePanel;
     private Story currentStory;
@@ -19,8 +21,20 @@ public class DialogueManager : ScriptableObject
     private TextMeshProUGUI displayNameText;
     private Animator portraitAnimator;
     private Animator layoutAnimator;
+
+    private bool canContinueToNextLine = false;
+    private float startTime;
+    private Time currentTime;
+
+    private float deltaTime;
+    public float characterInterval = 0.1f;
+    public string tempText;
     public void DialogUpdate()
     {
+/*        if(startTime >= typingSpeed)
+        {
+            startTime = Time.time;
+        }*/
         if (!isDialoguePlaying)
         {
             return;
@@ -51,8 +65,6 @@ public class DialogueManager : ScriptableObject
 
         layoutAnimator = dialoguePanel.GetComponent<Animator>();
         dialoguePanel.SetActive(false);
-
-
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
@@ -61,6 +73,9 @@ public class DialogueManager : ScriptableObject
         dialoguePanel.SetActive(true);
         isDialoguePlaying = true;
         currentStory = new Story(inkJSON.text);
+
+        dialogueText.text = "";
+        deltaTime = 0;
 
         ContinueStory();
     }
@@ -77,11 +92,23 @@ public class DialogueManager : ScriptableObject
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
+            //StartCoroutine(DisplayLine(currentStory.Continue()));
             HandleTags(currentStory.currentTags);
         }
         else
         {
             ExitDialogueMode();
+        }
+    }
+
+    private IEnumerator DisplayLine(string line) 
+    {
+        dialogueText.text = "";
+
+        foreach (char symbol in line.ToCharArray())
+        {
+            dialogueText.text += symbol;
+            yield return new WaitForSeconds(typingSpeed);
         }
     }
 
