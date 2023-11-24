@@ -1,6 +1,9 @@
 using Ink.Runtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,7 +12,6 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 [CreateAssetMenu(fileName = "DialogueManager", menuName = "ScriptableObjects/Manager/DialogueManager", order = 1)]
 public class DialogueManager : ScriptableObject
 {
-
     [Header("Dialogue UI")]
     [SerializeField] private float typingSpeed = 0.04f;
 
@@ -22,19 +24,11 @@ public class DialogueManager : ScriptableObject
     private Animator portraitAnimator;
     private Animator layoutAnimator;
 
-    private bool canContinueToNextLine = false;
-    private float startTime;
-    private Time currentTime;
-
-    private float deltaTime;
-    public float characterInterval = 0.1f;
-    public string tempText;
+    private List<char> currentReplicaLetters;
+    char firstLetter;
+    private float timeElapsed = 0f;
     public void DialogUpdate()
     {
-/*        if(startTime >= typingSpeed)
-        {
-            startTime = Time.time;
-        }*/
         if (!isDialoguePlaying)
         {
             return;
@@ -43,8 +37,16 @@ public class DialogueManager : ScriptableObject
         {
             ContinueStory();
         }
+        timeElapsed += Time.deltaTime;
+        if (currentReplicaLetters.Count > 0 && timeElapsed >= typingSpeed)
+        {
+            firstLetter = currentReplicaLetters[0];
+            currentReplicaLetters.RemoveAt(0);
+            dialogueText.text += firstLetter;
+            timeElapsed = 0f;
+        }
+        
     }
-
 
     public void InitiateDialogueMenu(GameObject canvas)
     {
@@ -75,7 +77,6 @@ public class DialogueManager : ScriptableObject
         currentStory = new Story(inkJSON.text);
 
         dialogueText.text = "";
-        deltaTime = 0;
 
         ContinueStory();
     }
@@ -91,24 +92,13 @@ public class DialogueManager : ScriptableObject
     {
         if (currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
-            //StartCoroutine(DisplayLine(currentStory.Continue()));
+            dialogueText.text = "";
+            currentReplicaLetters = currentStory.Continue().ToList();
             HandleTags(currentStory.currentTags);
         }
         else
         {
             ExitDialogueMode();
-        }
-    }
-
-    private IEnumerator DisplayLine(string line) 
-    {
-        dialogueText.text = "";
-
-        foreach (char symbol in line.ToCharArray())
-        {
-            dialogueText.text += symbol;
-            yield return new WaitForSeconds(typingSpeed);
         }
     }
 
