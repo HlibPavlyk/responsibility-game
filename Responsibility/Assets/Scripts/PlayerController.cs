@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private Controls controls; // for Olya inputManager
     private InputManager inputManager;
-    /*    Animator animator;
-        SpriteRenderer spriteRenderer;*/
+    Animator animator;
+   /* SpriteRenderer spriteRenderer;*/
     Vector2 moveInput = Vector2.zero;
 
 
@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
 
         inputManager = GameManager.Instance.InputManager;
 
-        /*animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();*/
+        animator = GetComponent<Animator>();
+        /*spriteRenderer = GetComponent<SpriteRenderer>();*/
     }
 
     private void Awake()
@@ -82,6 +82,16 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+
+        if (moveInput.x != 0 || moveInput.y != 0)
+        {
+            animator.SetFloat("X", moveInput.x);
+            animator.SetFloat("Y", moveInput.y);
+
+            animator.SetBool("IsWalking", true);
+        }
+        else
+            animator.SetBool("IsWalking", false) ;
     }
 
     /*void UpdateAnimatorParameters()
