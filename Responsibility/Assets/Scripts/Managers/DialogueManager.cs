@@ -27,6 +27,16 @@ public class DialogueManager : ScriptableObject
     private List<char> currentReplicaLetters;
     char firstLetter;
     private float timeElapsed = 0f;
+
+    [Header("Audio")]
+    [SerializeField] private DialogueAudioInfoSO defaultAudioInfo;
+    [SerializeField] private DialogueAudioInfoSO[] audioInfos;
+    [SerializeField] private bool makePredictable;
+    private DialogueAudioInfoSO currentAudioInfo;
+    private Dictionary<string, DialogueAudioInfoSO> audioInfoDictionary;
+    private AudioSource audioSource;
+
+    private int letterCounter = 0;
     public void DialogUpdate()
     {
         if (!isDialoguePlaying)
@@ -43,9 +53,10 @@ public class DialogueManager : ScriptableObject
             firstLetter = currentReplicaLetters[0];
             currentReplicaLetters.RemoveAt(0);
             dialogueText.text += firstLetter;
+            letterCounter++;
+            PlayDialogueSound(letterCounter, firstLetter);
             timeElapsed = 0f;
         }
-        
     }
 
     public void InitiateDialogueMenu(GameObject canvas)
@@ -66,12 +77,21 @@ public class DialogueManager : ScriptableObject
         portraitAnimator = portraitTransform.GetComponent<Animator>();
 
         layoutAnimator = dialoguePanel.GetComponent<Animator>();
+
+        GameObject audioObject = new GameObject("DialogueAudioSource");
+        audioObject.transform.parent = canvas.transform;  // Set the provided canvas as the parent
+        audioSource = audioObject.AddComponent<AudioSource>();
+
+        currentAudioInfo = defaultAudioInfo;
+        InitializeAudioInfoDictionary();
         dialoguePanel.SetActive(false);
+        
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-
+        /*GameObject audioObject = new GameObject("DialogueAudioSource");
+        audioSource = audioObject.AddComponent<AudioSource>();*/
         dialoguePanel.SetActive(true);
         isDialoguePlaying = true;
         currentStory = new Story(inkJSON.text);
@@ -128,13 +148,100 @@ public class DialogueManager : ScriptableObject
                 case "layout":
                     layoutAnimator.Play(tagValue);
                     break;
-                /*                case "audio":
-                                    SetCurrentAudioInfo(tagValue);
-                                    break;*/
+                case "audio":
+                    SetCurrentAudioInfo(tagValue);
+                    break;
                 default:
                     Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
                     break;
             }
+        }
+    }
+
+    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
+    {
+        if (audioSource == null)
+        {
+            Debug.LogError("Audio Source is nuuuuuuuuuuuuuuuuuuuuuuuuuuuull");
+            return;
+        }        // set variables for the below based on our config
+
+
+        AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
+        int frequencyLevel = currentAudioInfo.frequencyLevel;
+        float minPitch = currentAudioInfo.minPitch;
+        float maxPitch = currentAudioInfo.maxPitch;
+        bool stopAudioSource = currentAudioInfo.stopAudioSource;
+
+
+        // play the sound based on the config
+        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
+            if (stopAudioSource)
+            {
+                audioSource.Stop();
+            }
+            AudioClip soundClip = null;
+            // create predictable audio from hashing
+            if (makePredictable)
+            {
+                int hashCode = currentCharacter.GetHashCode();
+                // sound clip
+                int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
+                soundClip = dialogueTypingSoundClips[predictableIndex];
+                // pitch
+                int minPitchInt = (int)(minPitch * 100);
+                int maxPitchInt = (int)(maxPitch * 100);
+                int pitchRangeInt = maxPitchInt - minPitchInt;
+                // cannot divide by 0, so if there is no range then skip the selection
+                if (pitchRangeInt != 0)
+                {
+                    int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                    float predictablePitch = predictablePitchInt / 100f;
+                    audioSource.pitch = predictablePitch;
+                }
+                else
+                {
+                    audioSource.pitch = minPitch;
+                }
+            }
+            // otherwise, randomize the audio
+            else
+            {
+                // sound clip
+                int randomIndex = UnityEngine.Random.Range(0, dialogueTypingSoundClips.Length);
+                soundClip = dialogueTypingSoundClips[randomIndex];
+                // pitch
+                audioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+            }
+
+            // play sound
+            audioSource.PlayOneShot(soundClip);
+        }
+    }
+
+   
+    private void InitializeAudioInfoDictionary()
+    {
+
+        audioInfoDictionary = new Dictionary<string, DialogueAudioInfoSO>();
+        audioInfoDictionary.Add(defaultAudioInfo.id, defaultAudioInfo);
+        foreach (DialogueAudioInfoSO audioInfo in audioInfos)
+        {
+            audioInfoDictionary.Add(audioInfo.id, audioInfo);
+        }
+    }
+    private void SetCurrentAudioInfo(string id)
+    {
+        DialogueAudioInfoSO audioInfo = null;
+        audioInfoDictionary.TryGetValue(id, out audioInfo);
+        if (audioInfo != null)
+        {
+            this.currentAudioInfo = audioInfo;
+        }
+        else
+        {
+            Debug.LogWarning("Failed to find audio info for id: " + id);
         }
     }
 
