@@ -1,9 +1,11 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AppScript : MonoBehaviour
 {
-    [SerializeField] string pathToScene;
+    [SerializeField]
+    private SceneAsset sceneToLoad;
     private float lastClickTime;
     private float doubleClickTimeThreshold = 0.2f;
 
@@ -45,6 +47,6 @@ public class AppScript : MonoBehaviour
 
     void LoadScene()
     {
-        SceneManager.LoadScene(pathToScene);
+        SceneManager.LoadScene(sceneToLoad.name, LoadSceneMode.Single);
     }
 }

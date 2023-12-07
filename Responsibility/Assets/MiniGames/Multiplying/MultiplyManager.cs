@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,9 @@ public class MultiplyManager : MonoBehaviour
 {
     [SerializeField] private int size;
     [SerializeField] private NumberScript prefab;
+
+    [SerializeField]
+    private SceneAsset initialScene;
 
     private List<NumberScript> numbersList;
     private NumberScript[] lastClickedObjects = new NumberScript[2];
@@ -114,7 +118,7 @@ public class MultiplyManager : MonoBehaviour
         if (currentSum == estimatedSum)
         {
             Debug.Log("Peremoga bude");
-            SceneManager.LoadScene("Assets/Scenes/Desktop.unity");
+            SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
         }
     }
 

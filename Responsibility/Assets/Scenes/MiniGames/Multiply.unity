@@ -246,6 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 5
   prefab: {fileID: 8996474892187886522, guid: fe69f2de8a6b7fb4a9f72a35c6770d1f, type: 3}
+  initialScene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
 --- !u!4 &2105196636
 Transform:
   m_ObjectHideFlags: 0

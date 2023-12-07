@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ using UnityEngine.UI;
 public class Generator : MonoBehaviour
 {
     public static Generator Instance;
+
+    [SerializeField]
+    private SceneAsset initialScene;
 
     [SerializeField] private PipesCell _cellPrefab;
     [SerializeField] private int size;
@@ -98,7 +102,7 @@ public class Generator : MonoBehaviour
         if (endPipe.IsFilled)
         {
             hasGameFinished = true;
-            SceneManager.LoadScene("Assets/Scenes/Desktop.unity");
+            SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
         }
         else
         {
