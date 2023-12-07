@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using System.Drawing;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HexGridManager : MonoBehaviour
 {
     [SerializeField] public HexagonCell hexagonPrefab;
     [SerializeField] public int gridSizeX = 10;
     [SerializeField] public int gridSizeY = 10;
+
+    [SerializeField]
+    private SceneAsset initialScene;
 
     private HexagonCell[,] hexagonGrid;
     private HexagonCell virusedCell;
@@ -42,6 +47,7 @@ public class HexGridManager : MonoBehaviour
             {
                 Debug.Log("Peremoga");
                 isGameFinished = true;
+                SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
                 return;
             }
 
