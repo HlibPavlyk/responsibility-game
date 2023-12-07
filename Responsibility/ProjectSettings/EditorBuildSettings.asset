@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Office.unity
     guid: a5993297a3df1df4fa2f25aeef54a784
@@ -23,4 +20,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hall.unity
     guid: fdf7c923f2f244c42a516352b2c1712a
+  - enabled: 1
+    path: Assets/Scenes/MiniGames/Catch the virus.unity
+    guid: c9b6579fba6c58148b90dc6aee7254b8
+  - enabled: 1
+    path: Assets/Scenes/MiniGames/Desktop.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MiniGames/Monke.unity
+    guid: 1d21bb362a26f3545bed60d8f0ca149c
+  - enabled: 1
+    path: Assets/Scenes/MiniGames/Pipes.unity
+    guid: 30d0d8a0a4f82464d925f9f2c2cb0858
   m_configObjects: {}
