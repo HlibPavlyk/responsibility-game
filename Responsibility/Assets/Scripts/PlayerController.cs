@@ -12,9 +12,10 @@ public class PlayerController : MonoBehaviour
 
     private Controls controls; // for Olya inputManager
     private InputManager inputManager;
-    /*    Animator animator;
-        SpriteRenderer spriteRenderer;*/
+    Animator animator;
+   /* SpriteRenderer spriteRenderer;*/
     Vector2 moveInput = Vector2.zero;
+    /*private Vector2 previousPosition = new Vector2 (1, 1);*/
 
 
     void Start()
@@ -23,8 +24,8 @@ public class PlayerController : MonoBehaviour
 
         inputManager = GameManager.Instance.InputManager;
 
-        /*animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();*/
+        animator = GetComponent<Animator>();
+        /*spriteRenderer = GetComponent<SpriteRenderer>();*/
     }
 
     private void Awake()
@@ -53,25 +54,19 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (GameManager.Instance.DialogueManager.isDialoguePlaying || GameManager.Instance.LevelManager.isTransitionAnimationPlaying)
+            /*rb.position == previousPosition)*/
         {
             moveInput = Vector2.zero; //stop character movement while he talks
+            animator.SetBool("IsWalking", false);
         }
+
 
         if (moveInput != Vector2.zero)
         {
+            /*previousPosition = rb.position;*/
             rb.velocity = Vector2.ClampMagnitude(rb.velocity + (moveInput * moveSpeed * Time.deltaTime), maxSpeed);
-
-            /*if (moveInput.x > 0)
-            {
-                spriteRenderer.flipX = false;
-            }
-            else if (moveInput.x < 0)
-            {
-                spriteRenderer.flipX = true;
-            }
-
-            UpdateAnimatorParameters();*/
         }
         else
         {
@@ -81,7 +76,26 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        moveInput = value.Get<Vector2>();
+
+        if (animator != null)
+        {
+            if (GameManager.Instance.LevelManager.isTransitionAnimationPlaying || GameManager.Instance.DialogueManager.isDialoguePlaying)
+                moveInput = Vector2.zero;
+            else
+                moveInput = value.Get<Vector2>();
+
+            if (moveInput.x != 0 || moveInput.y != 0)
+            {
+                animator.SetFloat("X", moveInput.x);
+                animator.SetFloat("Y", moveInput.y);
+
+                animator.SetBool("IsWalking", true);
+            }
+            else
+            {
+                animator.SetBool("IsWalking", false);
+            }
+        }
     }
 
     /*void UpdateAnimatorParameters()
