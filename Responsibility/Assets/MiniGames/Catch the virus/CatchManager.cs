@@ -28,11 +28,6 @@ public class HexGridManager : MonoBehaviour
         InitializeVirus();
     }
 
-    private void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     void GenerateHexGrid()
     {
         virusGenerator = gameObject.AddComponent<VirusGenerator>();
@@ -60,7 +55,6 @@ public class HexGridManager : MonoBehaviour
             {
                 Debug.Log("Zrada");
                 isGameFinished= true;
-                RestartLevel();
                 return;
             }
 

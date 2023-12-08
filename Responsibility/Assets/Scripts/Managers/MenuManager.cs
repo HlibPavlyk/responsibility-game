@@ -24,9 +24,7 @@ public class MenuManager : ScriptableObject
     public void NewGame()
     {
         LevelEvents.levelExit.Invoke(startScene, "");
-
     }
-
 
     public void ContinueGame()
     {
