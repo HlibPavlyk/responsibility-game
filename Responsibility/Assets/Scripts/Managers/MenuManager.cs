@@ -36,7 +36,7 @@ public class MenuManager : ScriptableObject
 
     }
 
-    [System.Obsolete]
+    //[System.Obsolete]
     public void OpenSettings()
     {
         if (settingsPanel.active == false)
