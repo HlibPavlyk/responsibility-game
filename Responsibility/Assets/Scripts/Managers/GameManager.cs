@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public PlayerManager PlayerManager;
     public DialogueManager DialogueManager;
     public InputManager InputManager;
-
+    public MenuManager MenuManager;
 
     private void Awake()
     {
