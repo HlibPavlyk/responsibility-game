@@ -15,6 +15,8 @@ public class DialogueManager : ScriptableObject
     [Header("Dialogue UI")]
     [SerializeField] private float typingSpeed = 0.04f;
 
+    private InkTagModifiers inkTagModifiers;
+
     private TextMeshProUGUI dialogueText;
     private GameObject dialoguePanel;
     private Story currentStory;
@@ -37,6 +39,36 @@ public class DialogueManager : ScriptableObject
     private AudioSource audioSource;
 
     private int letterCounter = 0;
+
+    public void SetCharacterName(string name)
+    {
+        displayNameText.text = name;
+    }
+
+    public void SetCharacterAnimatorState(string stateName)
+    {
+        portraitAnimator.Play(stateName);
+    }
+
+    public void SetCharacterLayoutPosition(string layoutPosition)
+    {
+        layoutAnimator.Play(layoutPosition);
+    }
+
+    public void SetCurrentAudioInfo(string id)
+    {
+        DialogueAudioInfoSO audioInfo = null;
+        audioInfoDictionary.TryGetValue(id, out audioInfo);
+        if (audioInfo != null)
+        {
+            this.currentAudioInfo = audioInfo;
+        }
+        else
+        {
+            Debug.LogWarning("Failed to find audio info for id: " + id);
+        }
+    }
+
     public void DialogUpdate()
     {
         if (!isDialoguePlaying)
@@ -61,6 +93,7 @@ public class DialogueManager : ScriptableObject
 
     public void InitiateDialogueMenu(GameObject canvas)
     {
+        inkTagModifiers = new InkTagModifiers(this);
         isDialoguePlaying = false;
         UnityEngine.Transform panelTransform = canvas.transform.Find("DialoguePanel");
         dialoguePanel = panelTransform.gameObject;
@@ -85,13 +118,11 @@ public class DialogueManager : ScriptableObject
         currentAudioInfo = defaultAudioInfo;
         InitializeAudioInfoDictionary();
         dialoguePanel.SetActive(false);
-        
+
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-        /*GameObject audioObject = new GameObject("DialogueAudioSource");
-        audioSource = audioObject.AddComponent<AudioSource>();*/
         dialoguePanel.SetActive(true);
         isDialoguePlaying = true;
         currentStory = new Story(inkJSON.text);
@@ -114,7 +145,8 @@ public class DialogueManager : ScriptableObject
         {
             dialogueText.text = "";
             currentReplicaLetters = currentStory.Continue().ToList();
-            HandleTags(currentStory.currentTags);
+            FillInkTagModifiers(currentStory.currentTags);
+            inkTagModifiers.ApplyAllModifiers();
         }
         else
         {
@@ -122,39 +154,14 @@ public class DialogueManager : ScriptableObject
         }
     }
 
-    private void HandleTags(List<string> currentTags)
+    private void FillInkTagModifiers(List<string> currentTags)
     {
+        inkTagModifiers.Clear();
         // loop through each tag and handle it accordingly
         foreach (string tag in currentTags)
         {
-            // parse the tag
-            string[] splitTag = tag.Split(':');
-            if (splitTag.Length != 2)
-            {
-                Debug.LogError("Tag could not be appropriately parsed: " + tag);
-            }
-            string tagKey = splitTag[0].Trim();
-            string tagValue = splitTag[1].Trim();
-
-            // handle the tag
-            switch (tagKey)
-            {
-                case "speaker":
-                    displayNameText.text = tagValue;
-                    break;
-                case "portrait":
-                    portraitAnimator.Play(tagValue);
-                    break;
-                case "layout":
-                    layoutAnimator.Play(tagValue);
-                    break;
-                case "audio":
-                    SetCurrentAudioInfo(tagValue);
-                    break;
-                default:
-                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
-                    break;
-            }
+            DialogueModifier modifier = inkTagModifiers.CreateModifier(tag);
+            inkTagModifiers.AddModifier(modifier);
         }
     }
 
@@ -162,9 +169,9 @@ public class DialogueManager : ScriptableObject
     {
         if (audioSource == null)
         {
-            Debug.LogError("Audio Source is nuuuuuuuuuuuuuuuuuuuuuuuuuuuull");
+            Debug.LogError("Audio Source is null");
             return;
-        }        // set variables for the below based on our config
+        }
 
 
         AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
@@ -220,7 +227,7 @@ public class DialogueManager : ScriptableObject
         }
     }
 
-   
+
     private void InitializeAudioInfoDictionary()
     {
 
@@ -231,19 +238,4 @@ public class DialogueManager : ScriptableObject
             audioInfoDictionary.Add(audioInfo.id, audioInfo);
         }
     }
-    private void SetCurrentAudioInfo(string id)
-    {
-        DialogueAudioInfoSO audioInfo = null;
-        audioInfoDictionary.TryGetValue(id, out audioInfo);
-        if (audioInfo != null)
-        {
-            this.currentAudioInfo = audioInfo;
-        }
-        else
-        {
-            Debug.LogWarning("Failed to find audio info for id: " + id);
-        }
-    }
-
-
 }
