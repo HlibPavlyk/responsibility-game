@@ -9,9 +9,9 @@ public class HexGridManager : MonoBehaviour
     [SerializeField] public HexagonCell hexagonPrefab;
     [SerializeField] public int gridSizeX = 10;
     [SerializeField] public int gridSizeY = 10;
+    [SerializeField] public int blockedCells = 6;
 
-    [SerializeField]
-    private SceneAsset initialScene;
+    [SerializeField] private SceneAsset initialScene;
 
     private HexagonCell[,] hexagonGrid;
     private HexagonCell virusedCell;
@@ -19,7 +19,6 @@ public class HexGridManager : MonoBehaviour
     private bool isGameFinished = false;
 
     private VirusGenerator virusGenerator;
-    [SerializeField] public int blockedCells = 6;
 
     void Start()
     {
@@ -45,7 +44,6 @@ public class HexGridManager : MonoBehaviour
 
             if (path == null)
             {
-                Debug.Log("Peremoga");
                 isGameFinished = true;
                 SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
                 return;
@@ -53,8 +51,8 @@ public class HexGridManager : MonoBehaviour
 
             if (path.Count == 1)
             {
-                Debug.Log("Zrada");
-                isGameFinished= true;
+                isGameFinished = true;
+                ResetLevel();
                 return;
             }
 
@@ -76,6 +74,22 @@ public class HexGridManager : MonoBehaviour
         }
     }
 
+    public void ResetLevel()
+    {
+        isGameFinished = false;
+
+        virusedCell.SetVirus(false);
+
+        foreach (HexagonCell cell in hexagonGrid)
+        {
+            Destroy(cell.gameObject);
+        }
+
+        GenerateHexGrid();
+        LinkManagerToGrid();
+        InitializeVirus();
+    }
+
     private void LinkManagerToGrid()
     {
         foreach(HexagonCell cell in hexagonGrid)
@@ -83,7 +97,6 @@ public class HexGridManager : MonoBehaviour
             cell.SetHexGridManager(this);
         }
     }
-
     private void InitializeVirus()
     {
         virus = gameObject.AddComponent<Virus>();

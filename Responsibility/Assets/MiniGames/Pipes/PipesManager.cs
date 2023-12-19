@@ -22,6 +22,7 @@ public class Generator : MonoBehaviour
     private PipesCell endPipe;
 
     private PipesGenerator levelGenerator;
+    private HashSet<PipesCell> finished;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class Generator : MonoBehaviour
         GenerateNewLevel();
         flowButton.onClick.AddListener(StartWaterFlow);
     }
+
     private void Update()
     {
         if (hasGameFinished) return;
@@ -36,23 +38,33 @@ public class Generator : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         int row = Mathf.FloorToInt(mousePos.y);
         int col = Mathf.FloorToInt(mousePos.x);
-        if (row < 0 || col < 0) return;
-        if (row >= size) return;
-        if (col >= size) return;
+        if (row < 0 || col < 0 || row >= size || col >= size)
+        {
+            return;
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
             pipes[row, col].UpdateInput();
         }
     }
+
     private void StartWaterFlow()
     {
-        StartCoroutine(ShowHint());
+        hasGameFinished = true;
+        StartCoroutine(FlowWaterCoroutine());
     }
-    private IEnumerator ShowHint()
+
+    private IEnumerator FlowWaterCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
         CheckFill();
+        foreach (PipesCell filled in finished)
+        {
+            filled.IsFilled = true;
+            filled.UpdateFilled();
+            yield return new WaitForSeconds(0.1f);
+        }
         CheckWin();
     }
     private void CheckFill()
@@ -67,7 +79,7 @@ public class Generator : MonoBehaviour
         }
 
         Queue<PipesCell> check = new Queue<PipesCell>();
-        HashSet<PipesCell> finished = new HashSet<PipesCell>();
+        finished = new HashSet<PipesCell>();
         check.Enqueue(startPipe);
 
         while (check.Count > 0)
@@ -83,12 +95,6 @@ public class Generator : MonoBehaviour
                 }
             }
         }
-
-        foreach (PipesCell filled in finished)
-        {
-            filled.IsFilled = true;
-            filled.UpdateFilled();
-        }
     }
 
     private void RestartLevel()
@@ -101,24 +107,23 @@ public class Generator : MonoBehaviour
     {
         if (endPipe.IsFilled)
         {
-            hasGameFinished = true;
             SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
         }
         else
         {
-            Debug.Log("Finish pipe is not filled. Restarting level.");
             RestartLevel();
         }
     }
 
     private void CreateLevelData()
     {
+        float offset = 0.5f;
         pipes = new PipesCell[size, size];
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
             {
-                Vector2 spawnPos = new Vector2(j + 0.5f, i + 0.5f);
+                Vector2 spawnPos = new Vector2(j + offset, i + offset);
                 PipesCell tempPipe = Instantiate(_cellPrefab);
                 tempPipe.transform.position = spawnPos;
                 tempPipe.Init(0);
@@ -129,12 +134,14 @@ public class Generator : MonoBehaviour
         startPipe = pipes[0, 0];
         endPipe = pipes[size - 1, size - 1];
     }
-
     private void SetCamera()
     {
-        Camera.main.orthographicSize = size * 0.5f + 1f;
+        float scaleFactor = 0.5f;
+        float offset = 1f;
 
-        Vector3 cameraPos = new Vector3(size * 0.5f, size * 0.5f, -10f);
+        Camera.main.orthographicSize = size * scaleFactor + offset;
+
+        Vector3 cameraPos = new Vector3(size * scaleFactor, size * scaleFactor, -10f);
         Camera.main.transform.position = cameraPos;
     }
     private void GenerateNewLevel()

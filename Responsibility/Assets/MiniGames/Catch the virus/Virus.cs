@@ -21,11 +21,7 @@ public class Virus : MonoBehaviour
     {
         int x, y;
         (x, y) = Utils.GetHexagonCoordinates(cell, hexagonGrid);
-        if(x == 0 || y == 0 || x == gridSizeX - 1 || y == gridSizeY - 1)
-        {
-            return true;
-        }
-        return false;
+        return x == 0 || y == 0 || x == gridSizeX - 1 || y == gridSizeY - 1;
     }
 
     private void solve()

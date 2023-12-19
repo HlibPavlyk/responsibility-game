@@ -54,8 +54,8 @@ public class PipesCell : MonoBehaviour
         }
 
         emptySprite = currentPipe.GetChild(0).GetComponent<SpriteRenderer>();
-        emptySprite.gameObject.SetActive(!IsFilled);
         filledSprite = currentPipe.GetChild(1).GetComponent<SpriteRenderer>();
+        emptySprite.gameObject.SetActive(!IsFilled);
         filledSprite.gameObject.SetActive(IsFilled);
 
         connectBoxes = new List<Transform>();

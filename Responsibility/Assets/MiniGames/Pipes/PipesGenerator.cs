@@ -19,8 +19,7 @@ public class PipesGenerator : MonoBehaviour
 
     public void Initialize(PipesCell[,] pipes)
     {
-        if (pipes == null || pipes.GetLength(0) != pipes.GetLength(1))
-            return;
+        if (pipes == null || pipes.GetLength(0) != pipes.GetLength(1)) return;
 
         this.pipes = pipes;
         this.size = pipes.GetLength(0);
@@ -97,11 +96,14 @@ public class PipesGenerator : MonoBehaviour
 
     private List<Vector2> Extend(int remainingLength, PipesCell startCell, Vector2 direction)
     {
-        int x = (int)getCoordinates(startCell).x;
-        int y = (int)getCoordinates(startCell).y;
+        Vector2 cords = getCoordinates(startCell);
+        int x = (int)cords.x;
+        int y = (int)cords.y;
 
         if (!CanMove(x, y, direction))
+        {
             return null;
+        }
 
         PipesCell newCell = pipes[x + (int)direction.x, y + (int)direction.y];
         newCell.IsVisited = true;
