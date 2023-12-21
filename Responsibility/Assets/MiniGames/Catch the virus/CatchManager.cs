@@ -1,8 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HexGridManager : MonoBehaviour
 {
@@ -13,10 +14,12 @@ public class HexGridManager : MonoBehaviour
 
     [SerializeField] private SceneAsset initialScene;
 
+    [SerializeField] private Button hintButton;
+
     private HexagonCell[,] hexagonGrid;
     private HexagonCell virusedCell;
     private Virus virus;
-    private bool isGameFinished = false;
+    private List<HexagonCell> path;
 
     private VirusGenerator virusGenerator;
 
@@ -25,6 +28,8 @@ public class HexGridManager : MonoBehaviour
         GenerateHexGrid();
         LinkManagerToGrid();
         InitializeVirus();
+
+        hintButton.onClick.AddListener(StartHint);
     }
 
     void GenerateHexGrid()
@@ -34,29 +39,28 @@ public class HexGridManager : MonoBehaviour
 
         (hexagonGrid, virusedCell) = virusGenerator.CreateLevelData(blockedCells);
     }
+    private void StartHint()
+    {
+        StartCoroutine(HintCoroutine());
+    }
+    private IEnumerator HintCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+        getPath();
 
+        if(path != null && path.Count > 1)
+        {
+            path[1].SetBlocked(true);
+        }
+
+        CheckWin();
+    }
     public void OnHexagonCellClicked()
     {
-        if (!isGameFinished)
+        getPath();
+
+        if (path != null && path.Count > 1)
         {
-            CleanVisited();
-            List<HexagonCell> path = virus.getPath(virusedCell);
-
-            if (path == null)
-            {
-                isGameFinished = true;
-                SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
-                return;
-            }
-
-            if (path.Count == 1)
-            {
-                isGameFinished = true;
-                ResetLevel();
-                return;
-            }
-
-
             int rightNeighborX, rightNeighborY;
             (rightNeighborX, rightNeighborY) = Utils.GetHexagonCoordinates(path[1], hexagonGrid);
 
@@ -64,8 +68,25 @@ public class HexGridManager : MonoBehaviour
             virusedCell = hexagonGrid[rightNeighborX, rightNeighborY];
             virusedCell.SetVirus(true);
         }
-    }
 
+        CheckWin();
+    }
+    private void CheckWin()
+    {
+        if (path == null)
+        {
+            Debug.Log("Peremoga");
+            SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
+            return;
+        }
+
+        if (path.Count == 1)
+        {
+            Debug.Log("Zrada");
+            ResetLevel();
+            return;
+        }
+    }
     private void CleanVisited()
     {
         foreach (HexagonCell cell in hexagonGrid)
@@ -76,8 +97,6 @@ public class HexGridManager : MonoBehaviour
 
     public void ResetLevel()
     {
-        isGameFinished = false;
-
         virusedCell.SetVirus(false);
 
         foreach (HexagonCell cell in hexagonGrid)
@@ -101,5 +120,11 @@ public class HexGridManager : MonoBehaviour
     {
         virus = gameObject.AddComponent<Virus>();
         virus.Initialize(hexagonGrid);
+    }
+
+    private void getPath()
+    {
+        CleanVisited();
+        path = virus.getPath(virusedCell);
     }
 }
