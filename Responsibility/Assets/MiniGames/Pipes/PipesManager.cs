@@ -9,12 +9,12 @@ public class Generator : MonoBehaviour
 {
     public static Generator Instance;
 
-    [SerializeField]
-    private SceneAsset initialScene;
+    [SerializeField] private SceneAsset initialScene;
 
     [SerializeField] private PipesCell _cellPrefab;
     [SerializeField] private int size;
     [SerializeField] private Button flowButton;
+    [SerializeField] private Button hintButton;
 
     private bool hasGameFinished;
     public PipesCell[,] pipes;
@@ -22,6 +22,8 @@ public class Generator : MonoBehaviour
     private PipesCell endPipe;
 
     private PipesGenerator levelGenerator;
+    private List<PipesCell> path;
+    private int currentMarked = 1;
     private HashSet<PipesCell> finished;
 
     private void Awake()
@@ -29,6 +31,7 @@ public class Generator : MonoBehaviour
         Instance = this;
         GenerateNewLevel();
         flowButton.onClick.AddListener(StartWaterFlow);
+        hintButton.onClick.AddListener(StartHint);
     }
 
     private void Update()
@@ -54,14 +57,27 @@ public class Generator : MonoBehaviour
         hasGameFinished = true;
         StartCoroutine(FlowWaterCoroutine());
     }
-
+    private void StartHint()
+    {
+        StartCoroutine(HintCoroutine());
+    }
+    private IEnumerator HintCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (currentMarked < path.Count) 
+        { 
+            PipesCell pipe = path[currentMarked];
+            pipe.setMarked(true);
+            pipe.UpdateFilled();
+            currentMarked++;
+        }
+    }
     private IEnumerator FlowWaterCoroutine()
     {
-        //yield return new WaitForSeconds(0.1f);
         CheckFill();
         foreach (PipesCell filled in finished)
         {
-            filled.IsFilled = true;
+            filled.setFilled(true);
             filled.UpdateFilled();
             yield return new WaitForSeconds(0.1f);
         }
@@ -72,9 +88,11 @@ public class Generator : MonoBehaviour
         foreach (PipesCell cell in pipes)
         {
             PipesCell tempPipe = cell;
-            if (tempPipe.PipeType != 0)
+            int type = tempPipe.getType();
+
+            if (type != 0)
             {
-                tempPipe.IsFilled = false;
+                tempPipe.setFilled(false);
             }
         }
 
@@ -105,7 +123,7 @@ public class Generator : MonoBehaviour
 
     private void CheckWin()
     {
-        if (endPipe.IsFilled)
+        if (endPipe.getFilled())
         {
             SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
         }
@@ -152,6 +170,7 @@ public class Generator : MonoBehaviour
         levelGenerator.Initialize(pipes);
 
         this.pipes = levelGenerator.CreateLevel();
+        this.path = levelGenerator.getPath();
 
         SetCamera();
     }

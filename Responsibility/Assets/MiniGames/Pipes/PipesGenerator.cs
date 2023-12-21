@@ -29,10 +29,11 @@ public class PipesGenerator : MonoBehaviour
     {
         int dist = 0;
 
+        pipes[0, 0].Init(1);
+
         while (path == null || dist < 2 * (size - 1))
         {
             startPipes = new List<PipesCell>();
-            pipes[0, 0].Init(1);
 
             PipesCell start = pipes[0, 0];
             startPipes.Add(start);
@@ -63,7 +64,9 @@ public class PipesGenerator : MonoBehaviour
     {
         foreach (PipesCell pipe in pipes)
         {
-            if (pipe.PipeType == 0 || (pipe.PipeType == 2 && !startPipes.Contains(pipe)))
+            int type = pipe.getType();
+
+            if (type == 0 || (type == 2 && !startPipes.Contains(pipe)))
             {
                 int randomPipeType = UnityEngine.Random.Range(3, 5);
                 pipe.Init(randomPipeType);
@@ -177,5 +180,15 @@ public class PipesGenerator : MonoBehaviour
         int x = Math.Abs((int)first.x - (int)second.x);
         int y = Math.Abs((int)first.y - (int)second.y);
         return x + y;
+    }
+    public List<PipesCell> getPath()
+    {
+        List<PipesCell> cellPath = new List<PipesCell>();
+        foreach(Vector2 cords in path)
+        {
+            cellPath.Add(pipes[(int)cords.x, (int)cords.y]);
+        }
+        cellPath.Reverse();
+        return cellPath;
     }
 }
