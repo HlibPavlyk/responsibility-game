@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 4521573039060709382}
   - component: {fileID: 2334904014304390647}
   - component: {fileID: 1215131435926813046}
-  - component: {fileID: 8775551377041506367}
   - component: {fileID: 2245110532969167129}
   - component: {fileID: 3970041094104693526}
   - component: {fileID: -5728473094701657040}
   m_Layer: 0
-  m_Name: Player
-  m_TagString: Player
+  m_Name: Entity
+  m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,15 +77,15 @@ SpriteRenderer:
   m_SortingLayerID: 1835330169
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2141591822, guid: c621199458c37cd4c8e87878d3ae7ab6, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.875, y: 1.6875}
+  m_Size: {x: 0.13, y: 0.26}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1215131435926813046
@@ -119,24 +118,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8775551377041506367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3581022016258163397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8796c2d46ab220438c01ce79cf7d46c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 150
-  maxSpeed: 3
-  idleFriction: 0.9
-  spriteRenderer: {fileID: 2334904014304390647}
-  maxHealth: 5
-  invincibilityDuration: 2
 --- !u!50 &2245110532969167129
 Rigidbody2D:
   serializedVersion: 4
@@ -201,7 +182,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.53846157, y: 0.5}
     oldSize: {x: 0.8125, y: 1.625}
-    newSize: {x: 0.875, y: 1.6875}
+    newSize: {x: 0.13, y: 0.26}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -219,7 +200,7 @@ Animator:
   m_GameObject: {fileID: 3581022016258163397}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9000e0e7b82311c47a486e7e6c47487c, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

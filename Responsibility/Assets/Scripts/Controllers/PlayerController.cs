@@ -8,6 +8,13 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 150f;
     public float maxSpeed = 5f;
     public float idleFriction = 0.9f;
+    public SpriteRenderer spriteRenderer;
+
+    public int maxHealth = 5;
+    private int currentHealth;
+    private bool isInvincible = false;
+    public float invincibilityDuration = 2f;
+    private float invincibilityTimer = 0f;
     Rigidbody2D rb;
 
     private Controls controls; // for Olya inputManager
@@ -25,7 +32,38 @@ public class PlayerController : MonoBehaviour
         inputManager = GameManager.Instance.InputManager;
 
         animator = GetComponent<Animator>();
+
+        currentHealth = maxHealth;
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
         /*spriteRenderer = GetComponent<SpriteRenderer>();*/
+    }
+
+    void Update()
+    {
+
+        if (isInvincible)
+        {
+            invincibilityTimer -= Time.deltaTime;
+            if (invincibilityTimer <= 0)
+            {
+                isInvincible = false;
+            }
+        }
+    }
+
+    private IEnumerator BlinkEffect()
+    {
+        float blinkTime = invincibilityDuration / 10f; // Duration of each blink
+
+        for (float i = 0; i < invincibilityDuration; i += blinkTime)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled; // Toggle sprite visibility
+            yield return new WaitForSeconds(blinkTime);
+        }
+
+        spriteRenderer.enabled = true; // Ensure sprite is visible after invincibility
     }
 
     private void Awake()
@@ -96,6 +134,35 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("IsWalking", false);
             }
         }
+    }
+
+    // Method to handle taking damage
+    public void TakeDamage(int damage)
+    {
+        if (isInvincible) return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Player is dead!");
+            // Handle player death here
+        }
+
+        isInvincible = true;
+        invincibilityTimer = invincibilityDuration;
+        Debug.Log("Player took damage. Current health: " + currentHealth);
+
+        StartCoroutine(BlinkEffect());
+    }
+
+    // Method to heal the player
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        Debug.Log("Player healed. Current health: " + currentHealth);
     }
 
     /*void UpdateAnimatorParameters()
