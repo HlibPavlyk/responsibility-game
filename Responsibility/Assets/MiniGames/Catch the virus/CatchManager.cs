@@ -75,14 +75,12 @@ public class HexGridManager : MonoBehaviour
     {
         if (path == null)
         {
-            Debug.Log("Peremoga");
             SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
             return;
         }
 
         if (path.Count == 1)
         {
-            Debug.Log("Zrada");
             ResetLevel();
             return;
         }

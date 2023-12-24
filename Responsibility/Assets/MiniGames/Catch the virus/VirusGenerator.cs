@@ -42,7 +42,7 @@ public class VirusGenerator : MonoBehaviour
             throw new Exception("Not enough available cells for the specified number of blocked cells.");
         }
 
-        availableCells = Utils.ShuffleList(availableCells);
+        Utils.ShuffleList(availableCells);
 
         for (int i = 0; i < blocked; i++)
         {

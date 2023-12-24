@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MultiplyGenerator : MonoBehaviour
@@ -13,12 +14,12 @@ public class MultiplyGenerator : MonoBehaviour
         this.prefab = prefab;
     }
 
-    public (List<NumberScript>, int) CreateLevelData()
+    public (List<NumberScript>, List<NumberScript>, int) CreateLevelData()
     {
         int estimatedSum = 0;
 
         numbersList = CreatePrefabsList();
-        numbersList = Utils.ShuffleList(numbersList);
+        Utils.ShuffleList(numbersList);
 
         List<NumberScript> result = new List<NumberScript>();
 
@@ -29,7 +30,7 @@ public class MultiplyGenerator : MonoBehaviour
                 result.Add(numbersList[i]);
                 if (i % 2 == 1)
                 {
-                    estimatedSum += numbersList[i - 1].GetValue() * numbersList[i].GetValue();
+                  estimatedSum += numbersList[i - 1].GetValue() * numbersList[i].GetValue();
                 }
             }
             else
@@ -38,9 +39,11 @@ public class MultiplyGenerator : MonoBehaviour
             }
         }
 
-        result = Utils.ShuffleList(result);
+        numbersList.RemoveRange(size, numbersList.Count - size);
+        Utils.ShuffleList(numbersList);
 
-        return (result, estimatedSum);
+        result.Reverse();
+        return (result, numbersList, estimatedSum);
     }
 
     private List<NumberScript> CreatePrefabsList()
