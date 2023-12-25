@@ -9,6 +9,7 @@ public class PlayerManager : ScriptableObject
     private GameObject playerPrefab;
     public GameObject ActivePlayer { get; private set; }
 
+
     [SerializeField]
     private PlayerStats startingPlayerStats;
     public PlayerStats PlayerStats { get; private set; }

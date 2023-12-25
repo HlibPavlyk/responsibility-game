@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da16fc6fb8e36434ea068670b01e1cab, type: 3}
   m_Name: PlayerManager
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3581022016258163397, guid: d694daa24bf211a418e0c21dbf6304fa, type: 3}
+  playerPrefab: {fileID: 3581022016258163397, guid: 5d70e55e79df6ec4a93e435266843335, type: 3}
   startingPlayerStats: {fileID: 11400000, guid: f87aa31c2a44fe14d98c829959461227, type: 2}
   spawnTag: Respawn

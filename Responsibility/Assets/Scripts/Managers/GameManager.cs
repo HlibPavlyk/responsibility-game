@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public DialogueManager DialogueManager;
     public InputManager InputManager;
     public MenuManager MenuManager;
+    private PlayerController playerController;
 
     private void Awake()
     {
@@ -33,5 +34,7 @@ public class GameManager : MonoBehaviour
         LevelManager.GameState = GameState;
         PlayerManager.GameState = GameState;
     }
+
+
 
 }
