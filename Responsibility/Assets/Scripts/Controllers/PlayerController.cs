@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +12,6 @@ public class PlayerController : MonoBehaviour
 
     public int maxHealth = 5;
     private int currentHealth;
-    public event Action<int> OnHealthChanged;
     private bool isInvincible = false;
     public float invincibilityDuration = 2f;
     private float invincibilityTimer = 0f;
@@ -165,12 +163,6 @@ public class PlayerController : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         Debug.Log("Player healed. Current health: " + currentHealth);
-    }
-
-    private void SetHealth(int newHealth)
-    {
-        currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
-        OnHealthChanged?.Invoke(currentHealth);
     }
 
     /*void UpdateAnimatorParameters()

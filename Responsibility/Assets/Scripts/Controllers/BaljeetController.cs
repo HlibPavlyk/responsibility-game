@@ -84,15 +84,6 @@ public class BaljeetController : MonoBehaviour
             {
                 AttackPlayer();
             }
-
-            if (waitTimer <= 0f)
-            {
-                GoToSleep();
-            }
-            else if (attackDelayTimer <= 0 && HasPlayerMoved()) // Check if attack delay has elapsed
-            {
-                AttackPlayer();
-            }
         }
     }
 
@@ -111,14 +102,22 @@ public class BaljeetController : MonoBehaviour
 
         transform.position = teleportPosition; // Teleport to the new position
 
-
-
         Debug.Log($"[BaljeetController] Teleported near player at {transform.position}");
         isSleeping = false;
         isNearPlayer = true;
         waitTimer = waitTimeAfterTeleport;
-        lastPlayerPosition = playerTransform.position; // Update last known player position
         attackDelayTimer = attackDelayAfterTeleport;
+
+        // Start the coroutine to set lastPlayerPosition
+        StartCoroutine(SetLastPlayerPositionAfterDelay(2f)); // 1 second delay or adjust as needed
+    }
+
+    IEnumerator SetLastPlayerPositionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for the specified delay
+
+        lastPlayerPosition = playerTransform.position; // Update last known player position
+        Debug.Log($"[BaljeetController] Updated last player position after delay: {lastPlayerPosition}");
     }
 
 
