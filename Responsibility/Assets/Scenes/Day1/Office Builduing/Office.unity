@@ -2877,6 +2877,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2245110532969167129, guid: d694daa24bf211a418e0c21dbf6304fa, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2334904014304390647, guid: d694daa24bf211a418e0c21dbf6304fa, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2998,6 +3002,8 @@ MonoBehaviour:
   sleepInterval: 5
   waitTimeAfterTeleport: 3
   attackDamage: 10
+  teleportDistance: 1
+  attackDelayAfterTeleport: 1
 --- !u!1 &1438554009
 GameObject:
   m_ObjectHideFlags: 0

@@ -127,7 +127,7 @@ public class BaljeetController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("[BaljeetController] Collided with player.");
-            AttackPlayer();
+            //AttackPlayer();
         }
     }
 
