@@ -21,7 +21,6 @@ public class MultiplyManager : MonoBehaviour
 
     private List<NumberScript> numbersList;
     private List<NumberScript> resultList;
-    private int hintCount = 0;
 
     private NumberScript[] lastClickedObjects = new NumberScript[2];
     private int clickCount = 0;

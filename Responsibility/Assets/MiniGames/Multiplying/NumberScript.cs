@@ -10,9 +10,6 @@ public class NumberScript : MonoBehaviour
 
     private Collider2D objectCollider;
 
-    private SpriteRenderer bg;
-    private SpriteRenderer chosenBg;
-
     private SpriteRenderer numberSprite;
     private SpriteRenderer circleSprite;
 
@@ -22,22 +19,16 @@ public class NumberScript : MonoBehaviour
     {
         isChosen = false;
 
-        bg = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        bg.gameObject.SetActive(!isChosen);
-
-        chosenBg = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        chosenBg.gameObject.SetActive(isChosen);
-
         this.value = value;
 
         num = Instantiate(numPrefabs[value - 1], transform);
 
-        objectCollider = transform.GetChild(2).GetComponent<Collider2D>();
+        objectCollider = transform.GetChild(1).GetComponent<Collider2D>();
 
         numberSprite = num.GetComponent<SpriteRenderer>();
         numberSprite.gameObject.SetActive(true);
 
-        circleSprite = transform.GetChild(3).GetComponent<SpriteRenderer>();
+        circleSprite = transform.GetChild(2).GetComponent<SpriteRenderer>();
         circleSprite.color = Color.white;
         connected = null;
     }
@@ -88,8 +79,14 @@ public class NumberScript : MonoBehaviour
 
     public void UpdateChosen()
     {
-        bg.gameObject.SetActive(!isChosen);
-        chosenBg.gameObject.SetActive(isChosen);
+        if(isChosen)
+        {
+            numberSprite.color = Color.red;
+        }
+        else
+        {
+            numberSprite.color = Color.white;
+        }
     }
 
     public bool IsConnected()

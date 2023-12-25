@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59d474281e7564680c00ec73330751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 8
+  size: 6
   radius: 4
   prefab: {fileID: 8996474892187886522, guid: fe69f2de8a6b7fb4a9f72a35c6770d1f, type: 3}
   initialScene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}

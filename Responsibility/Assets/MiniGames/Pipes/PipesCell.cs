@@ -20,9 +20,6 @@ public class PipesCell : MonoBehaviour
     private SpriteRenderer emptySprite;
     private SpriteRenderer filledSprite;
 
-    private SpriteRenderer emptyMarkedSprite;
-    private SpriteRenderer filledMarkedSprite;
-
     private List<Transform> connectBoxes;
 
     private const int minRotation = 0;
@@ -36,9 +33,11 @@ public class PipesCell : MonoBehaviour
         {
             Destroy(currentPipe.gameObject);
         }
+
         PipeType = pipe % 10;
         currentPipe = Instantiate(_pipePrefabs[PipeType], transform);
         currentPipe.transform.localPosition = Vector3.zero;
+
         if (PipeType == 1 || PipeType == 2)
         {
             rotation = pipe / 10;
@@ -49,12 +48,6 @@ public class PipesCell : MonoBehaviour
         }
         currentPipe.transform.eulerAngles = new Vector3(0, 0, rotation * rotationMultiplier);
 
-        if (PipeType == 1)
-        {
-            isFilled = true;
-            isMarked = true;
-        }
-
         if (PipeType == 0)
         {
             return;
@@ -62,13 +55,17 @@ public class PipesCell : MonoBehaviour
 
         emptySprite = currentPipe.GetChild(0).GetComponent<SpriteRenderer>();
         filledSprite = currentPipe.GetChild(1).GetComponent<SpriteRenderer>();
-        emptyMarkedSprite = currentPipe.GetChild(2).GetComponent<SpriteRenderer>();
-        filledMarkedSprite = currentPipe.GetChild(3).GetComponent<SpriteRenderer>();
 
-        emptySprite.gameObject.SetActive(!isFilled && !isMarked);
-        filledSprite.gameObject.SetActive(isFilled && !isMarked);
-        emptyMarkedSprite.gameObject.SetActive(!isFilled && isMarked);
-        filledMarkedSprite.gameObject.SetActive(isFilled && isMarked);
+        emptySprite.gameObject.SetActive(!isFilled);
+        filledSprite.gameObject.SetActive(isFilled);
+
+        if (PipeType == 1)
+        {
+            isFilled = true;
+            isMarked = true;
+            emptySprite.color = Color.yellow;
+            filledSprite.color = Color.yellow;
+        }
 
         connectBoxes = new List<Transform>();
         for (int i = 2; i < currentPipe.childCount; i++)
@@ -89,10 +86,14 @@ public class PipesCell : MonoBehaviour
     {
         if (PipeType == 0) return;
 
-        emptySprite.gameObject.SetActive(!isFilled && !isMarked);
-        filledSprite.gameObject.SetActive(isFilled && !isMarked);
-        emptyMarkedSprite.gameObject.SetActive(!isFilled && isMarked);
-        filledMarkedSprite.gameObject.SetActive(isFilled && isMarked);
+        emptySprite.gameObject.SetActive(!isFilled);
+        filledSprite.gameObject.SetActive(isFilled);
+
+        if(isMarked)
+        {
+            emptySprite.color = Color.yellow;
+            filledSprite.color = Color.yellow;
+        }
     }
 
     public List<PipesCell> ConnectedPipes()

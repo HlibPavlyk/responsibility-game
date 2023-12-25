@@ -537,7 +537,7 @@ MonoBehaviour:
   hexagonPrefab: {fileID: 1658843794855069299, guid: 69a3e538bb351344d9897c4a538dd54c, type: 3}
   gridSizeX: 12
   gridSizeY: 8
-  blockedCells: 12
+  blockedCells: 10
   initialScene: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
   hintButton: {fileID: 314558299}
 --- !u!4 &1921218952
