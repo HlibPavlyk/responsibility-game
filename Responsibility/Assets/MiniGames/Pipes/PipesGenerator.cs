@@ -19,8 +19,7 @@ public class PipesGenerator : MonoBehaviour
 
     public void Initialize(PipesCell[,] pipes)
     {
-        if (pipes == null || pipes.GetLength(0) != pipes.GetLength(1))
-            return;
+        if (pipes == null || pipes.GetLength(0) != pipes.GetLength(1)) return;
 
         this.pipes = pipes;
         this.size = pipes.GetLength(0);
@@ -30,10 +29,11 @@ public class PipesGenerator : MonoBehaviour
     {
         int dist = 0;
 
+        pipes[0, 0].Init(1);
+
         while (path == null || dist < 2 * (size - 1))
         {
             startPipes = new List<PipesCell>();
-            pipes[0, 0].Init(1);
 
             PipesCell start = pipes[0, 0];
             startPipes.Add(start);
@@ -64,7 +64,9 @@ public class PipesGenerator : MonoBehaviour
     {
         foreach (PipesCell pipe in pipes)
         {
-            if (pipe.PipeType == 0 || (pipe.PipeType == 2 && !startPipes.Contains(pipe)))
+            int type = pipe.getType();
+
+            if (type == 0 || (type == 2 && !startPipes.Contains(pipe)))
             {
                 int randomPipeType = UnityEngine.Random.Range(3, 5);
                 pipe.Init(randomPipeType);
@@ -97,11 +99,14 @@ public class PipesGenerator : MonoBehaviour
 
     private List<Vector2> Extend(int remainingLength, PipesCell startCell, Vector2 direction)
     {
-        int x = (int)getCoordinates(startCell).x;
-        int y = (int)getCoordinates(startCell).y;
+        Vector2 cords = getCoordinates(startCell);
+        int x = (int)cords.x;
+        int y = (int)cords.y;
 
         if (!CanMove(x, y, direction))
+        {
             return null;
+        }
 
         PipesCell newCell = pipes[x + (int)direction.x, y + (int)direction.y];
         newCell.IsVisited = true;
@@ -175,5 +180,15 @@ public class PipesGenerator : MonoBehaviour
         int x = Math.Abs((int)first.x - (int)second.x);
         int y = Math.Abs((int)first.y - (int)second.y);
         return x + y;
+    }
+    public List<PipesCell> getPath()
+    {
+        List<PipesCell> cellPath = new List<PipesCell>();
+        foreach(Vector2 cords in path)
+        {
+            cellPath.Add(pipes[(int)cords.x, (int)cords.y]);
+        }
+        cellPath.Reverse();
+        return cellPath;
     }
 }

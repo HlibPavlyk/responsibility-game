@@ -142,7 +142,7 @@ PrefabInstance:
     - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d77e75aba707aea4ca5db7420985e193, type: 3}
+      objectReference: {fileID: 21300000, guid: ed30d229a23e8a9469d0047c2aa1474f, type: 3}
     - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -387,7 +387,11 @@ PrefabInstance:
     - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 95e96a8c35342b145acc508c0025de61, type: 3}
+      objectReference: {fileID: 21300000, guid: b9a5799423b84244289d8aa0c8e3cc74, type: 3}
+    - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -438,15 +442,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.02
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.02
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.02
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -478,11 +482,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -7.04
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.98
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5006266397034264282, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -556,7 +560,7 @@ PrefabInstance:
     - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b0dd1dc5706fa7a4b81df96b527ee57f, type: 3}
+      objectReference: {fileID: 21300000, guid: 7156cfae755f1fa48b85e6cfd612f7cb, type: 3}
     - target: {fileID: -6623116442768008405, guid: 6787f437f9263da4ba3dc6a247d0bffd, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1

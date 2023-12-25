@@ -33,9 +33,10 @@ public static class Utils
         }
         return (x, y);
     }
-    public static List<T> ShuffleList<T>(List<T> list)
+    public static void ShuffleList<T>(List<T> list)
     {
         System.Random random = new System.Random();
+        List<T> result = new List<T>();
 
         for (int i = list.Count - 1; i > 0; i--)
         {
@@ -45,7 +46,5 @@ public static class Utils
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
         }
-
-        return list;
     }
 }

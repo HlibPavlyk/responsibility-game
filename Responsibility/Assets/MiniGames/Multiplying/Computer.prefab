@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4727893813949169941}
@@ -87,8 +87,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2671296982406804093}
   - component: {fileID: 1104144758581497509}
-  m_Layer: 0
-  m_Name: SquareBG
+  m_Layer: 1
+  m_Name: Computer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4727893813949169941}
@@ -147,99 +147,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5471707f7ae21c242b3d1a16843c75d3, type: 3}
+  m_SortingLayerID: 1835330169
+  m_SortingLayer: 2
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 200236093, guid: d9a6389150030754987d0b7ba59b66e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!1 &4740663686046963591
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4510841764487834459}
-  - component: {fileID: 5991346960539761759}
-  m_Layer: 0
-  m_Name: ChosenSquareBG
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4510841764487834459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740663686046963591}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4727893813949169941}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5991346960539761759
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740663686046963591}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 18535f3511d3bd34389679d02b6ce07b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -256,7 +172,7 @@ GameObject:
   - component: {fileID: 4727893813949169941}
   - component: {fileID: 8996474892187886522}
   m_Layer: 0
-  m_Name: Arabian
+  m_Name: Computer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,7 +192,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2671296982406804093}
-  - {fileID: 4510841764487834459}
   - {fileID: 2302318266203252247}
   - {fileID: 9149171913783274583}
   m_Father: {fileID: 0}
@@ -295,14 +210,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numPrefabs:
   - {fileID: 7812523300271825341, guid: 939f9a56d6834f14fa5bccf0c5ea9fd5, type: 3}
-  - {fileID: 7812523300271825341, guid: f77ca30ff6571944093c39a0e5481c47, type: 3}
-  - {fileID: 7812523300271825341, guid: 4cfb0514e4c37df44afa69f395bb499b, type: 3}
-  - {fileID: 7812523300271825341, guid: ca94ca41e32ae4d468e2fcb512917fc0, type: 3}
-  - {fileID: 7812523300271825341, guid: 5767aa2e2fb634349a59636bbb1449c2, type: 3}
-  - {fileID: 7812523300271825341, guid: 72e11fffd419e6745b25e701ea23090c, type: 3}
-  - {fileID: 7812523300271825341, guid: c4d41afd8eabea2438aaef3cc46fa449, type: 3}
-  - {fileID: 7812523300271825341, guid: 39f013ba822e9ff4cb51bb1d93a8fdef, type: 3}
-  - {fileID: 7812523300271825341, guid: 6f4d7768b1c203d438cc8ab9d0e99be3, type: 3}
+  - {fileID: 7812523300271825341, guid: 7cbda2e553461ef40b5c675f67acb191, type: 3}
+  - {fileID: 7812523300271825341, guid: e4fdfe084b41525498a77bb7df15a2dd, type: 3}
+  - {fileID: 7812523300271825341, guid: 802e3a63268c00f49ab0cf2ad2ee4313, type: 3}
+  - {fileID: 7812523300271825341, guid: cffa1aa992dbbb646b9c861c6b729763, type: 3}
+  - {fileID: 7812523300271825341, guid: ef31975f6a0fb9842ac8f19e3ba27b0e, type: 3}
+  - {fileID: 7812523300271825341, guid: 0716b10eeecad6a45abd6c04878f8839, type: 3}
+  - {fileID: 7812523300271825341, guid: 7c09acf012b577546bd4aad2973e3d2d, type: 3}
+  - {fileID: 7812523300271825341, guid: 78f4680dbc2d62e46919ba7ca2776c7c, type: 3}
 --- !u!1 &5963240333692955688
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +245,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4727893813949169941}

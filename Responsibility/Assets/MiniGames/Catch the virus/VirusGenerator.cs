@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VirusGenerator : MonoBehaviour
@@ -22,29 +23,31 @@ public class VirusGenerator : MonoBehaviour
         SpawnVirus();
         System.Random random = new System.Random();
 
-        for (int i = 0; i < blocked; i++)
+        List<(int x, int y)> availableCells = new List<(int x, int y)>();
+
+        for (int x = 0; x < sizeX; x++)
         {
-            bool cellFound = false;
-
-            for (int attempt = 0; attempt < 100; attempt++)
+            for (int y = 0; y < sizeY; y++)
             {
-                int randomX = random.Next(0, sizeX);
-                int randomY = random.Next(0, sizeY);
-
-                HexagonCell randomCell = hexagonGrid[randomX, randomY];
-
-                if (!randomCell.IsVirused() && !randomCell.IsBlocked())
+                HexagonCell cell = hexagonGrid[x, y];
+                if (!cell.IsVirused() && !cell.IsBlocked())
                 {
-                    randomCell.SetBlocked(true);
-                    cellFound = true;
-                    break;
+                    availableCells.Add((x, y));
                 }
             }
+        }
 
-            if (!cellFound)
-            {
-                throw new Exception("Unable to find a suitable cell after multiple attempts.");
-            }
+        if (availableCells.Count < blocked)
+        {
+            throw new Exception("Not enough available cells for the specified number of blocked cells.");
+        }
+
+        Utils.ShuffleList(availableCells);
+
+        for (int i = 0; i < blocked; i++)
+        {
+            (int x, int y) randomCoords = availableCells[i];
+            hexagonGrid[randomCoords.x, randomCoords.y].SetBlocked(true);
         }
 
         return (hexagonGrid, virusedCell);
@@ -54,11 +57,13 @@ public class VirusGenerator : MonoBehaviour
     {
         float xOffset = 0.85f;
         float yOffset = 1.1f;
+        float offsetDelimiter = 2f;
+        float offsetSubtraction = 0.5f;
 
         hexagonGrid = new HexagonCell[sizeX, sizeY];
 
-        float startX = -xOffset * (sizeX / 2f - 0.5f);
-        float startY = -yOffset * (sizeY / 2f - 0.5f);
+        float startX = -xOffset * (sizeX / offsetDelimiter - offsetSubtraction);
+        float startY = -yOffset * (sizeY / offsetDelimiter - offsetSubtraction);
 
         for (int x = 0; x < sizeX; x++)
         {
