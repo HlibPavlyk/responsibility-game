@@ -12,7 +12,7 @@ public class PlayerManager : ScriptableObject
 
     [SerializeField]
     private PlayerStats startingPlayerStats;
-    public PlayerStats PlayerStats { get; private set; }
+    public PlayerStats PlayerStats;
     public GameState GameState {get; set;}
 
     public string spawnTag;

@@ -23,6 +23,7 @@ public class MenuManager : ScriptableObject
     }
     public void NewGame()
     {
+        GameManager.Instance.SaveLoadManager.DeleteSaves();
         LevelEvents.levelExit.Invoke(startScene, "");
 
     }
@@ -30,7 +31,10 @@ public class MenuManager : ScriptableObject
 
     public void ContinueGame()
     {
-
+        GameManager.Instance.SaveLoadManager.LoadGame();
+        LevelEvents.levelExit.Invoke(GameManager.Instance.PlayerManager.PlayerStats.currentSceneName, "");
+        /*SceneManager.LoadScene(GameManager.Instance.PlayerManager.PlayerStats.currentSceneName, LoadSceneMode.Single);*/
+        /*SceneManager.LoadScene(GameManager.Instance.PlayerManager.PlayerStats.currentSceneIndex*//**//*, LoadSceneMode.Single);*/
     }
 
     public void LoadGame()
