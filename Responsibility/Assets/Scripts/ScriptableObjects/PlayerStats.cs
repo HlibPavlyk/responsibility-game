@@ -7,5 +7,5 @@ using UnityEngine;
 public class PlayerStats : ScriptableObject
 {
     //Player Stats and other logic
-    public string currentSceneName;
+    public SceneAsset currentSceneName;
 }

@@ -53,7 +53,7 @@ public class LevelTransition : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         //test save-upload system
-        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad.name;
+        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad;
         GameManager.Instance.SaveLoadManager.SaveGame();
 
         LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
