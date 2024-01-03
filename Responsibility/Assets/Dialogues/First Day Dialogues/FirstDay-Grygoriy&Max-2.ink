@@ -1,0 +1,6 @@
+Here is your PC, the company makes sure that we have the most quality of the equipment. The work of the system administrator requires problem-solving skills, attention to detail, and discipline. #speaker:Max #portrait:Max #layout:right #audio:MaxVoice
+I think I can work with this. #speaker:Grygoriy #portrait:Grygoriy #layout:left #audio:GrygoriyVoice
+Excellent, we work by a pretty structured schedule but with a finite amount of tasks for a day, to avoid overloading. So there is always a job or a check-up to do. Once you are done with it you can have your free time, you can also repeat the check-up just to be sure. Otherwise, you can use the gym and library on the second floor. We play board games in the dormitory every Tuesday and Thursday in the evenings and you are welcome to join. #speaker:Max #portrait:Max #layout:right #audio:MaxVoice
+Sound nice, you seem to be putting some effort into teambuilding. #speaker:Grygoriy #portrait:Grygoriy #layout:left #audio:GrygoriyVoice
+Thank you. If you have any questions about your task or anything in the office you can always ask me. You can start with your job right away, have a nice first day then. #speaker:Max #portrait:Max #layout:right #audio:MaxVoice
+I’ll sure do #speaker:Grygoriy #portrait:Grygoriy #layout:left #audio:GrygoriyVoice

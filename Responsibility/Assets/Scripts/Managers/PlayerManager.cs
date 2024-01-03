@@ -24,7 +24,7 @@ public class PlayerManager : ScriptableObject
 
     protected void SpawnPlayer(Transform defaultSpawnTransform)
     {
-        if(GameState.playerSpawnLocation != "")
+        if (GameState.playerSpawnLocation != "")
         {
             GameObject[] spawns = GameObject.FindGameObjectsWithTag(spawnTag);
             bool foundSpawn = false;
