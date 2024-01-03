@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Day1/MiniGames/Catch the virus.unity
     guid: c9b6579fba6c58148b90dc6aee7254b8
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/MainMenu.unity
+    guid: 6a55bda526df23d44b832715ba094684
   m_configObjects: {}

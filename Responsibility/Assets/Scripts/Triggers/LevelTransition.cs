@@ -52,8 +52,14 @@ public class LevelTransition : MonoBehaviour
 
         yield return new WaitForSeconds(transitionTime);
 
+        //test save-upload system
+        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad.name;
+        GameManager.Instance.SaveLoadManager.SaveGame();
+
         LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
         GameManager.Instance.LevelManager.isTransitionAnimationPlaying = false;
+
+       
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
