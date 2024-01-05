@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91811bf49b31e5d4eaffd7858da2651c, type: 3}
-  m_Name: MaxVoice
+  m_Name: PlayerVoice
   m_EditorClassIdentifier: 
-  id: MaxVoice
+  id: GrygoriyVoice
   dialogueTypingSoundClips:
-  - {fileID: 8300000, guid: 7b5f7059fec729b4ea17234b960f643a, type: 3}
-  frequencyLevel: 2
-  minPitch: 0.5
-  maxPitch: 3
+  - {fileID: 8300000, guid: c94c74b8927a66b40afbd15a0d648616, type: 3}
+  frequencyLevel: 3
+  minPitch: 0.57
+  maxPitch: 1.56
   stopAudioSource: 0
