@@ -5,11 +5,11 @@ A repository for course project of 3rd semester of 3 KPI students: Horovyi Oleks
 <p>
     <img src="./screenshots/image23.png">
 </p>
-## ㅤ
+# ㅤ
 <p>
     <img src="./screenshots/image1.png">
 </p>
-## ㅤ
+# ㅤ
 <p>
     <img src="./screenshots/image10.png">
 </p>
