@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public DialogueManager DialogueManager;
     public InputManager InputManager;
     public MenuManager MenuManager;
-    public SaveLoadManager SaveLoadManager;
     private PlayerController playerController;
 
     private void Awake()
