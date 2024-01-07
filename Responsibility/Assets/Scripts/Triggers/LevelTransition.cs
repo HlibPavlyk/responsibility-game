@@ -54,7 +54,7 @@ public class LevelTransition : MonoBehaviour
 
         //test save-upload system
         GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad;
-        GameManager.Instance.SaveLoadManager.SaveGame();
+        SaveLoadManager.SaveGame();
 
         LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
         GameManager.Instance.LevelManager.isTransitionAnimationPlaying = false;
