@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,9 +121,9 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: 2.768073, y: -9.960439}
-  - {x: -2.8343945, y: -9.960424}
-  - {x: -2.830553, y: 2.268764}
-  - {x: 2.7709675, y: 2.2698398}
+  - {x: -2.8398495, y: -9.966561}
+  - {x: -2.8394833, y: 2.2728186}
+  - {x: 2.773346, y: 2.2728128}
   - {x: 2.7724147, y: -9.957706}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
