@@ -50,4 +50,3 @@ MonoBehaviour:
   DialogueManager: {fileID: 11400000, guid: 7abd7bf6d4d400a49a10d52f535efd1b, type: 2}
   InputManager: {fileID: 11400000, guid: 83465fb0bcc371745baf07006a1eb7e2, type: 2}
   MenuManager: {fileID: 11400000, guid: 4c183149f481f4641849a1a2a4482ef7, type: 2}
-  SaveLoadManager: {fileID: 11400000, guid: 1423943636089bc41a3a8d826dc24940, type: 2}

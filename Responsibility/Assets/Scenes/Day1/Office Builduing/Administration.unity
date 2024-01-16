@@ -481,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 308783978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.115, y: 1.289, z: 0}
+  m_LocalPosition: {x: -0.158, y: 1.312, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -507,7 +507,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1524,7 +1524,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 932179943}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 0.99, y: 0.99, z: 0.99}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -2132,10 +2132,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 6.351533, y: 1.7845335}
-      - {x: -2.7485323, y: 1.7774861}
-      - {x: -2.7471118, y: -3.8181505}
-      - {x: 6.3507795, y: -3.8247325}
+    - - {x: 6.3459754, y: 1.7795877}
+      - {x: -2.7935743, y: 1.7830293}
+      - {x: -2.7878013, y: -3.8557599}
+      - {x: 6.346664, y: -3.8550856}
   m_UseDelaunayMesh: 0
 --- !u!1001 &1475997260
 PrefabInstance:
