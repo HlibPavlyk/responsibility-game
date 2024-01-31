@@ -1,0 +1,1 @@
+“A more comfortable, leather sofa. Seems to be heavier than the ones in the hall.”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice

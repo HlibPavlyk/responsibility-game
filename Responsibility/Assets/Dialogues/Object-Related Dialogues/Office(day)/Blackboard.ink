@@ -1,0 +1,1 @@
+“A clear blackboard, though it has some recent smudges on it, so it must be used pretty often”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice
