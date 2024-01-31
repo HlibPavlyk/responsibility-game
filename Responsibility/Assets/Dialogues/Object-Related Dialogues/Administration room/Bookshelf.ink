@@ -1,0 +1,1 @@
+“There are many books on the shelf. Most of them are about time management, motivation, and self-improvement: «How to Win Friends and influence people», «Atomic Habits», «The Power of Now»... «1984»?”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice

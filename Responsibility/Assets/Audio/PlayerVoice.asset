@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91811bf49b31e5d4eaffd7858da2651c, type: 3}
   m_Name: PlayerVoice
   m_EditorClassIdentifier: 
-  id: GrygoriyVoice
+  id: PlayerVoice
   dialogueTypingSoundClips:
   - {fileID: 8300000, guid: c94c74b8927a66b40afbd15a0d648616, type: 3}
   frequencyLevel: 3

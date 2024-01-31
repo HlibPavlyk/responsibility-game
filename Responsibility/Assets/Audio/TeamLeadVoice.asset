@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91811bf49b31e5d4eaffd7858da2651c, type: 3}
   m_Name: TeamLeadVoice
   m_EditorClassIdentifier: 
-  id: MaxVoice
+  id: TeamLeadVoice
   dialogueTypingSoundClips:
   - {fileID: 8300000, guid: 7b5f7059fec729b4ea17234b960f643a, type: 3}
   frequencyLevel: 2

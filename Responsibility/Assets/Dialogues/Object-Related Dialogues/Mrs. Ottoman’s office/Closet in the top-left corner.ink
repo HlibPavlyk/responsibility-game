@@ -1,0 +1,1 @@
+“Unusually shiny. A very durable closet”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice

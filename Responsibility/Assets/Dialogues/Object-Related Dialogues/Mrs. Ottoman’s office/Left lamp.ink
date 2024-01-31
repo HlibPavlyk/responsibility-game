@@ -1,0 +1,1 @@
+“The positioning of the lamps is rather unusual.”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice
