@@ -24,6 +24,12 @@ public class PlayerManager : ScriptableObject
 
     protected void SpawnPlayer(Transform defaultSpawnTransform)
     {
+        if (GameState.playerSpawnLocation == null)
+        {
+            Debug.Log("Player spawning disable");
+            return;
+        }
+
         if (GameState.playerSpawnLocation != "")
         {
             GameObject[] spawns = GameObject.FindGameObjectsWithTag(spawnTag);

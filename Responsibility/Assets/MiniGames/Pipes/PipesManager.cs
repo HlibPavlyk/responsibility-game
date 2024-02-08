@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Generator : MonoBehaviour
+public class Generator : SceneTransition
 {
     public static Generator Instance;
 
@@ -118,14 +118,14 @@ public class Generator : MonoBehaviour
     private void RestartLevel()
     {
         StopAllCoroutines();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(LoadLevel(AssetDatabase.LoadAssetAtPath<SceneAsset>(SceneManager.GetActiveScene().path)));
     }
 
     private void CheckWin()
     {
         if (endPipe.getFilled())
         {
-            SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
+            StartCoroutine(LoadLevel());
         }
         else
         {

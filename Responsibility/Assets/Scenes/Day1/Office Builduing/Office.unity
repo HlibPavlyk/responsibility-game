@@ -281,12 +281,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229fd1c9430cc84483909291864c999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 50101370}
-  triggereTag: Player
   playerSpawnTransformName: 
   sceneToLoad: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
   transitionAnimator: {fileID: 535105855740789941}
   transitionTime: 0.5
+  visualCue: {fileID: 50101370}
+  triggereTag: Player
 --- !u!1001 &156177045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1366,6 +1366,7 @@ Transform:
   - {fileID: 1958385939}
   - {fileID: 99110042}
   - {fileID: 420041060}
+  - {fileID: 1196490919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1109141966 stripped
@@ -1487,6 +1488,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7b96bb1026b2114a9699093947ffb40, type: 3}
+--- !u!1 &1196490918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1196490919}
+  m_Layer: 0
+  m_Name: FromDesktop
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1196490919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196490918}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.39, y: 0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1107824828}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1232081436 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2052667442723437463, guid: a3fa4aa5eff1ba84897e3882a6000ebd, type: 3}
@@ -2886,7 +2918,7 @@ Transform:
   m_GameObject: {fileID: 1438554009}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.098, y: 0.29, z: 4.836114}
+  m_LocalPosition: {x: 1.52, y: 0.29, z: 4.836114}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3654,12 +3686,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229fd1c9430cc84483909291864c999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 1756691115}
-  triggereTag: Player
   playerSpawnTransformName: FromOffice
   sceneToLoad: {fileID: 102900000, guid: ff677bf7c4681cd4fb7d7fdc70c22e33, type: 3}
   transitionAnimator: {fileID: 535105855740789941}
   transitionTime: 0.5
+  visualCue: {fileID: 1756691115}
+  triggereTag: Player
 --- !u!4 &1958385939
 Transform:
   m_ObjectHideFlags: 0
