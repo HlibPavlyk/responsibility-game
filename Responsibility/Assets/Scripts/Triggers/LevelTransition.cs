@@ -4,21 +4,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class LevelTransition : MonoBehaviour
+public class LevelTransition : SceneTransition
 {
     [Header("VisualCue")]
     [SerializeField] private GameObject visualCue;
     private bool playerInRange;
     public string triggereTag = "Player";
-    public string playerSpawnTransformName = "NOT SET";
 
-    public SceneAsset sceneToLoad;
-
-    [SerializeField]
-    private Animator transitionAnimator;
-    public float transitionTime = 0.5f;
-
-    private void Start()
+    protected override void Start()
     {
         if (sceneToLoad == null)
         {
@@ -31,7 +24,6 @@ public class LevelTransition : MonoBehaviour
     private void Update()
     {
         if (playerInRange)
-
         {
             visualCue.SetActive(true);
             if (GameManager.Instance.InputManager.GetInteractPressed())
@@ -45,7 +37,7 @@ public class LevelTransition : MonoBehaviour
         }
     }
 
-    IEnumerator LoadLevel()
+    public override IEnumerator LoadLevel(SceneAsset OtherSceneToLoad = null)
     {
         GameManager.Instance.LevelManager.isTransitionAnimationPlaying = true;
         transitionAnimator.SetTrigger("Start");
@@ -59,7 +51,6 @@ public class LevelTransition : MonoBehaviour
         LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
         GameManager.Instance.LevelManager.isTransitionAnimationPlaying = false;
 
-       
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

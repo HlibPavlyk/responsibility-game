@@ -6,13 +6,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MultiplyManager : MonoBehaviour
+public class MultiplyManager : SceneTransition
 {
     [SerializeField] private int size;
     [SerializeField] private float radius = 4f;
 
     [SerializeField] private NumberScript prefab;
-    [SerializeField] private SceneAsset initialScene;
     [SerializeField] private GameObject server;
     [SerializeField] private Button hintButton;
     
@@ -35,8 +34,13 @@ public class MultiplyManager : MonoBehaviour
 
     private MultiplyGenerator levelGenerator;
 
-    private void Start()
+    protected override void Start()
     {
+        if (sceneToLoad == null)
+        {
+            throw new MissingReferenceException(name + "has no sceneToLoad set");
+        }
+
         CreateLevelData();
         hintButton.onClick.AddListener(startHint);
     }
@@ -146,7 +150,7 @@ public class MultiplyManager : MonoBehaviour
         if (currentSum == estimatedSum)
         {
             current.color = Color.green;
-            SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
+            StartCoroutine(LoadLevel());
         }
     }
 

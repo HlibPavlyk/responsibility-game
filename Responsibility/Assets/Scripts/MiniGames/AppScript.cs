@@ -2,16 +2,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AppScript : MonoBehaviour
+public class AppScript : SceneTransition
 {
-    [SerializeField]
-    private SceneAsset sceneToLoad;
     private float lastClickTime;
     private float doubleClickTimeThreshold = 0.2f;
 
     private Collider2D objectCollider;
 
-    private void Start()
+    protected override void Start()
     {
         objectCollider = GetComponent<Collider2D>();
 
@@ -36,7 +34,7 @@ public class AppScript : MonoBehaviour
 
                     if (timeSinceLastClick < doubleClickTimeThreshold)
                     {
-                        LoadScene();
+                        StartCoroutine(LoadLevel());
                     }
 
                     lastClickTime = Time.time;
@@ -45,8 +43,4 @@ public class AppScript : MonoBehaviour
         }
     }
 
-    void LoadScene()
-    {
-        SceneManager.LoadScene(sceneToLoad.name, LoadSceneMode.Single);
-    }
 }

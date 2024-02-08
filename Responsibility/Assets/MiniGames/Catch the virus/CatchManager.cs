@@ -5,14 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class HexGridManager : MonoBehaviour
+public class HexGridManager : SceneTransition
 {
     [SerializeField] public HexagonCell hexagonPrefab;
     [SerializeField] public int gridSizeX = 10;
     [SerializeField] public int gridSizeY = 10;
     [SerializeField] public int blockedCells = 6;
-
-    [SerializeField] private SceneAsset initialScene;
 
     [SerializeField] private Button hintButton;
 
@@ -23,7 +21,7 @@ public class HexGridManager : MonoBehaviour
 
     private VirusGenerator virusGenerator;
 
-    void Start()
+    protected override void Start()
     {
         GenerateHexGrid();
         LinkManagerToGrid();
@@ -75,7 +73,7 @@ public class HexGridManager : MonoBehaviour
     {
         if (path == null)
         {
-            SceneManager.LoadScene(initialScene.name, LoadSceneMode.Single);
+            StartCoroutine(LoadLevel());
             return;
         }
 
