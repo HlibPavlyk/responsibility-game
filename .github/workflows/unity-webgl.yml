@@ -17,7 +17,7 @@ jobs:
       - name: Activate Unity
         uses: game-ci/unity-activate@v2
         with:
-          unityVersion: 6000.0.32f1
+          unityVersion: ${{ secrets.UNITY_VERSION }}
           personal: true
           license: ${{ secrets.UNITY_LICENSE }}
 
