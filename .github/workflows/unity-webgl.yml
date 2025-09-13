@@ -14,6 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Activate Unity
+        uses: game-ci/unity-activate@v2
+        with:
+          unityVersion: 6000.0.32f1
+          personal: true
+          license: ${{ secrets.UNITY_LICENSE }}
+
       - name: Build project
         uses: game-ci/unity-builder@v4
         with:
