@@ -1,1 +1,0 @@
-“A shelf. Seem to be made out of whole wood. It wouldn’t be reasonable to take a peek, while she is in the room”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice

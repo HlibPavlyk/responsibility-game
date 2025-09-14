@@ -1,1 +1,0 @@
-“Wondering about the painting? It’s «The founding of Khoml city» by Mañgo Armada. He is a modern artist, quite popular, this one is from his «The Solitude of Old Europe» painting collection” #speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice
