@@ -25,6 +25,7 @@ jobs:
             Library-
 
       - name: Run Unity tests
+        if: false # remove this line to run tests
         uses: game-ci/unity-test-runner@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}

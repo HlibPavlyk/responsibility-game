@@ -77,4 +77,12 @@ crashlytics-build.properties
 # Rider
 .idea/
 
+# GitHub Actions
+/artifacts/
+/Library/
+/Logs/
+/Temp/
+/Obj/
+
+
 # End of https://www.toptal.com/developers/gitignore/api/unity
