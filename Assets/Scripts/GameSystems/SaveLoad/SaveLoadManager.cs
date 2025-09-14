@@ -1,21 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 using UnityEngine;
-using UnityEngine.UI;
 
 public static class SaveLoadManager
 {
-    private static readonly string saveDirectory;
-    private static readonly string saveFile;
+    private static readonly string SaveDirectory;
+    private static readonly string SaveFile;
 
     static SaveLoadManager()
     {
-        saveDirectory = Application.persistentDataPath + "/Saves";
-        saveFile = saveDirectory + "/LastSave.txt";
+        SaveDirectory = Path.Combine(Application.persistentDataPath, "Saves");
+        SaveFile = Path.Combine(SaveDirectory, "LastSave.json");
     }
 
     private static bool IsExist(string filePath)
@@ -25,41 +19,32 @@ public static class SaveLoadManager
 
     public static void SaveGame()
     {
-        if (!IsExist(saveDirectory))
+        if (!Directory.Exists(SaveDirectory))
         {
-            Directory.CreateDirectory(saveDirectory);
+            Directory.CreateDirectory(SaveDirectory);
         }
 
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(saveFile);
-
-        string json = JsonUtility.ToJson(GameManager.Instance.PlayerManager.PlayerStats);
-        bf.Serialize(file, json);
-        file.Close();
+        var json = JsonUtility.ToJson(GameManager.Instance.PlayerManager.PlayerStats, true);
+        File.WriteAllText(SaveFile, json);
     }
 
     public static void LoadGame()
     {
-        if (!IsExist(saveDirectory))
+        if (!File.Exists(SaveFile))
         {
-            Directory.CreateDirectory(saveDirectory);
+            Debug.LogError($"Save file {SaveFile} does not exist in {SaveDirectory}");
+            return;
         }
-
-        BinaryFormatter bf = new BinaryFormatter();
-
-        if (IsExist(saveFile))
-        {
-            FileStream file = File.Open(saveFile, FileMode.Open);
-            JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), GameManager.Instance.PlayerManager.PlayerStats);
-            file.Close();
-        }
+        
+        var json = File.ReadAllText(SaveFile);
+        JsonUtility.FromJsonOverwrite(json, GameManager.Instance.PlayerManager.PlayerStats);
     }
 
     public static void DeleteSaves()
     {
-        if (IsExist(saveFile))
+        if (IsExist(SaveFile))
         {
-            File.Delete(saveFile);
+            File.Delete(SaveFile);
         }
     }
 }

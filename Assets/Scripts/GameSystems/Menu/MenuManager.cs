@@ -25,7 +25,9 @@ public class MenuManager : ScriptableObject
     {
         SaveLoadManager.DeleteSaves();
         LevelEvents.levelExit.Invoke(startSceneName, "");
+        
         GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = startSceneName;
+        SaveLoadManager.SaveGame();
 
     }
 
