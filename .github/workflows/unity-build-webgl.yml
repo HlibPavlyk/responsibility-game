@@ -1,12 +1,12 @@
-name: Build and Deploy Unity WebGL
+name: Build and Test Unity WebGL
 
 on:
-  push:
+  pull_request:
     branches:
-      - setup-ci/cd
+      - main
 
 jobs:
-  build:
+  test-and-build:
     name: Build WebGL
     runs-on: ubuntu-latest
 
@@ -48,10 +48,3 @@ jobs:
         with:
           name: WebGL-Build
           path: build/WebGL
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/WebGL/*
-          publish_branch: gh-pages
