@@ -3,13 +3,13 @@ using UnityEngine;
 
 public static class SaveLoadManager
 {
-    private static readonly string saveDirectory;
-    private static readonly string saveFile;
+    private static readonly string SaveDirectory;
+    private static readonly string SaveFile;
 
     static SaveLoadManager()
     {
-        saveDirectory = Path.Combine(Application.persistentDataPath, "Saves");
-        saveFile = Path.Combine(saveDirectory, "LastSave.json");
+        SaveDirectory = Path.Combine(Application.persistentDataPath, "Saves");
+        SaveFile = Path.Combine(SaveDirectory, "LastSave.json");
     }
 
     private static bool IsExist(string filePath)
@@ -19,32 +19,32 @@ public static class SaveLoadManager
 
     public static void SaveGame()
     {
-        if (!Directory.Exists(saveDirectory))
+        if (!Directory.Exists(SaveDirectory))
         {
-            Directory.CreateDirectory(saveDirectory);
+            Directory.CreateDirectory(SaveDirectory);
         }
 
         var json = JsonUtility.ToJson(GameManager.Instance.PlayerManager.PlayerStats, true);
-        File.WriteAllText(saveFile, json);
+        File.WriteAllText(SaveFile, json);
     }
 
     public static void LoadGame()
     {
-        if (!File.Exists(saveFile))
+        if (!File.Exists(SaveFile))
         {
-            Debug.LogError($"Save file {saveFile} does not exist in {saveDirectory}");
+            Debug.LogError($"Save file {SaveFile} does not exist in {SaveDirectory}");
             return;
         }
         
-        var json = File.ReadAllText(saveFile);
+        var json = File.ReadAllText(SaveFile);
         JsonUtility.FromJsonOverwrite(json, GameManager.Instance.PlayerManager.PlayerStats);
     }
 
     public static void DeleteSaves()
     {
-        if (IsExist(saveFile))
+        if (IsExist(SaveFile))
         {
-            File.Delete(saveFile);
+            File.Delete(SaveFile);
         }
     }
 }
