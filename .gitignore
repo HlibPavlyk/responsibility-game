@@ -83,7 +83,7 @@ crashlytics-build.properties
 /Logs/
 /Temp/
 /Obj/
-/Resources/
+Resources/
 Resources.meta
 
 
