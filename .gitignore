@@ -83,6 +83,8 @@ crashlytics-build.properties
 /Logs/
 /Temp/
 /Obj/
+/Resources/
+Resources.meta
 
 
 # End of https://www.toptal.com/developers/gitignore/api/unity

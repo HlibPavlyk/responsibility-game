@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,8 +7,6 @@ using UnityEngine.UI;
 public class Generator : SceneTransition
 {
     public static Generator Instance;
-
-    [SerializeField] private SceneAsset initialScene;
 
     [SerializeField] private PipesCell _cellPrefab;
     [SerializeField] private int size;
@@ -118,8 +115,10 @@ public class Generator : SceneTransition
     private void RestartLevel()
     {
         StopAllCoroutines();
-        StartCoroutine(LoadLevel(AssetDatabase.LoadAssetAtPath<SceneAsset>(SceneManager.GetActiveScene().path)));
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
+
 
     private void CheckWin()
     {

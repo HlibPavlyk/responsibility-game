@@ -6,7 +6,7 @@ using UnityEngine;
 public class SceneTransition : MonoBehaviour
 {
     public string playerSpawnTransformName = "NOT SET";
-    public SceneAsset sceneToLoad;
+    public string sceneToLoad;
 
     [SerializeField]
     protected Animator transitionAnimator;
@@ -21,7 +21,7 @@ public class SceneTransition : MonoBehaviour
     }
 
 
-    public virtual IEnumerator LoadLevel(SceneAsset OtherSceneToLoad = null)
+    public virtual IEnumerator LoadLevel(string OtherSceneToLoad = null)
     {
         transitionAnimator.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
@@ -30,7 +30,7 @@ public class SceneTransition : MonoBehaviour
         GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad;
         SaveLoadManager.SaveGame();
 
-        SceneAsset sceneChoice;
+        string sceneChoice;
         if (OtherSceneToLoad != null)
         {
             sceneChoice = OtherSceneToLoad;

@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class MenuManager : ScriptableObject
 {
     [SerializeField]
-    private SceneAsset startScene;
+    private string startSceneName;
 
     private GameObject settingsPanel;
     private GameObject background;
@@ -24,7 +24,8 @@ public class MenuManager : ScriptableObject
     public void NewGame()
     {
         SaveLoadManager.DeleteSaves();
-        LevelEvents.levelExit.Invoke(startScene, "");
+        LevelEvents.levelExit.Invoke(startSceneName, "");
+        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = startSceneName;
 
     }
 

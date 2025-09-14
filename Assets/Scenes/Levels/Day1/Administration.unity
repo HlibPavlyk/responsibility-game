@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -356,6 +352,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239593450}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -379,7 +376,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -0.1494236, y: -0.961674}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,7 +388,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1.185112, y: 1.0143785}
   m_EdgeRadius: 0
 --- !u!114 &239593453
@@ -405,12 +402,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229fd1c9430cc84483909291864c999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 1293951410}
-  triggereTag: Player
   playerSpawnTransformName: FromAdministration
-  sceneToLoad: {fileID: 102900000, guid: fdf7c923f2f244c42a516352b2c1712a, type: 3}
+  sceneToLoad: Hall
   transitionAnimator: {fileID: 1475997261}
   transitionTime: 0.5
+  visualCue: {fileID: 1293951410}
+  triggereTag: Player
 --- !u!4 &282234280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7632352772609329477, guid: 77019136f34607b4ab439a3b72e32351, type: 3}
@@ -504,6 +501,9 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1082,6 +1082,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341081684}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1105,7 +1106,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -0.02088356, y: -0.026773363}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -1116,7 +1118,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.42438316, y: 0.54754204}
   m_EdgeRadius: 0
 --- !u!4 &341081687
@@ -1288,6 +1289,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539420272}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1311,7 +1313,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -0.1555214, y: -0.8519145}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -1322,7 +1325,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1.2460899, y: 1.2338974}
   m_EdgeRadius: 0
 --- !u!114 &539420275
@@ -1337,12 +1339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229fd1c9430cc84483909291864c999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 1784563081}
-  triggereTag: Player
   playerSpawnTransformName: FromAdministration
-  sceneToLoad: {fileID: 102900000, guid: a5993297a3df1df4fa2f25aeef54a784, type: 3}
+  sceneToLoad: Office
   transitionAnimator: {fileID: 1475997261}
   transitionTime: 0.5
+  visualCue: {fileID: 1784563081}
+  triggereTag: Player
 --- !u!1001 &764055154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1720,6 +1722,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103491651}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1743,7 +1746,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -0.40623903, y: -1.3099656}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -1754,7 +1758,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1.1504774, y: 1.2173982}
   m_EdgeRadius: 0
 --- !u!114 &1103491654
@@ -1769,12 +1772,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229fd1c9430cc84483909291864c999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 1146315082}
-  triggereTag: Player
   playerSpawnTransformName: FromAdministration
-  sceneToLoad: {fileID: 102900000, guid: 81a810a285e201d47814f729b47bb361, type: 3}
+  sceneToLoad: BossRoom
   transitionAnimator: {fileID: 1475997261}
   transitionTime: 0.5
+  visualCue: {fileID: 1146315082}
+  triggereTag: Player
 --- !u!1001 &1146315080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2096,6 +2099,7 @@ PolygonCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462138290}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -2119,7 +2123,8 @@ PolygonCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -2427,6 +2432,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660950911}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -2450,7 +2456,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: -0.1494236, y: -0.961674}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -2461,7 +2468,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1.185112, y: 1.0143785}
   m_EdgeRadius: 0
 --- !u!114 &1660950914
@@ -2476,12 +2482,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229fd1c9430cc84483909291864c999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 233654929}
-  triggereTag: Player
   playerSpawnTransformName: FromAdministration
-  sceneToLoad: {fileID: 102900000, guid: 00762e97196b3b946ad286208621bab8, type: 3}
+  sceneToLoad: WC
   transitionAnimator: {fileID: 1475997261}
   transitionTime: 0.5
+  visualCue: {fileID: 233654929}
+  triggereTag: Player
 --- !u!1 &1784563081 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 407943933886700248, guid: f9421d5431ad28b4394298450a3107a9, type: 3}

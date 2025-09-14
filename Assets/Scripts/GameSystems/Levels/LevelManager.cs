@@ -18,10 +18,10 @@ public class LevelManager : ScriptableObject
     {
         LevelEvents.levelExit += OnLevelExit;
     }
-    private void OnLevelExit(SceneAsset nextLevel, string playerSpawnTransformName)
+    private void OnLevelExit(string nextLevelSceneName, string playerSpawnTransformName)
     {
         GameState.playerSpawnLocation = playerSpawnTransformName;
-        SceneManager.LoadScene(nextLevel.name, LoadSceneMode.Single);
+        SceneManager.LoadScene(nextLevelSceneName, LoadSceneMode.Single);
     }
 
     private void OnDisable()

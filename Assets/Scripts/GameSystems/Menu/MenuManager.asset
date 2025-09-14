@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac418d92a5fd59848b36b6647a85b2a4, type: 3}
   m_Name: MenuManager
   m_EditorClassIdentifier: 
-  startScene: {fileID: 102900000, guid: fdf7c923f2f244c42a516352b2c1712a, type: 3}
+  startSceneName: Hall

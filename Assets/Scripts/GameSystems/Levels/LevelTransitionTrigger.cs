@@ -37,7 +37,7 @@ public class LevelTransition : SceneTransition
         }
     }
 
-    public override IEnumerator LoadLevel(SceneAsset OtherSceneToLoad = null)
+    public override IEnumerator LoadLevel(string OtherSceneToLoad = null)
     {
         GameManager.Instance.LevelManager.isTransitionAnimationPlaying = true;
         transitionAnimator.SetTrigger("Start");
