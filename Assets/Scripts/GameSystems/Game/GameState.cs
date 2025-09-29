@@ -7,4 +7,12 @@ public class GameState : ScriptableObject
 {
     //Implement incapsulation
     public string playerSpawnLocation = "";
+    public GameObject activePlayer;
+    public PlayerStats playerStats;
+    
+    //transition animation
+    public bool isTransitionAnimationPlaying;
+    
+    // dialogue manager
+    public bool isDialoguePlaying;
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 
 public class BaljeetController : MonoBehaviour
@@ -39,13 +40,13 @@ public class BaljeetController : MonoBehaviour
     void OnEnable()
     {
         // Subscribe to the player spawned event
-        PlayerEvents.onPlayerSpawned += UpdatePlayerTransform;
+        GameEvents.Player.onPlayerSpawned += UpdatePlayerTransform;
     }
 
     void OnDisable()
     {
         // Unsubscribe from the player spawned event
-        PlayerEvents.onPlayerSpawned -= UpdatePlayerTransform;
+        GameEvents.Player.onPlayerSpawned -= UpdatePlayerTransform;
     }
 
     void UpdatePlayerTransform(Transform newPlayerTransform)
@@ -149,7 +150,7 @@ public class BaljeetController : MonoBehaviour
 
         if (playerTransform != null)
         {
-            PlayerController playerController = playerTransform.GetComponent<PlayerController>();
+            PlayerControllerDI playerController = playerTransform.GetComponent<PlayerControllerDI>();
             if (playerController != null)
             {
                 playerController.TakeDamage(1); // Decrease player's health by 1

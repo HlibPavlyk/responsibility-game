@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.DI;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
+using VContainer;
 
-public class DialogInitiate : MonoBehaviour
+public class DialogInitiate : InjectableMonoBehaviour
 {
+    [Inject] private readonly IDialogueManager dialogueManager;
     
     void Start()
     {
-        GameManager.Instance.DialogueManager.InitiateDialogueMenu(gameObject);
+        dialogueManager.Initialize(gameObject);
     }
 
     void Update()
     {
-        GameManager.Instance.DialogueManager.DialogUpdate();
+        dialogueManager.DialogUpdate();
     }
 }

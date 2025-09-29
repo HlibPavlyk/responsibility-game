@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class DialogueTrigger : MonoBehaviour
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
+    
+    [Inject] private readonly IDialogueManager dialogueManager;
+    [Inject] private readonly IInputManager inputManager;
+    [Inject] private readonly GameState gameState;
+    
     private bool playerInRange;
     private void Awake()
     {
@@ -19,13 +26,13 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (playerInRange && !GameManager.Instance.DialogueManager.isDialoguePlaying)
+        if (playerInRange && !gameState.isDialoguePlaying)
 
         {
             visualCue.SetActive(true);
-            if (GameManager.Instance.InputManager.GetInteractPressed())
+            if (inputManager.GetInteractPressed())
             {
-                GameManager.Instance.DialogueManager.EnterDialogueMode(inkJSON);
+                dialogueManager.EnterDialogueMode(inkJSON);
             }
         }
         else

@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 
 public abstract class DialogueModifiers
 {
-    protected DialogueManager manager;
-    public DialogueModifiers(DialogueManager manager)
+    protected IDialogueManager manager;
+    public DialogueModifiers(IDialogueManager manager)
     {
         this.manager = manager ?? throw new ArgumentNullException(nameof(manager));
     }
@@ -18,7 +19,7 @@ public class InkTagModifiers : DialogueModifiers
 {
     List<DialogueModifier> modifiers = new List<DialogueModifier>();
 
-    public InkTagModifiers(DialogueManager manager) : base(manager) { }
+    public InkTagModifiers(IDialogueManager manager) : base(manager) { }
 
     public void AddModifier(DialogueModifier modifier)
     {

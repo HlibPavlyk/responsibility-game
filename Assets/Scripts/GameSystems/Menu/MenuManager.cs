@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
+using Core.Interfaces;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using VContainer;
 
 [CreateAssetMenu(fileName = "MenuManager", menuName = "ScriptableObjects/Manager/MenuManager", order = 1)]
 public class MenuManager : ScriptableObject
@@ -14,6 +17,9 @@ public class MenuManager : ScriptableObject
 
     private GameObject settingsPanel;
     private GameObject background;
+    
+    [Inject] private GameState gameState;
+    
     // Start is called before the first frame update
     public void InitiateDialogueMenu(GameObject canvas)
     {
@@ -24,8 +30,9 @@ public class MenuManager : ScriptableObject
     public void NewGame()
     {
         SaveLoadManager.DeleteSaves();
-        LevelEvents.levelExit.Invoke(startSceneName, "");
-        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = startSceneName;
+        GameEvents.Level.levelExit.Invoke(startSceneName, "");
+        //LevelEvents.levelExit.Invoke("Hall", "");
+        gameState.playerStats.currentSceneName = startSceneName;
 
     }
 
@@ -33,7 +40,7 @@ public class MenuManager : ScriptableObject
     public void ContinueGame()
     {
         SaveLoadManager.LoadGame();
-        LevelEvents.levelExit.Invoke(GameManager.Instance.PlayerManager.PlayerStats.currentSceneName, "");
+        GameEvents.Level.levelExit.Invoke(gameState.playerStats.currentSceneName, "");
         /*SceneManager.LoadScene(GameManager.Instance.PlayerManager.PlayerStats.currentSceneName, LoadSceneMode.Single);*/
         /*SceneManager.LoadScene(GameManager.Instance.PlayerManager.PlayerStats.currentSceneIndex*//**//*, LoadSceneMode.Single);*/
     }

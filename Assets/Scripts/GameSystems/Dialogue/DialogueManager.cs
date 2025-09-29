@@ -98,10 +98,10 @@ public class DialogueManager : ScriptableObject
             return;
         }
         
-        if (GameManager.Instance?.InputManager?.GetSubmitPressed() == true)
+        /*if (GameManager.Instance?.InputManager?.GetSubmitPressed() == true)
         {
             ContinueStory();
-        }
+        }*/
         
         timeElapsed += Time.deltaTime;
         if (currentReplicaLetters != null && currentReplicaLetters.Count > 0 && timeElapsed >= typingSpeed)
@@ -129,7 +129,8 @@ public class DialogueManager : ScriptableObject
             return;
         }
 
-        inkTagModifiers = new InkTagModifiers(this);
+        //todo inject dialogue managers service
+        //inkTagModifiers = new InkTagModifiers(this);
         isDialoguePlaying = false;
         
         UnityEngine.Transform panelTransform = canvas.transform.Find("DialoguePanel");

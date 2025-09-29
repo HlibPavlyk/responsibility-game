@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
+using Core.Interfaces;
 using UnityEditor;
 using UnityEngine;
+using VContainer;
 
 public class SceneTransition : MonoBehaviour
 {
@@ -11,6 +14,9 @@ public class SceneTransition : MonoBehaviour
     [SerializeField]
     protected Animator transitionAnimator;
     public float transitionTime = 0.5f;
+    
+   
+    [Inject] protected GameState gameState;
 
     protected virtual void Start()
     {
@@ -27,7 +33,7 @@ public class SceneTransition : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         //test save-upload system
-        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad;
+        gameState.playerStats.currentSceneName = sceneToLoad;
         SaveLoadManager.SaveGame();
 
         string sceneChoice;
@@ -39,7 +45,7 @@ public class SceneTransition : MonoBehaviour
         {
             sceneChoice = sceneToLoad;
         }
-        LevelEvents.levelExit.Invoke(sceneChoice, playerSpawnTransformName);
+        GameEvents.Level.levelExit.Invoke(sceneChoice, playerSpawnTransformName);
     }
 
    

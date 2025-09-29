@@ -4,14 +4,19 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using Core.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public static class SaveLoadManager
 {
     private static readonly string saveDirectory;
     private static readonly string saveFile;
 
+    //todo update that
+    /*[Inject] private IPlayerManager playerManager;*/
+    
     static SaveLoadManager()
     {
         saveDirectory = Application.persistentDataPath + "/Saves";
@@ -33,7 +38,7 @@ public static class SaveLoadManager
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(saveFile);
 
-        string json = JsonUtility.ToJson(GameManager.Instance.PlayerManager.PlayerStats);
+        string json = JsonUtility.ToJson(string.Empty /*playerManager.PlayerStats*/);
         bf.Serialize(file, json);
         file.Close();
     }
@@ -50,7 +55,7 @@ public static class SaveLoadManager
         if (IsExist(saveFile))
         {
             FileStream file = File.Open(saveFile, FileMode.Open);
-            JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), GameManager.Instance.PlayerManager.PlayerStats);
+            JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), string.Empty /*GameManager.Instance.PlayerManager.PlayerStats*/);
             file.Close();
         }
     }

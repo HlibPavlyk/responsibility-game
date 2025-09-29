@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.DI;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : InjectableMonoBehaviour
 {
     public float moveSpeed = 150f;
     public float maxSpeed = 5f;
@@ -18,18 +21,18 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
 
     private Controls controls; // for Olya inputManager
-    private InputManager inputManager;
     Animator animator;
    /* SpriteRenderer spriteRenderer;*/
     Vector2 moveInput = Vector2.zero;
     /*private Vector2 previousPosition = new Vector2 (1, 1);*/
+    
+    [Inject] private IInputManager inputManager;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        inputManager = GameManager.Instance.InputManager;
 
         animator = GetComponent<Animator>();
 
@@ -66,8 +69,9 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.enabled = true; // Ensure sprite is visible after invincibility
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         controls = new Controls();
     }
 
@@ -93,12 +97,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (GameManager.Instance.DialogueManager.isDialoguePlaying || GameManager.Instance.LevelManager.isTransitionAnimationPlaying)
-            /*rb.position == previousPosition)*/
+        /*if (GameManager.Instance.DialogueManager.isDialoguePlaying || GameManager.Instance.LevelManager.isTransitionAnimationPlaying)
+            /*rb.position == previousPosition)#1#
         {
             moveInput = Vector2.zero; //stop character movement while he talks
             animator.SetBool("IsWalking", false);
-        }
+        }*/
 
 
         if (moveInput != Vector2.zero)
@@ -117,10 +121,10 @@ public class PlayerController : MonoBehaviour
 
         if (animator != null)
         {
-            if (GameManager.Instance.LevelManager.isTransitionAnimationPlaying || GameManager.Instance.DialogueManager.isDialoguePlaying)
+            /*if (GameManager.Instance.LevelManager.isTransitionAnimationPlaying || GameManager.Instance.DialogueManager.isDialoguePlaying)
                 moveInput = Vector2.zero;
             else
-                moveInput = value.Get<Vector2>();
+                moveInput = value.Get<Vector2>();*/
 
             if (moveInput.x != 0 || moveInput.y != 0)
             {

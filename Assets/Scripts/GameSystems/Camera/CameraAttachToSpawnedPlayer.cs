@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,11 +26,11 @@ public class CameraAttachToSpawnedPlayer : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerEvents.onPlayerSpawned += setCameraTargetAction;
+        GameEvents.Player.onPlayerSpawned += setCameraTargetAction;
     }
 
     private void OnDisable()
     {
-        PlayerEvents.onPlayerSpawned -= setCameraTargetAction;
+        GameEvents.Player.onPlayerSpawned -= setCameraTargetAction;
     }
 }

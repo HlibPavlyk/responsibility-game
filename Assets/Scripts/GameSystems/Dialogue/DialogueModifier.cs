@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 
 public class DialogueModifier
 {
-    protected DialogueManager manager;
+    protected IDialogueManager manager;
     protected string modifierValue;
 
-    public DialogueModifier(DialogueManager manager, string modifierValue)
+    public DialogueModifier(IDialogueManager manager, string modifierValue)
     {
         this.manager = manager ?? throw new System.ArgumentNullException(nameof(manager));
         this.modifierValue = modifierValue ?? throw new System.ArgumentNullException(nameof(modifierValue));
@@ -19,7 +20,7 @@ public class DialogueModifier
 
 public class ChangeSpeakerNameModifier : DialogueModifier
 {
-    public ChangeSpeakerNameModifier(DialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
+    public ChangeSpeakerNameModifier(IDialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
     
     public override void ModifyDialogue()
     {
@@ -36,7 +37,7 @@ public class ChangeSpeakerNameModifier : DialogueModifier
 
 public class ChangeSpeakerPortraitModifier : DialogueModifier
 {
-    public ChangeSpeakerPortraitModifier(DialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
+    public ChangeSpeakerPortraitModifier(IDialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
     
     public override void ModifyDialogue()
     {
@@ -53,7 +54,7 @@ public class ChangeSpeakerPortraitModifier : DialogueModifier
 
 public class ChangeSpeakerLayoutPositionModifier : DialogueModifier
 {
-    public ChangeSpeakerLayoutPositionModifier(DialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
+    public ChangeSpeakerLayoutPositionModifier(IDialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
     
     public override void ModifyDialogue()
     {
@@ -70,7 +71,7 @@ public class ChangeSpeakerLayoutPositionModifier : DialogueModifier
 
 public class ChangeSpeakerAudioInfoModifier : DialogueModifier
 {
-    public ChangeSpeakerAudioInfoModifier(DialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
+    public ChangeSpeakerAudioInfoModifier(IDialogueManager manager, string modifierValue) : base(manager, modifierValue) { }
     
     public override void ModifyDialogue()
     {

@@ -19,10 +19,10 @@ public class PlayerManager : ScriptableObject
 
     private void OnEnable()
     {
-        LevelEvents.levelLoaded += SpawnPlayer;
+       // LevelEvents.levelLoaded += SpawnPlayer;
     }
 
-    protected void SpawnPlayer(Transform defaultSpawnTransform)
+    /*protected void SpawnPlayer(Transform defaultSpawnTransform)
     {
         if (GameState.playerSpawnLocation == null)
         {
@@ -64,10 +64,10 @@ public class PlayerManager : ScriptableObject
         {
             throw new MissingReferenceException("No ActivePlayer in PlayerManager. May have failed to spawn!");
         }
-    }
+    }*/
 
     private void OnDisable()
     {
-        LevelEvents.levelLoaded -= SpawnPlayer;
+      //  LevelEvents.levelLoaded -= SpawnPlayer;
     }
 }

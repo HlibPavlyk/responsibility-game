@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
+using Core.Interfaces;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEditor;
 using UnityEngine;
+using VContainer;
 
 public class LevelTransition : SceneTransition
 {
@@ -10,6 +14,10 @@ public class LevelTransition : SceneTransition
     [SerializeField] private GameObject visualCue;
     private bool playerInRange;
     public string triggereTag = "Player";
+    
+    
+    [Inject] private ISaveLoadManager saveLoadManager;
+    [Inject] private IInputManager inputManager;
 
     protected override void Start()
     {
@@ -21,12 +29,12 @@ public class LevelTransition : SceneTransition
         visualCue.SetActive(false);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (playerInRange)
         {
             visualCue.SetActive(true);
-            if (GameManager.Instance.InputManager.GetInteractPressed())
+            if (inputManager.GetInteractPressed())
             {
                 StartCoroutine(LoadLevel());
             }
@@ -39,17 +47,18 @@ public class LevelTransition : SceneTransition
 
     public override IEnumerator LoadLevel(string OtherSceneToLoad = null)
     {
-        GameManager.Instance.LevelManager.isTransitionAnimationPlaying = true;
+        gameState.isTransitionAnimationPlaying = true;
         transitionAnimator.SetTrigger("Start");
 
         yield return new WaitForSeconds(transitionTime);
 
         //test save-upload system
-        GameManager.Instance.PlayerManager.PlayerStats.currentSceneName = sceneToLoad;
-        SaveLoadManager.SaveGame();
+        gameState.playerStats.currentSceneName = sceneToLoad;
+        saveLoadManager.SaveGame();
 
-        LevelEvents.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
-        GameManager.Instance.LevelManager.isTransitionAnimationPlaying = false;
+        GameEvents.Level.levelExit.Invoke(sceneToLoad, playerSpawnTransformName);
+        gameState.isTransitionAnimationPlaying = false;
+        //GameManager.Instance.LevelManager.isTransitionAnimationPlaying = false;
 
     }
 

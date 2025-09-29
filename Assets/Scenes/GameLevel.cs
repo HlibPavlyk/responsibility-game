@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 
 public class GameLevel : MonoBehaviour
@@ -9,7 +10,7 @@ public class GameLevel : MonoBehaviour
     // Start the game level
     void Start()
     {
-        LevelEvents.levelLoaded.Invoke(defaultPlayerSpawn);
+        GameEvents.Level.levelLoaded.Invoke(defaultPlayerSpawn);
     }
 
 }
