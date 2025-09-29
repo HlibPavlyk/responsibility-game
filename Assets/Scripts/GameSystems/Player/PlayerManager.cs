@@ -7,25 +7,11 @@ using VContainer.Unity;
 
 namespace GameSystems.Player
 {
-    public class PlayerManagerService : IPlayerManager
+    public class PlayerManager : IPlayerManager
     {
-        /*private GameObject activePlayer { get; set; }
-        private PlayerStats playerStats { get; set; }
-        private GameState gameState { get; set; }*/
-        
-        /*private string spawnTag { get; set; }
-        private GameObject playerPrefab { get; set; }*/
-
         [Inject] private PlayerManagerSettings settings;
         [Inject] private GameState gameState;
         [Inject] private IObjectResolver container;
-        /*public PlayerManagerService(PlayerManagerSettings settings, GameState gameState)
-        {
-            PlayerStats = settings.StartingPlayerStats;
-            playerPrefab = settings.PlayerPrefab;
-            spawnTag = settings.SpawnTag;
-            GameState = gameState;
-        }*/
 
         public void SpawnPlayer(Transform defaultSpawnTransform)
         {

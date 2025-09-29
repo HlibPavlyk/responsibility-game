@@ -16,7 +16,7 @@ public class LevelTransition : SceneTransition
     public string triggereTag = "Player";
     
     
-    [Inject] private ISaveLoadManager saveLoadManager;
+    
     [Inject] private IInputManager inputManager;
 
     protected override void Start()

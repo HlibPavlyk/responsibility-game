@@ -45,10 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: ResponsibilityGame.Core.DI.GlobalLifetimeScope
+    TypeName: Core.DI.GlobalLifetimeScope
   autoRun: 1
   autoInjectGameObjects: []
-  bootstrapPrefab: {fileID: 0}
-  registerMenuManager: 1
-  registerLevelManager: 1
-  registerPlayerManager: 1

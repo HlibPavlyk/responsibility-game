@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Events;
 using Core.Interfaces;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEditor;
 using UnityEngine;
 using VContainer;
@@ -17,6 +18,7 @@ public class SceneTransition : MonoBehaviour
     
    
     [Inject] protected GameState gameState;
+    [Inject] protected ISaveLoadManager saveLoadManager;
 
     protected virtual void Start()
     {
@@ -34,7 +36,7 @@ public class SceneTransition : MonoBehaviour
 
         //test save-upload system
         gameState.playerStats.currentSceneName = sceneToLoad;
-        SaveLoadManager.SaveGame();
+        saveLoadManager.SaveGame();
 
         string sceneChoice;
         if (OtherSceneToLoad != null)

@@ -1,80 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core.DI;
 using Core.Events;
 using Core.Interfaces;
-using TMPro;
-using UnityEditor;
+using ResponsibilityGame.Core.DI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using VContainer;
+using ResponsibilityGame.Core.Interfaces;
 
-[CreateAssetMenu(fileName = "MenuManager", menuName = "ScriptableObjects/Manager/MenuManager", order = 1)]
-public class MenuManager : ScriptableObject
+namespace ResponsibilityGame.GameSystems.Menu
 {
-    [SerializeField]
-    private string startSceneName;
-
-    private GameObject settingsPanel;
-    private GameObject background;
-    
-    [Inject] private GameState gameState;
-    
-    // Start is called before the first frame update
-    public void InitiateDialogueMenu(GameObject canvas)
+    public class MenuManager : IMenuManager
     {
-        background = canvas.transform.Find("Background").gameObject;
-        settingsPanel = background.transform.Find("SettingsWindow").gameObject;
-        settingsPanel.SetActive(false);
-    }
-    public void NewGame()
-    {
-        SaveLoadManager.DeleteSaves();
-        GameEvents.Level.levelExit.Invoke(startSceneName, "");
-        //LevelEvents.levelExit.Invoke("Hall", "");
-        gameState.playerStats.currentSceneName = startSceneName;
+        [Inject] private GameState gameState;
+        [Inject] private MenuManagerSettings settings;
+        [Inject] private ISaveLoadManager saveLoadManager;
 
-    }
-
-
-    public void ContinueGame()
-    {
-        SaveLoadManager.LoadGame();
-        GameEvents.Level.levelExit.Invoke(gameState.playerStats.currentSceneName, "");
-        /*SceneManager.LoadScene(GameManager.Instance.PlayerManager.PlayerStats.currentSceneName, LoadSceneMode.Single);*/
-        /*SceneManager.LoadScene(GameManager.Instance.PlayerManager.PlayerStats.currentSceneIndex*//**//*, LoadSceneMode.Single);*/
-    }
-
-    public void LoadGame()
-    {
-
-    }
-
-    [System.Obsolete]
-    public void OpenSettings()
-    {
-        if (settingsPanel.active == false)
+        public void NewGame()
         {
-            settingsPanel.SetActive(true);
+            saveLoadManager.DeleteSaves();
+            
+            GameEvents.Level.levelExit.Invoke(settings.StartSceneName, "");
+            
+            gameState.playerStats.currentSceneName = settings.StartSceneName;
+            saveLoadManager.SaveGame();
         }
-        else 
+
+        public void ContinueGame()
         {
-            settingsPanel.SetActive(false);
+            saveLoadManager.LoadGame();
+            GameEvents.Level.levelExit.Invoke(gameState.playerStats.currentSceneName, "");
+        }
+
+        public void LoadGame()
+        {
+            // Implementation for load game functionality
+        }
+
+        public void OpenSettings()
+        {
+            // Implementation for OpenSettings functionality
+        }
+
+        public void ShowAboutInfo()
+        {
+            // Implementation for about info functionality
+        }
+
+        public void ExitGame()
+        {
+            Application.Quit();
         }
     }
-
-    public void ShowAboutInfo()
-    {
-
-    }
-
-    public void ExitGame() 
-    { 
-        Application.Quit();
-    }
-    /*// Update is called once per frame
-    void Update()
-    {
-        
-    }*/
 }

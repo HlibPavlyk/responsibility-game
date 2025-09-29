@@ -1,70 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
-using Core.Interfaces;
+using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
-using UnityEngine.UI;
 using VContainer;
 
-public static class SaveLoadManager
+namespace GameSystems.SaveLoad
 {
-    private static readonly string saveDirectory;
-    private static readonly string saveFile;
-
-    //todo update that
-    /*[Inject] private IPlayerManager playerManager;*/
-    
-    static SaveLoadManager()
+    public class SaveLoadManager : ISaveLoadManager
     {
-        saveDirectory = Application.persistentDataPath + "/Saves";
-        saveFile = saveDirectory + "/LastSave.txt";
-    }
+        private string saveDirectory => Path.Combine(Application.persistentDataPath, "Saves");
+        private string saveFile => Path.Combine(saveDirectory, "LastSave.json");
 
-    private static bool IsExist(string filePath)
-    {
-        return File.Exists(filePath) || Directory.Exists(filePath);
-    }
-
-    public static void SaveGame()
-    {
-        if (!IsExist(saveDirectory))
+        [Inject] private GameState gameState;
+        
+        public void SaveGame()
         {
-            Directory.CreateDirectory(saveDirectory);
+            if (!Directory.Exists(saveDirectory))
+            {
+                Directory.CreateDirectory(saveDirectory);
+            }
+            
+            var json = JsonUtility.ToJson(gameState.playerStats, true);
+            File.WriteAllText(saveFile, json);
+            
+            Debug.Log($"Game saved to: {saveFile}");
         }
 
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(saveFile);
-
-        string json = JsonUtility.ToJson(string.Empty /*playerManager.PlayerStats*/);
-        bf.Serialize(file, json);
-        file.Close();
-    }
-
-    public static void LoadGame()
-    {
-        if (!IsExist(saveDirectory))
+        public void LoadGame()
         {
-            Directory.CreateDirectory(saveDirectory);
+            if (!File.Exists(saveFile))
+            {
+                Debug.LogError($"Save file {saveFile} does not exist in {saveDirectory}");
+                return;
+            }
+
+            var json = File.ReadAllText(saveFile);
+            JsonUtility.FromJsonOverwrite(json, gameState.playerStats);
+            
+            Debug.Log($"Game loaded from: {saveFile}");
         }
 
-        BinaryFormatter bf = new BinaryFormatter();
-
-        if (IsExist(saveFile))
+        public void DeleteSaves()
         {
-            FileStream file = File.Open(saveFile, FileMode.Open);
-            JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), string.Empty /*GameManager.Instance.PlayerManager.PlayerStats*/);
-            file.Close();
+            if (HasSaveFile())
+            {
+                File.Delete(saveFile);
+                Debug.Log("Save file deleted");
+            }
         }
-    }
 
-    public static void DeleteSaves()
-    {
-        if (IsExist(saveFile))
+        public bool HasSaveFile()
         {
-            File.Delete(saveFile);
+            return File.Exists(saveFile);
+        }
+
+        private bool IsExist(string filePath)
+        {
+            return File.Exists(filePath) || Directory.Exists(filePath);
         }
     }
 }

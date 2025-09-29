@@ -1,38 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ResponsibilityGame.Core.Interfaces;
 using VContainer;
 
-[CreateAssetMenu(fileName = "LevelManager", menuName = "ScriptableObjects/Manager/LevelManager", order = 1)]
-
-public class LevelManager : ScriptableObject
+namespace ResponsibilityGame.GameSystems.Levels
 {
-    //public GameState GameState { get; set; }
-    [NonSerialized]
-    public bool isTransitionAnimationPlaying = false;  
-    
-    [Inject] private GameState gameState;
+    public class LevelManager : ILevelManager
+    {
+        public GameState GameState { get; set; }
+        public bool IsTransitionAnimationPlaying { get; set; }
 
-    /*private void OnEnable()
-    {
-        LevelEvents.levelExit += OnLevelExit;
-    }*/
-    private void OnLevelExit(string nextLevelSceneName, string playerSpawnTransformName)
-    {
-        /*//GameState.playerSpawnLocation = playerSpawnTransformName;
-        gameState.playerSpawnLocation = playerSpawnTransformName;
-        SceneManager.LoadScene(nextLevelSceneName, LoadSceneMode.Single);*/
-        
-        gameState.playerSpawnLocation = "GameStartSpawn";
-        SceneManager.LoadScene("Hall", LoadSceneMode.Single);
+        [Inject] private GameState gameState;
+        /*
+        public LevelManagerService()
+        {
+            // Subscribe to level events
+            LevelEvents.levelExit += OnLevelExit;
+        }*/
+
+        public void OnLevelExit(string nextSceneName, string playerSpawnTransformName)
+        {
+            if (gameState)
+            {
+                gameState.playerSpawnLocation = playerSpawnTransformName;
+            }
+            SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
+        }
+
+        /*public void Cleanup()
+        {
+            // Unsubscribe from events
+            LevelEvents.levelExit -= OnLevelExit;
+        }*/
     }
-
-    /*private void OnDisable()
-    {
-        LevelEvents.levelExit -= OnLevelExit;
-    }*/
 }
