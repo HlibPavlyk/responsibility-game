@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class DialogueModifiers
 {
     protected IDialogueManager manager;
-    public DialogueModifiers(IDialogueManager manager)
+    protected DialogueModifiers(IDialogueManager manager)
     {
         this.manager = manager ?? throw new ArgumentNullException(nameof(manager));
     }

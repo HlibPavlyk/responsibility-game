@@ -1,51 +1,48 @@
 using System.Collections;
-using System.Collections.Generic;
 using Core.DI;
-using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
+using ResponsibilityGame.Core.Interfaces;
 
 public class PlayerController : InjectableMonoBehaviour
 {
-    public float moveSpeed = 150f;
-    public float maxSpeed = 5f;
-    public float idleFriction = 0.9f;
-    public SpriteRenderer spriteRenderer;
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 150f;
+    [SerializeField] private float maxSpeed = 3f;
+    [SerializeField] private float idleFriction = 0.9f;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
-    public int maxHealth = 5;
-    private int currentHealth;
-    private bool isInvincible = false;
-    public float invincibilityDuration = 2f;
-    private float invincibilityTimer = 0f;
-    Rigidbody2D rb;
+    [Header("Health Settings")]
+    [SerializeField] private int maxHealth = 5;
+    [SerializeField] private float invincibilityDuration = 2f;
 
-    private Controls controls; // for Olya inputManager
-    Animator animator;
-   /* SpriteRenderer spriteRenderer;*/
-    Vector2 moveInput = Vector2.zero;
-    /*private Vector2 previousPosition = new Vector2 (1, 1);*/
-    
+    // DI залежності - замість GameManager.Instance
     [Inject] private IInputManager inputManager;
+    [Inject] private GameState gameState;
 
+    // Компоненти Unity
+    private Rigidbody2D rb;
+    private Controls controls;
+    private Animator animator;
+    private Vector2 moveInput = Vector2.zero;
+    
+    private int currentHealth;
+    private bool isInvincible;
+    private float invincibilityTimer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-
         animator = GetComponent<Animator>();
-
         currentHealth = maxHealth;
 
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
-        /*spriteRenderer = GetComponent<SpriteRenderer>();*/
     }
 
     void Update()
     {
-
         if (isInvincible)
         {
             invincibilityTimer -= Time.deltaTime;
@@ -54,19 +51,6 @@ public class PlayerController : InjectableMonoBehaviour
                 isInvincible = false;
             }
         }
-    }
-
-    private IEnumerator BlinkEffect()
-    {
-        float blinkTime = invincibilityDuration / 10f; // Duration of each blink
-
-        for (float i = 0; i < invincibilityDuration; i += blinkTime)
-        {
-            spriteRenderer.enabled = !spriteRenderer.enabled; // Toggle sprite visibility
-            yield return new WaitForSeconds(blinkTime);
-        }
-
-        spriteRenderer.enabled = true; // Ensure sprite is visible after invincibility
     }
 
     protected override void Awake()
@@ -78,37 +62,41 @@ public class PlayerController : InjectableMonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
-        controls.Player.Interact.started += context => inputManager.InteractButtonPressed(context);
-        controls.Player.Interact.performed += context => inputManager.InteractButtonPressed(context);
-        controls.Player.Interact.canceled += context => inputManager.InteractButtonPressed(context);
+        
+        // Використовуємо injected inputManager замість GameManager.Instance.InputManager
+        controls.Player.Interact.started += context => inputManager?.InteractButtonPressed(context);
+        controls.Player.Interact.performed += context => inputManager?.InteractButtonPressed(context);
+        controls.Player.Interact.canceled += context => inputManager?.InteractButtonPressed(context);
 
-        controls.Player.Submit.started += context => inputManager.SubmitButtonPressed(context);
-        controls.Player.Submit.performed += context => inputManager.SubmitButtonPressed(context);
-        controls.Player.Submit.canceled += context => inputManager.SubmitButtonPressed(context);
+        controls.Player.Submit.started += context => inputManager?.SubmitButtonPressed(context);
+        controls.Player.Submit.performed += context => inputManager?.SubmitButtonPressed(context);
+        controls.Player.Submit.canceled += context => inputManager?.SubmitButtonPressed(context);
     }
 
     private void OnDisable()
     {
         controls.Disable();
-        controls.Player.Interact.started -= context => inputManager.InteractButtonPressed(context);
-        controls.Player.Submit.started -= context => inputManager.SubmitButtonPressed(context);
+        controls.Player.Interact.started -= context => inputManager?.InteractButtonPressed(context);
+        controls.Player.Submit.started -= context => inputManager?.SubmitButtonPressed(context);
     }
 
     void FixedUpdate()
     {
+        // Використовуємо injected залежності замість GameManager.Instance
+        var shouldStopMovement = (gameState?.isDialoguePlaying ?? false) || 
+                                 (gameState?.isTransitionAnimationPlaying ?? false);
 
-        /*if (GameManager.Instance.DialogueManager.isDialoguePlaying || GameManager.Instance.LevelManager.isTransitionAnimationPlaying)
-            /*rb.position == previousPosition)#1#
+        if (shouldStopMovement)
         {
-            moveInput = Vector2.zero; //stop character movement while he talks
+            moveInput = Vector2.zero; // Зупиняємо рух під час діалогу або переходу
             animator.SetBool("IsWalking", false);
-        }*/
-
+        }
 
         if (moveInput != Vector2.zero)
         {
-            /*previousPosition = rb.position;*/
-            rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity + (moveInput * moveSpeed * Time.deltaTime), maxSpeed);
+            rb.linearVelocity = Vector2.ClampMagnitude(
+                rb.linearVelocity + moveInput * (moveSpeed * Time.deltaTime), 
+                maxSpeed);
         }
         else
         {
@@ -118,19 +106,21 @@ public class PlayerController : InjectableMonoBehaviour
 
     void OnMove(InputValue value)
     {
-
         if (animator != null)
         {
-            /*if (GameManager.Instance.LevelManager.isTransitionAnimationPlaying || GameManager.Instance.DialogueManager.isDialoguePlaying)
+            // Використовуємо injected залежності
+            bool shouldBlockInput = (gameState?.isTransitionAnimationPlaying ?? false) || 
+                                   (gameState?.isDialoguePlaying ?? false);
+
+            if (shouldBlockInput)
                 moveInput = Vector2.zero;
             else
-                moveInput = value.Get<Vector2>();*/
+                moveInput = value.Get<Vector2>();
 
             if (moveInput.x != 0 || moveInput.y != 0)
             {
                 animator.SetFloat("X", moveInput.x);
                 animator.SetFloat("Y", moveInput.y);
-
                 animator.SetBool("IsWalking", true);
             }
             else
@@ -140,7 +130,19 @@ public class PlayerController : InjectableMonoBehaviour
         }
     }
 
-    // Method to handle taking damage
+    private IEnumerator BlinkEffect()
+    {
+        float blinkTime = invincibilityDuration / 10f;
+
+        for (float i = 0; i < invincibilityDuration; i += blinkTime)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+            yield return new WaitForSeconds(blinkTime);
+        }
+
+        spriteRenderer.enabled = true;
+    }
+
     public void TakeDamage(int damage)
     {
         if (isInvincible) return;
@@ -161,19 +163,10 @@ public class PlayerController : InjectableMonoBehaviour
         StartCoroutine(BlinkEffect());
     }
 
-    // Method to heal the player
     public void Heal(int amount)
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         Debug.Log("Player healed. Current health: " + currentHealth);
     }
-
-    /*void UpdateAnimatorParameters()
-    {
-        animator.SetFloat("moveX", moveInput.x);
-        animator.SetFloat("moveY", moveInput.y);
-    }*/
-
-
 }

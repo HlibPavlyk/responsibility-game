@@ -11,12 +11,6 @@ namespace ResponsibilityGame.GameSystems.Levels
         public bool IsTransitionAnimationPlaying { get; set; }
 
         [Inject] private GameState gameState;
-        /*
-        public LevelManagerService()
-        {
-            // Subscribe to level events
-            LevelEvents.levelExit += OnLevelExit;
-        }*/
 
         public void OnLevelExit(string nextSceneName, string playerSpawnTransformName)
         {
@@ -26,11 +20,5 @@ namespace ResponsibilityGame.GameSystems.Levels
             }
             SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
         }
-
-        /*public void Cleanup()
-        {
-            // Unsubscribe from events
-            LevelEvents.levelExit -= OnLevelExit;
-        }*/
     }
 }

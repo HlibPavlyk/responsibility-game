@@ -150,7 +150,7 @@ public class BaljeetController : MonoBehaviour
 
         if (playerTransform != null)
         {
-            PlayerControllerDI playerController = playerTransform.GetComponent<PlayerControllerDI>();
+            PlayerController playerController = playerTransform.GetComponent<PlayerController>();
             if (playerController != null)
             {
                 playerController.TakeDamage(1); // Decrease player's health by 1

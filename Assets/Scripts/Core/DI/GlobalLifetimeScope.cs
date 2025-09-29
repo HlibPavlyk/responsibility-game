@@ -40,8 +40,8 @@ namespace Core.DI
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
             builder.Register<IMenuManager, MenuManager>(Lifetime.Scoped);
             builder.Register<ISaveLoadManager, SaveLoadManager>(Lifetime.Scoped);
-            builder.Register<IDialogueManager, DialogueManagerService>(Lifetime.Scoped);
-            builder.Register<IInputManager, InputManagerService>(Lifetime.Singleton);
+            builder.Register<IDialogueManager, DialogueManager>(Lifetime.Scoped);
+            builder.Register<IInputManager, InputManager>(Lifetime.Singleton);
         }
         
         protected override void Awake()

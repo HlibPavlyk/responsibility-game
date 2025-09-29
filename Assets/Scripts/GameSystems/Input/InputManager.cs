@@ -1,52 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using ResponsibilityGame.Core.Interfaces;
 
-[CreateAssetMenu(fileName = "InputManager", menuName = "ScriptableObjects/Manager/InputManager", order = 1)]
-[RequireComponent(typeof(PlayerInput))]
-public class InputManager : ScriptableObject
+namespace ResponsibilityGame.GameSystems.Input
 {
-    private bool interactPressed = false;
-    private bool submitPressed = false;
-    
-
-    public void InteractButtonPressed(InputAction.CallbackContext context)
+    public class InputManager : IInputManager
     {
-        if (context.performed)
+        private bool interactPressed;
+        private bool submitPressed;
+
+        public void InteractButtonPressed(InputAction.CallbackContext context)
         {
-            interactPressed = true;
+            if (context.performed)
+            {
+                interactPressed = true;
+            }
+            else if (context.canceled)
+            {
+                interactPressed = false;
+            }
         }
-        else if (context.canceled)
+
+        public void SubmitButtonPressed(InputAction.CallbackContext context)
         {
+            if (context.performed)
+            {
+                submitPressed = true;
+            }
+            else if (context.canceled)
+            {
+                submitPressed = false;
+            }
+        }
+
+        public bool GetInteractPressed()
+        {
+            bool result = interactPressed;
             interactPressed = false;
+            return result;
         }
-    }
-     
-    public void SubmitButtonPressed(InputAction.CallbackContext context)
-    {
-        if (context.performed)
+
+        public bool GetSubmitPressed()
         {
-            submitPressed = true;
-        }
-        else if (context.canceled)
-        {
+            bool result = submitPressed;
             submitPressed = false;
+            return result;
         }
     }
-
-    public bool GetInteractPressed()
-    {
-        bool result = interactPressed;
-        interactPressed = false;
-        return result;
-    }
-
-    public bool GetSubmitPressed()
-    {
-        bool result = submitPressed;
-        submitPressed = false;
-        return result;
-    }
-
 }
