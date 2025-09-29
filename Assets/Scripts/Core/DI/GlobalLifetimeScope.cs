@@ -1,13 +1,13 @@
-using Content.Characters.Player;
 using Core.Interfaces;
-using GameSystems.Player;
+using Features.Bootstrap;
+using Features.Characters.Player;
 using GameSystems.SaveLoad;
-using ResponsibilityGame.Core.DI;
 using ResponsibilityGame.Core.Interfaces;
 using ResponsibilityGame.GameSystems.Dialogue;
 using ResponsibilityGame.GameSystems.Input;
 using ResponsibilityGame.GameSystems.Levels;
 using ResponsibilityGame.GameSystems.Menu;
+using Systems.Game;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -22,17 +22,15 @@ namespace Core.DI
         protected override void Configure(IContainerBuilder builder)
         {
             // Register game state from settings
-            state.playerStats = settings.PlayerManagerSettings.StartingPlayerStats;
+            state.playerStats = settings.playerManagerSettings.startingPlayerStats;
             
             // Register MonoBehaviour components
-            builder.RegisterComponentInHierarchy<PlayerSpawner>();
-            builder.RegisterComponentInHierarchy<LevelManagerBehaviour>();
-            builder.RegisterComponentInHierarchy<MenuManagerBehaviour>();
+            builder.RegisterComponentInHierarchy<BootstrapBehaviour>();
             
             // Register scriptable objects
-            builder.RegisterInstance(settings.PlayerManagerSettings);
-            builder.RegisterInstance(settings.MenuManagerSettings);
-            builder.RegisterInstance(settings.DialogueManagerSettings);
+            builder.RegisterInstance(settings.playerManagerSettings);
+            builder.RegisterInstance(settings.menuManagerSettings);
+            builder.RegisterInstance(settings.dialogueManagerSettings);
             builder.RegisterInstance(state);
             
             // Register core managers
