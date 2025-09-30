@@ -21,9 +21,6 @@ namespace Core.DI
         
         protected override void Configure(IContainerBuilder builder)
         {
-            // Register game state from settings
-            state.playerStats = settings.playerManagerSettings.startingPlayerStats;
-            
             // Register MonoBehaviour components
             builder.RegisterComponentInHierarchy<BootstrapBehaviour>();
             
@@ -37,9 +34,14 @@ namespace Core.DI
             builder.Register<IPlayerManager, PlayerManager>(Lifetime.Scoped);
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
             builder.Register<IMenuManager, MenuManager>(Lifetime.Scoped);
-            builder.Register<ISaveLoadManager, SaveLoadManager>(Lifetime.Scoped);
             builder.Register<IDialogueManager, DialogueManager>(Lifetime.Scoped);
             builder.Register<IInputManager, InputManager>(Lifetime.Singleton);
+            
+            #if UNITY_WEBGL && !UNITY_EDITOR
+                builder.Register<ISaveLoadManager, WebSaveLoadManager>(Lifetime.Scoped);
+            #else
+                builder.Register<ISaveLoadManager, SaveLoadManager>(Lifetime.Scoped);
+            #endif
         }
         
         protected override void Awake()

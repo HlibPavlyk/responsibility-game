@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a0a7a75a8875c1409ba8d196cbd951d, type: 3}
-  m_Name: StartingGameState
+  m_Script: {fileID: 11500000, guid: 2076eda657554e7459193b123e868cae, type: 3}
+  m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  playerSpawnLocation: GameStartSpawn
-  activePlayer: {fileID: 0}
-  playerStats: {fileID: 11400000, guid: f87aa31c2a44fe14d98c829959461227, type: 2}
