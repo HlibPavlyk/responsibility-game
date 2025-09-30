@@ -1,6 +1,6 @@
+using Core.Abstractions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using ResponsibilityGame.Core.Interfaces;
 using Systems.Game;
 using VContainer;
 

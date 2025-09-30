@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using ResponsibilityGame.Core.Interfaces;
+using Core.Abstractions;
 using UnityEngine;
 
 public class DialogueModifier

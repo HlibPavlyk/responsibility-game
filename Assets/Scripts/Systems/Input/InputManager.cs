@@ -1,5 +1,5 @@
+using Core.Abstractions;
 using UnityEngine.InputSystem;
-using ResponsibilityGame.Core.Interfaces;
 
 namespace ResponsibilityGame.GameSystems.Input
 {

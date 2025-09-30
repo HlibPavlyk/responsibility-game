@@ -1,17 +1,17 @@
 using System.IO;
-using ResponsibilityGame.Core.Interfaces;
+using Core.Abstractions;
 using Systems.Game;
 using UnityEngine;
 using VContainer;
 
-namespace GameSystems.SaveLoad
+namespace Systems.SaveLoad
 {
     public class SaveLoadManager : ISaveLoadManager
     {
         private string saveDirectory => Path.Combine(Application.persistentDataPath, "Saves");
         private string saveFile => Path.Combine(saveDirectory, "LastSave.json");
 
-        [Inject] private GameState gameState;
+        [Inject] private readonly GameState _gameState;
         
         public void SaveGame()
         {
@@ -20,7 +20,7 @@ namespace GameSystems.SaveLoad
                 Directory.CreateDirectory(saveDirectory);
             }
             
-            var json = JsonUtility.ToJson(gameState.playerStats, true);
+            var json = JsonUtility.ToJson(_gameState.playerStats, true);
             File.WriteAllText(saveFile, json);
             
             Debug.Log($"Game saved to: {saveFile}");
@@ -35,7 +35,7 @@ namespace GameSystems.SaveLoad
             }
 
             var json = File.ReadAllText(saveFile);
-            JsonUtility.FromJsonOverwrite(json, gameState.playerStats);
+            JsonUtility.FromJsonOverwrite(json, _gameState.playerStats);
             
             Debug.Log($"Game loaded from: {saveFile}");
         }

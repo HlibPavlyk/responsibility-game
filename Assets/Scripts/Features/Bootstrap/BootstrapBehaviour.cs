@@ -1,6 +1,5 @@
+using Core.Abstractions;
 using Core.Events;
-using Core.Interfaces;
-using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 using VContainer;
 

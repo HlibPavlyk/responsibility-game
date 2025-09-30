@@ -1,9 +1,9 @@
 using System.Collections;
+using Core.Abstractions;
 using Core.DI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
-using ResponsibilityGame.Core.Interfaces;
 using Systems.Game;
 
 public class PlayerController : InjectableDynamicMonoBehaviour

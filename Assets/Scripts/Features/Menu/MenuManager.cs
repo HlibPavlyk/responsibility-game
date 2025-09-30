@@ -1,9 +1,8 @@
+using Core.Abstractions;
 using Core.DI;
 using Core.Events;
-using Core.Interfaces;
 using UnityEngine;
 using VContainer;
-using ResponsibilityGame.Core.Interfaces;
 using Systems.Game;
 
 namespace ResponsibilityGame.GameSystems.Menu

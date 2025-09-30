@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace ResponsibilityGame.Core.Interfaces
+namespace Core.Abstractions
 {
     public interface IMenuManager
     {

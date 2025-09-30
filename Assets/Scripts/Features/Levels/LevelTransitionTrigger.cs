@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Abstractions;
 using Core.Events;
-using Core.Interfaces;
-using ResponsibilityGame.Core.Interfaces;
 using UnityEditor;
 using UnityEngine;
 using VContainer;

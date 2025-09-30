@@ -1,4 +1,4 @@
-namespace ResponsibilityGame.Core.Interfaces
+namespace Core.Abstractions
 {
     public interface ILevelManager
     {

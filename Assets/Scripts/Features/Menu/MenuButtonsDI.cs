@@ -1,7 +1,7 @@
+using Core.Abstractions;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-using ResponsibilityGame.Core.Interfaces;
 
 namespace ResponsibilityGame.GameSystems.Menu
 {

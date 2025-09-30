@@ -1,4 +1,4 @@
-using ResponsibilityGame.Core.Interfaces;
+using Core.Abstractions;
 using Systems.Game;
 using UnityEngine;
 using VContainer;

@@ -4,12 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Core.Abstractions;
 using Core.DI;
 using Core.Events;
 using TMPro;
 using UnityEngine;
 using VContainer;
-using ResponsibilityGame.Core.Interfaces;
 using Systems.Game;
 
 namespace ResponsibilityGame.GameSystems.Dialogue

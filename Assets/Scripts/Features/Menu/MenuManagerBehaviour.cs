@@ -1,5 +1,5 @@
+using Core.Abstractions;
 using Core.DI;
-using ResponsibilityGame.Core.Interfaces;
 using UnityEngine;
 using VContainer;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Interfaces
+namespace Core.Abstractions
 {
     public interface IPlayerManager
     {

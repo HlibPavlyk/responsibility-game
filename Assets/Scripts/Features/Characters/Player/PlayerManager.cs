@@ -1,6 +1,6 @@
+using Core.Abstractions;
 using Core.DI;
 using Core.Events;
-using Core.Interfaces;
 using Systems.Game;
 using UnityEngine;
 using VContainer;

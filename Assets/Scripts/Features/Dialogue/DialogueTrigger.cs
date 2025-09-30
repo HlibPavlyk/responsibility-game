@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Abstractions;
 using Core.DI;
-using ResponsibilityGame.Core.Interfaces;
 using Systems.Game;
 using UnityEngine;
 using UnityEngine.InputSystem;
