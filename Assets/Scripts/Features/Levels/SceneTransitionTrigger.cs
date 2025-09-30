@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using Core.Abstractions;
+using Core.DI;
+using Core.Events;
+using Systems.Game;
+using UnityEditor;
+using UnityEngine;
+using VContainer;
+
+[InjectableMonoBehaviour]
+public class SceneTransition : MonoBehaviour
+{
+    public string playerSpawnTransformName = "NOT SET";
+    public string sceneToLoad;
+
+    [SerializeField]
+    protected Animator transitionAnimator;
+    public float transitionTime = 0.5f;
+    
+   
+    [Inject] protected GameState gameState;
+    [Inject] protected ISaveLoadManager saveLoadManager;
+
+    protected virtual void Start()
+    {
+        if (sceneToLoad == null)
+        {
+            throw new MissingReferenceException(name + "has no sceneToLoad set");
+        }
+    }
+
+
+    public virtual IEnumerator LoadLevel(string OtherSceneToLoad = null)
+    {
+        transitionAnimator.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+
+        //test save-upload system
+        gameState.playerStats.currentSceneName = sceneToLoad;
+        saveLoadManager.SaveGame();
+
+        string sceneChoice;
+        if (OtherSceneToLoad != null)
+        {
+            sceneChoice = OtherSceneToLoad;
+        }
+        else
+        {
+            sceneChoice = sceneToLoad;
+        }
+        GameEvents.Level.LevelExit.Invoke(sceneChoice, playerSpawnTransformName);
+    }
+
+   
+}

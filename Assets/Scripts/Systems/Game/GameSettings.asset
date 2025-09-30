@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d35270c4d455416f97e557d7aa3a459f, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  playerManagerSettings:
+    startingPlayerStats: {fileID: 11400000, guid: f87aa31c2a44fe14d98c829959461227, type: 2}
+    playerPrefab: {fileID: 3581022016258163397, guid: 5d70e55e79df6ec4a93e435266843335, type: 3}
+    spawnTag: Respawn
+  menuManagerSettings:
+    startSceneName: Hall
+  dialogueManagerSettings:
+    typingSpeed: 0.04
+    defaultAudioInfo: {fileID: 11400000, guid: b4e5f73338b371a44929372ad74869da, type: 2}
+    audioInfos:
+    - {fileID: 11400000, guid: 219d3876174315b48b4dc41a5e095c79, type: 2}
+    - {fileID: 11400000, guid: dc113e8ec3b5a0c47a9d34f3c6cdfa84, type: 2}
+    - {fileID: 11400000, guid: 92a18905cffe4c049a050fe45c8775b1, type: 2}
+    - {fileID: 11400000, guid: 41d4b2a98abf6db4fb6e0d5f6390c36b, type: 2}
+    makePredictable: 1
