@@ -14,27 +14,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-
-      - name: Cache Unity Library
-        uses: actions/cache@v3
+          
+      - name: Download artifact from build
+        uses: dawidd6/action-download-artifact@v2
         with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
-
-      - name: Build Unity project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: WebGL
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
+          workflow: test-build.yml
+          workflow_conclusion: success
           name: WebGL-Build
           path: build/WebGL
 
