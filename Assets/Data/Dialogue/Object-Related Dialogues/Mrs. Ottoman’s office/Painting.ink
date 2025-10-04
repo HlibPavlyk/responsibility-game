@@ -1,1 +1,0 @@
-“I enjoy the works of Mañgo Armada a lot, there is something about the way he presents the older times and folklore. This one is called «A Long Trail near Schloss Ettersburg». I think we have a painting from the same collection in the administration room.”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice

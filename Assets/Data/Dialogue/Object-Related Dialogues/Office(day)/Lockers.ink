@@ -1,1 +1,0 @@
-“There are two lockers. One is signed as «Spare PC parts» and the other is labeled... «Spare cat parts»?”#speaker:Orest #portrait:Player #layout:left #audio:PlayerVoice
