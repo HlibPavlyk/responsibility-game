@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using Core.Abstractions;
 using Core.DI;
 using UnityEngine;
 using VContainer;
 
-[InjectableMonoBehaviour]
-public class DialogInitiate : MonoBehaviour
+namespace Features.Dialogue
 {
-    [Inject] private readonly IDialogueManager dialogueManager;
-    
-    void Start()
+    [InjectableMonoBehaviour]
+    public class DialogInitiate : MonoBehaviour
     {
-        dialogueManager.Initialize(gameObject);
-    }
+        [Inject] private readonly IDialogueManager _dialogueManager;
 
-    void Update()
-    {
-        dialogueManager.DialogUpdate();
+        private void Start()
+        {
+            _dialogueManager.Initialize(gameObject);
+        }
+
+        private void FixedUpdate()
+        {
+            _dialogueManager.DialogUpdate();
+        }
     }
 }

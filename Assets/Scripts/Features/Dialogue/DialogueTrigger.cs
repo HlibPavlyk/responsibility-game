@@ -1,61 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using Core.Abstractions;
 using Core.DI;
 using Systems.Game;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer;
 
-[InjectableMonoBehaviour]
-public class DialogueTrigger : MonoBehaviour
+namespace Features.Dialogue
 {
-    [Header("VisualCue")]
-    [SerializeField] private GameObject visualCue;
-
-    [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON;
-    
-    [Inject] private readonly IDialogueManager dialogueManager;
-    [Inject] private readonly IInputManager inputManager;
-    [Inject] private readonly GameState gameState;
-    
-    private bool playerInRange;
-    private void Awake()
+    [InjectableMonoBehaviour]
+    public class DialogueTrigger : MonoBehaviour
     {
-        playerInRange = false;
-        visualCue.SetActive(false);
-    }
+        // serialized fields
+        [Header("VisualCue")]
+        [SerializeField] private GameObject visualCue;
 
-    private void Update()
-    {
-        if (playerInRange && !gameState.isDialoguePlaying)
-
+        [Header("Ink JSON")]
+        [SerializeField] private TextAsset inkJson;
+    
+        // injected dependencies
+        [Inject] private readonly IDialogueManager _dialogueManager;
+        [Inject] private readonly IInputManager _inputManager;
+        [Inject] private readonly GameState _gameState;
+    
+        // internal fields
+        private bool _playerInRange;
+        
+        // constants
+        private const string PlayerTag = "Player";
+        
+        private void Awake()
         {
-            visualCue.SetActive(true);
-            if (inputManager.GetInteractPressed())
-            {
-                dialogueManager.EnterDialogueMode(inkJSON);
-            }
-        }
-        else
-        {
+            _playerInRange = false;
             visualCue.SetActive(false);
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
-    }
 
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag("Player"))
+        private void FixedUpdate()
         {
-            playerInRange = false;
+            if (_playerInRange && !_gameState.isDialoguePlaying)
+            {
+                visualCue.SetActive(true);
+                if (_inputManager.GetInteractPressed())
+                {
+                    _dialogueManager.EnterDialogueMode(inkJson);
+                }
+            }
+            else
+            {
+                visualCue.SetActive(false);
+            }
+        }
+        private void OnTriggerEnter2D(Collider2D gameCollider)
+        {
+            if (gameCollider.gameObject.CompareTag(PlayerTag))
+            {
+                _playerInRange = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D gameCollider)
+        {
+            if (gameCollider.gameObject.CompareTag(PlayerTag))
+            {
+                _playerInRange = false;
+            }
         }
     }
 }

@@ -1,22 +1,23 @@
 using Core.Abstractions;
 using UnityEngine.InputSystem;
 
-namespace ResponsibilityGame.GameSystems.Input
+namespace Systems.Input
 {
     public class InputManager : IInputManager
     {
-        private bool interactPressed;
-        private bool submitPressed;
+        private bool _interactPressed;
+        private bool _submitPressed;
+        private bool _pausePressed;
 
         public void InteractButtonPressed(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
-                interactPressed = true;
+                _interactPressed = true;
             }
             else if (context.canceled)
             {
-                interactPressed = false;
+                _interactPressed = false;
             }
         }
 
@@ -24,25 +25,44 @@ namespace ResponsibilityGame.GameSystems.Input
         {
             if (context.performed)
             {
-                submitPressed = true;
+                _submitPressed = true;
             }
             else if (context.canceled)
             {
-                submitPressed = false;
+                _submitPressed = false;
+            }
+        }
+
+        public void PauseButtonPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                _pausePressed = true;
+            }
+            else if (context.canceled)
+            {
+                _pausePressed = false;
             }
         }
 
         public bool GetInteractPressed()
         {
-            bool result = interactPressed;
-            interactPressed = false;
+            var result = _interactPressed;
+            _interactPressed = false;
             return result;
         }
 
         public bool GetSubmitPressed()
         {
-            bool result = submitPressed;
-            submitPressed = false;
+            var result = _submitPressed;
+            _submitPressed = false;
+            return result;
+        }
+
+        public bool GetPausePressed()
+        {
+            var result = _pausePressed;
+            _pausePressed = false;
             return result;
         }
     }

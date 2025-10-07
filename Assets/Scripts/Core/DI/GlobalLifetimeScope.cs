@@ -1,11 +1,12 @@
 using Core.Abstractions;
 using Features.Bootstrap;
 using Features.Characters.Player;
+using Features.Menu;
 using ResponsibilityGame.GameSystems.Dialogue;
-using ResponsibilityGame.GameSystems.Input;
 using ResponsibilityGame.GameSystems.Levels;
 using ResponsibilityGame.GameSystems.Menu;
 using Systems.Game;
+using Systems.Input;
 using Systems.SaveLoad;
 using UnityEngine;
 using VContainer;
@@ -33,6 +34,7 @@ namespace Core.DI
             builder.Register<IPlayerManager, PlayerManager>(Lifetime.Scoped);
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
             builder.Register<IMenuManager, MenuManager>(Lifetime.Scoped);
+            builder.Register<IPauseMenuManager, PauseMenuManager>(Lifetime.Singleton);
             builder.Register<IDialogueManager, DialogueManager>(Lifetime.Scoped);
             builder.Register<IInputManager, InputManager>(Lifetime.Singleton);
             
