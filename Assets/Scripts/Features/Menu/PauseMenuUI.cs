@@ -19,7 +19,6 @@ namespace Features.Menu
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button resetButton;
-        [SerializeField] private Button loadButton;
         [SerializeField] private Button mainMenuButton;
         [SerializeField] private Button quitButton;
         
@@ -54,7 +53,6 @@ namespace Features.Menu
             resumeButton.onClick.AddListener(OnResumeClicked);
             optionsButton.onClick.AddListener(OnOptionsClicked);
             resetButton.onClick.AddListener(OnResetClicked);
-            loadButton.onClick.AddListener(OnLoadClicked);
             mainMenuButton.onClick.AddListener(OnMainMenuClicked);
             quitButton.onClick.AddListener(OnQuitClicked);
             
@@ -75,7 +73,6 @@ namespace Features.Menu
             resumeButton.onClick.RemoveListener(OnResumeClicked);
             optionsButton.onClick.RemoveListener(OnOptionsClicked);
             resetButton.onClick.RemoveListener(OnResetClicked);
-            loadButton.onClick.RemoveListener(OnLoadClicked);
             mainMenuButton.onClick.RemoveListener(OnMainMenuClicked);
             quitButton.onClick.RemoveListener(OnQuitClicked);
             
@@ -138,7 +135,6 @@ namespace Features.Menu
         private void OnResumeClicked() => _pauseMenuManager.Resume();
         private void OnOptionsClicked() => _pauseMenuManager.OpenOptions();
         private void OnResetClicked() => _pauseMenuManager.ResetLevel();
-        private void OnLoadClicked() => _pauseMenuManager.LoadGame();
         private void OnMainMenuClicked() => _pauseMenuManager.ReturnToMainMenu();
         private void OnQuitClicked() => _pauseMenuManager.QuitGame();
     }

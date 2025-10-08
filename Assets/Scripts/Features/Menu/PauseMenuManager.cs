@@ -51,12 +51,6 @@ namespace Features.Menu
             GameEvents.Level.LevelExit?.Invoke(currentScene, "");
         }
 
-        public void LoadGame()
-        {
-            Resume();
-            _menuManager.LoadGame();
-        }
-
         public void ReturnToMainMenu()
         {
             Resume();
