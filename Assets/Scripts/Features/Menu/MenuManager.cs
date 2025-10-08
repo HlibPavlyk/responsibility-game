@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Core.Abstractions;
 using Core.Events;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace Features.Menu
 
         // public properties
         public bool hasSaveGame => _saveLoadManager.HasSaveFile();
+        
+        // import reload function from jslib
+        [DllImport("__Internal")] private static extern void ReloadPage();
 
         public void NewGame()
         {
@@ -52,7 +56,9 @@ namespace Features.Menu
 
         public void ExitGame()
         {
-            #if UNITY_EDITOR
+            #if UNITY_WEBGL && !UNITY_EDITOR
+                ReloadPage();
+            #elif UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
             #else
                 Application.Quit();
