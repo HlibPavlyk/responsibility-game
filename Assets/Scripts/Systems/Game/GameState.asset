@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a0a7a75a8875c1409ba8d196cbd951d, type: 3}
   m_Name: GameState
   m_EditorClassIdentifier: 
-  playerSpawnLocation: FromWC
+  playerSpawnLocation: 
   activePlayer: {fileID: 0}
   playerStats: {fileID: 11400000, guid: f87aa31c2a44fe14d98c829959461227, type: 2}
   isTransitionAnimationPlaying: 0
   isDialoguePlaying: 0
+  isPaused: 0

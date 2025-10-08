@@ -2,7 +2,7 @@ namespace Core.Abstractions
 {
     public interface IMenuManager
     {
-        //void Initialize(string startSceneName, GameObject canvas);
+        bool hasSaveGame { get; }
         void NewGame();
         void ContinueGame();
         void LoadGame();

@@ -1,179 +1,201 @@
+using System;
 using System.Collections;
 using Core.Abstractions;
 using Core.DI;
+using Systems.Game;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
-using Systems.Game;
 
-public class PlayerController : InjectableDynamicMonoBehaviour
+namespace Features.Characters.Player
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 150f;
-    [SerializeField] private float maxSpeed = 3f;
-    [SerializeField] private float idleFriction = 0.9f;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    public class PlayerController : InjectableDynamicMonoBehaviour
+    {
+        // serialized fields
+        [Header("Movement Settings")]
+        [SerializeField] private float moveSpeed = 150f;
+        [SerializeField] private float maxSpeed = 3f;
+        [SerializeField] private float idleFriction = 0.9f;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
-    [Header("Health Settings")]
-    [SerializeField] private int maxHealth = 5;
-    [SerializeField] private float invincibilityDuration = 2f;
+        [Header("Health Settings")]
+        [SerializeField] private int maxHealth = 5;
+        [SerializeField] private float invincibilityDuration = 2f;
 
-    // DI залежності - замість GameManager.Instance
-    [Inject] private IInputManager inputManager;
-    [Inject] private GameState gameState;
+        // injected dependencies
+        [Inject] private IInputManager _inputManager;
+        [Inject] private GameState _gameState;
 
-    // Компоненти Unity
-    private Rigidbody2D rb;
-    private Controls controls;
-    private Animator animator;
-    private Vector2 moveInput = Vector2.zero;
+        // unity components
+        private Rigidbody2D _rb;
+        private Controls _controls;
+        private Animator _animator;
+        private Vector2 _moveInput = Vector2.zero;
     
-    private int currentHealth;
-    private bool isInvincible;
-    private float invincibilityTimer;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        currentHealth = maxHealth;
-
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    void Update()
-    {
-        if (isInvincible)
-        {
-            invincibilityTimer -= Time.deltaTime;
-            if (invincibilityTimer <= 0)
-            {
-                isInvincible = false;
-            }
-        }
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-        controls = new Controls();
-    }
+        // fields for monster interaction
+        private int _currentHealth;
+        private bool _isInvincible;
+        private float _invincibilityTimer;
     
-    /*private void Awake()
-    {
-        //base.Awake();
-        controls = new Controls();
-    }*/
-
-    private void OnEnable()
-    {
-        controls.Enable();
+        // actions for input controls
+        private Action<InputAction.CallbackContext> _onInteract;
+        private Action<InputAction.CallbackContext> _onSubmit;
         
-        // Використовуємо injected inputManager замість GameManager.Instance.InputManager
-        controls.Player.Interact.started += context => inputManager?.InteractButtonPressed(context);
-        controls.Player.Interact.performed += context => inputManager?.InteractButtonPressed(context);
-        controls.Player.Interact.canceled += context => inputManager?.InteractButtonPressed(context);
+        // constants for animator
+        private static readonly int IsWalking = Animator.StringToHash("IsWalking");
+        private static readonly int X = Animator.StringToHash("X");
+        private static readonly int Y = Animator.StringToHash("Y");
 
-        controls.Player.Submit.started += context => inputManager?.SubmitButtonPressed(context);
-        controls.Player.Submit.performed += context => inputManager?.SubmitButtonPressed(context);
-        controls.Player.Submit.canceled += context => inputManager?.SubmitButtonPressed(context);
-    }
 
-    private void OnDisable()
-    {
-        controls.Disable();
-        controls.Player.Interact.started -= context => inputManager?.InteractButtonPressed(context);
-        controls.Player.Submit.started -= context => inputManager?.SubmitButtonPressed(context);
-    }
-
-    void FixedUpdate()
-    {
-        // Використовуємо injected залежності замість GameManager.Instance
-        var shouldStopMovement = (gameState?.isDialoguePlaying ?? false) || 
-                                 (gameState?.isTransitionAnimationPlaying ?? false);
-
-        if (shouldStopMovement)
+        void Start()
         {
-            moveInput = Vector2.zero; // Зупиняємо рух під час діалогу або переходу
-            animator.SetBool("IsWalking", false);
+            _rb = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
+            _currentHealth = maxHealth;
+
+            if (spriteRenderer == null)
+                spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        if (moveInput != Vector2.zero)
+        void Update()
         {
-            rb.linearVelocity = Vector2.ClampMagnitude(
-                rb.linearVelocity + moveInput * (moveSpeed * Time.deltaTime), 
-                maxSpeed);
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, idleFriction);
-        }
-    }
-
-    void OnMove(InputValue value)
-    {
-        if (animator != null)
-        {
-            // Використовуємо injected залежності
-            bool shouldBlockInput = (gameState?.isTransitionAnimationPlaying ?? false) || 
-                                   (gameState?.isDialoguePlaying ?? false);
-
-            if (shouldBlockInput)
-                moveInput = Vector2.zero;
-            else
-                moveInput = value.Get<Vector2>();
-
-            if (moveInput.x != 0 || moveInput.y != 0)
+            if (_isInvincible)
             {
-                animator.SetFloat("X", moveInput.x);
-                animator.SetFloat("Y", moveInput.y);
-                animator.SetBool("IsWalking", true);
+                _invincibilityTimer -= Time.deltaTime;
+                if (_invincibilityTimer <= 0)
+                {
+                    _isInvincible = false;
+                }
+            }
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _controls = new Controls();
+        }
+
+        private void OnEnable()
+        {
+            _onInteract = context => _inputManager?.InteractButtonPressed(context);
+            _onSubmit = context => _inputManager?.SubmitButtonPressed(context);
+
+            _controls.Enable();
+
+            // connect interaction button
+            _controls.Player.Interact.started += _onInteract;
+            _controls.Player.Interact.performed += _onInteract;
+            _controls.Player.Interact.canceled += _onInteract;
+
+            // connect submit button
+            _controls.Player.Submit.started += _onSubmit;
+            _controls.Player.Submit.performed += _onSubmit;
+            _controls.Player.Submit.canceled += _onSubmit;
+        }
+
+        private void OnDisable()
+        {
+            _controls.Disable();
+
+            // disconnect interaction button
+            _controls.Player.Interact.started -= _onInteract;
+            _controls.Player.Interact.performed -= _onInteract;
+            _controls.Player.Interact.canceled -= _onInteract;
+
+            // disconnect submit button
+            _controls.Player.Submit.started -= _onSubmit;
+            _controls.Player.Submit.performed -= _onSubmit;
+            _controls.Player.Submit.canceled -= _onSubmit;
+        }
+
+        void FixedUpdate()
+        {
+            if (IsInputBlocked())
+            {
+                _moveInput = Vector2.zero; // Зупиняємо рух під час діалогу або переходу
+                _animator.SetBool(IsWalking, false);
+            }
+
+            if (_moveInput != Vector2.zero)
+            {
+                _rb.linearVelocity = Vector2.ClampMagnitude(
+                    _rb.linearVelocity + _moveInput * (moveSpeed * Time.deltaTime), 
+                    maxSpeed);
             }
             else
             {
-                animator.SetBool("IsWalking", false);
+                _rb.linearVelocity = Vector2.Lerp(_rb.linearVelocity, Vector2.zero, idleFriction);
+                _animator.SetBool(IsWalking, false);
             }
         }
-    }
 
-    private IEnumerator BlinkEffect()
-    {
-        float blinkTime = invincibilityDuration / 10f;
-
-        for (float i = 0; i < invincibilityDuration; i += blinkTime)
+        void OnMove(InputValue value)
         {
-            spriteRenderer.enabled = !spriteRenderer.enabled;
-            yield return new WaitForSeconds(blinkTime);
+            if (_animator == null ||  IsInputBlocked())
+            {
+                _moveInput = Vector2.zero;
+                return;
+            }
+                
+            _moveInput = value.Get<Vector2>();
+
+            if (_moveInput.x != 0 || _moveInput.y != 0)
+            {
+                _animator.SetFloat(X, _moveInput.x);
+                _animator.SetFloat(Y, _moveInput.y);
+                _animator.SetBool(IsWalking, true);
+            }
+            else
+            {
+                _animator.SetBool(IsWalking, false);
+            }
         }
 
-        spriteRenderer.enabled = true;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        if (isInvincible) return;
-
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        if (currentHealth <= 0)
+        private bool IsInputBlocked()
         {
-            Debug.Log("Player is dead!");
-            // Handle player death here
+            return (_gameState?.isTransitionAnimationPlaying ?? false) ||
+                   (_gameState?.isDialoguePlaying ?? false) ||
+                   (_gameState?.isPaused ?? false);
         }
 
-        isInvincible = true;
-        invincibilityTimer = invincibilityDuration;
-        Debug.Log("Player took damage. Current health: " + currentHealth);
+        private IEnumerator BlinkEffect()
+        {
+            float blinkTime = invincibilityDuration / 10f;
 
-        StartCoroutine(BlinkEffect());
-    }
+            for (float i = 0; i < invincibilityDuration; i += blinkTime)
+            {
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+                yield return new WaitForSeconds(blinkTime);
+            }
 
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        Debug.Log("Player healed. Current health: " + currentHealth);
+            spriteRenderer.enabled = true;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if (_isInvincible) return;
+
+            _currentHealth -= damage;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, maxHealth);
+
+            if (_currentHealth <= 0)
+            {
+                Debug.Log("Player is dead!");
+                // Handle player death here
+            }
+
+            _isInvincible = true;
+            _invincibilityTimer = invincibilityDuration;
+            Debug.Log("Player took damage. Current health: " + _currentHealth);
+
+            StartCoroutine(BlinkEffect());
+        }
+
+        public void Heal(int amount)
+        {
+            _currentHealth += amount;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, maxHealth);
+            Debug.Log("Player healed. Current health: " + _currentHealth);
+        }
     }
 }

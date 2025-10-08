@@ -23,5 +23,11 @@ namespace Core.Events
             public static UnityAction OnDialogueEnded;
             public static UnityAction<string> OnSpeakerChanged;
         }
+        
+        public static class Game
+        {
+            public static UnityAction OnGamePaused;
+            public static UnityAction OnGameResumed;
+        }
     }
 }

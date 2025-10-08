@@ -1,52 +1,68 @@
+using System.Runtime.InteropServices;
 using Core.Abstractions;
-using Core.DI;
 using Core.Events;
 using UnityEngine;
 using VContainer;
 using Systems.Game;
 
-namespace ResponsibilityGame.GameSystems.Menu
+namespace Features.Menu
 {
     public class MenuManager : IMenuManager
     {
-        [Inject] private GameState gameState;
-        [Inject] private MenuManagerSettings settings;
-        [Inject] private ISaveLoadManager saveLoadManager;
+        // injectable dependencies
+        [Inject] private readonly GameState _gameState;
+        [Inject] private readonly MenuManagerSettings _settings;
+        [Inject] private readonly ISaveLoadManager _saveLoadManager;
+
+        // public properties
+        public bool hasSaveGame => _saveLoadManager.HasSaveFile();
+        
+        // import reload function from jslib
+        [DllImport("__Internal")] private static extern void ReloadPage();
 
         public void NewGame()
         {
-            saveLoadManager.DeleteSaves();
-            
-            GameEvents.Level.LevelExit.Invoke(settings.startSceneName, "");
-            
-            gameState.playerStats.currentSceneName = settings.startSceneName;
-            saveLoadManager.SaveGame();
+            _saveLoadManager.DeleteSaves();
+            _gameState.playerStats.currentSceneName = _settings.startSceneName;
+            GameEvents.Level.LevelExit?.Invoke(_settings.startSceneName, "");
         }
 
         public void ContinueGame()
         {
-            saveLoadManager.LoadGame();
-            GameEvents.Level.LevelExit.Invoke(gameState.playerStats.currentSceneName, "");
+            if (_saveLoadManager.HasSaveFile())
+            {
+                _saveLoadManager.LoadGame();
+                GameEvents.Level.LevelExit?.Invoke(_gameState.playerStats.currentSceneName, "");
+            }
         }
 
         public void LoadGame()
         {
-            // Implementation for load game functionality
+            // Will be implemented to load a specific save
+            Debug.Log("Loading game...");
         }
 
         public void OpenSettings()
         {
-            // Implementation for OpenSettings functionality
+            // Will be implemented to show settings panel
+            Debug.Log("Opening settings...");
         }
 
         public void ShowAboutInfo()
         {
-            // Implementation for about info functionality
+            // Will be implemented to show about panel
+            Debug.Log("Showing about info...");
         }
 
         public void ExitGame()
         {
-            Application.Quit();
+            #if UNITY_WEBGL && !UNITY_EDITOR
+                ReloadPage();
+            #elif UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
         }
     }
 }

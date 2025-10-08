@@ -15,5 +15,8 @@ namespace Systems.Game
     
         // dialogue manager
         public bool isDialoguePlaying;
+        
+        // pause menu manager
+        public bool isPaused ;
     }
 }

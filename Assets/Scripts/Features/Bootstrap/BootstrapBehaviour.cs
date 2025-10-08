@@ -1,5 +1,6 @@
 using Core.Abstractions;
 using Core.Events;
+using Systems.Game;
 using UnityEngine;
 using VContainer;
 
@@ -11,6 +12,7 @@ namespace Features.Bootstrap
         
         [Inject] private readonly IPlayerManager _playerManager;
         [Inject] private readonly ILevelManager _levelManager;
+        [Inject] private readonly GameState _gameState;
 
         private void Awake()
         {
@@ -19,6 +21,12 @@ namespace Features.Bootstrap
         
         private void Start()
         {
+            // reset game state that blocks input
+            _gameState.isPaused = false;
+            _gameState.isDialoguePlaying = false;
+            _gameState.isTransitionAnimationPlaying = false;
+            
+            // load initial scene
             if (string.IsNullOrEmpty(initialSceneName))
             {
                 Debug.LogError("Initial scene name is not set");
