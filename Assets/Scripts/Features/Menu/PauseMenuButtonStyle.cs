@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Features.Menu
 {
     [RequireComponent(typeof(Button))]
-    public class PauseMenuButtonStyle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+    public class PauseMenuButtonStyle : MonoBehaviour, IPointerEnterHandler, ISelectHandler, IDeselectHandler
     {
         [Header("Text Settings")]
         [SerializeField] private TextMeshProUGUI buttonText;
@@ -29,15 +29,12 @@ namespace Features.Menu
         [SerializeField] private AudioClip clickSound;
 
         private Button _button;
-        private Image _backgroundImage;
         private Vector3 _targetScale;
-        private bool _isHighlighted;
         private AudioSource _audioSource;
 
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _backgroundImage = GetComponent<Image>();
 
             // Get or create AudioSource for sounds
             _audioSource = GetComponent<AudioSource>();
@@ -101,47 +98,33 @@ namespace Features.Menu
         {
             if (!_button.interactable) return;
 
-            SetHighlighted(true);
+            // Select this button when mouse hovers over it
+            _button.Select();
             PlaySound(hoverSound);
-
-            // Set selected in EventSystem
-            EventSystem.current?.SetSelectedGameObject(gameObject);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (!_button.interactable) return;
-
-            SetHighlighted(false);
         }
 
         public void OnSelect(BaseEventData eventData)
         {
             if (!_button.interactable) return;
 
-            SetHighlighted(true);
+            // Update visual state to show selection
+            if (buttonText != null)
+                buttonText.color = highlightedTextColor;
+                
+            if (useScaleAnimation)
+                _targetScale = Vector3.one * highlightedScale;
         }
 
         public void OnDeselect(BaseEventData eventData)
         {
             if (!_button.interactable) return;
 
-            SetHighlighted(false);
-        }
-
-        private void SetHighlighted(bool highlighted)
-        {
-            _isHighlighted = highlighted;
-
+            // Reset visual state when deselected
             if (buttonText != null)
-            {
-                buttonText.color = highlighted ? highlightedTextColor : normalTextColor;
-            }
-
+                buttonText.color = normalTextColor;
+            
             if (useScaleAnimation)
-            {
-                _targetScale = Vector3.one * (highlighted ? highlightedScale : normalScale);
-            }
+                _targetScale = Vector3.one * normalScale;
         }
 
         private void PlaySound(AudioClip clip)
