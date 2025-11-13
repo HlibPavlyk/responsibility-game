@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960012f6442d4acd84569328143e372e, type: 3}
+  m_Name: FootstepSettings
+  m_EditorClassIdentifier: 
+  baseInterval: 0.85
+  minSpeedToStep: 0.1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundCheckDistance: 0.2
+  defaultSet:
+    surfaceTag: foot_step_def
+    clips:
+    - {fileID: 8300000, guid: c0de7bf671e834396bf55a6191bef0ae, type: 3}
+    - {fileID: 8300000, guid: e2390e64f7c084d1ea3c9db6c6fa0d6a, type: 3}
+    - {fileID: 8300000, guid: d4b8329cb3e0048958d2740006cd776d, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+  surfaceSets: []
