@@ -17,7 +17,8 @@ public class LevelTransition : SceneTransition
     
     
     [Inject] private IInputManager inputManager;
-
+    [Inject] private ISfxManager sfxManager; 
+    
     protected override void Start()
     {
         if (sceneToLoad == null)
@@ -46,6 +47,9 @@ public class LevelTransition : SceneTransition
 
     public override IEnumerator LoadLevel(string OtherSceneToLoad = null)
     {
+        // door open SFX
+        sfxManager?.Play("door_open"); // id from SfxLibrarySettings
+        
         gameState.isTransitionAnimationPlaying = true;
         transitionAnimator.SetTrigger("Start");
 
