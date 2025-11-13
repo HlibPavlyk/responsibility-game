@@ -11,6 +11,7 @@ using Systems.SaveLoad;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Features.Audio;
 
 namespace Core.DI
 {
@@ -29,7 +30,10 @@ namespace Core.DI
             builder.RegisterInstance(settings.menuManagerSettings);
             builder.RegisterInstance(settings.dialogueManagerSettings);
             builder.RegisterInstance(state);
-            
+            builder.RegisterInstance(settings.musicManagerSettings);
+            builder.RegisterInstance(settings.sfxLibrarySettings);
+            builder.RegisterInstance(settings.footstepSettings);
+
             // Register core managers
             builder.Register<IPlayerManager, PlayerManager>(Lifetime.Scoped);
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
@@ -37,7 +41,10 @@ namespace Core.DI
             builder.Register<IPauseMenuManager, PauseMenuManager>(Lifetime.Singleton);
             builder.Register<IDialogueManager, DialogueManager>(Lifetime.Scoped);
             builder.Register<IInputManager, InputManager>(Lifetime.Singleton);
+            builder.Register<IMusicManager, MusicManager>(Lifetime.Singleton);
+            builder.Register<ISfxManager, SfxManager>(Lifetime.Singleton);
             
+            builder.RegisterBuildCallback(r => r.Resolve<IMusicManager>().Initialize()); 
             #if UNITY_WEBGL && !UNITY_EDITOR
                 builder.Register<ISaveLoadManager, WebSaveLoadManager>(Lifetime.Scoped);
             #else
