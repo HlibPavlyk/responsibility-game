@@ -27,3 +27,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 92a18905cffe4c049a050fe45c8775b1, type: 2}
     - {fileID: 11400000, guid: 41d4b2a98abf6db4fb6e0d5f6390c36b, type: 2}
     makePredictable: 1
+  musicManagerSettings: {fileID: 11400000, guid: 9a99e1774458047049ecad2cfe13265e, type: 2}
+  sfxLibrarySettings: {fileID: 11400000, guid: 3c78e502bd9f14265b5fe72359a40579, type: 2}
+  footstepSettings: {fileID: 11400000, guid: a2eeda1d98df7487b84f02dfb07872a7, type: 2}
