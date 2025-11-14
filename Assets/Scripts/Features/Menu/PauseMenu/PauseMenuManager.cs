@@ -1,10 +1,12 @@
 using Core.Abstractions;
+using Core.Abstractions.Menu;
 using Core.Events;
+using Features.Menu.Options;
 using Systems.Game;
 using UnityEngine;
 using VContainer;
 
-namespace Features.Menu
+namespace Features.Menu.PauseMenu
 {
     public class PauseMenuManager : IPauseMenuManager
     {
@@ -12,7 +14,7 @@ namespace Features.Menu
         [Inject] private readonly IMenuManager _menuManager;
         [Inject] private readonly ISaveLoadManager _saveLoadManager;
         [Inject] private readonly GameState _gameState;
-        
+
         public void TogglePause()
         {
             if (_gameState.isPaused)
@@ -39,9 +41,14 @@ namespace Features.Menu
             GameEvents.Game.OnGameResumed?.Invoke();
         }
 
-        public void OpenOptions()
+        public void OpenOptions(OptionsWindowUI optionsWindowUI)
         {
-            _menuManager.OpenSettings();
+            if (optionsWindowUI)
+            {
+                Debug.LogWarning("Options window UI is null");
+            }
+            
+            optionsWindowUI.Show();
         }
 
         public void ResetLevel()
