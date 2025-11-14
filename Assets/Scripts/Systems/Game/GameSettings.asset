@@ -19,7 +19,7 @@ MonoBehaviour:
   menuManagerSettings:
     startSceneName: Hall
   dialogueManagerSettings:
-    typingSpeed: 0.07
+    typingSpeed: 0.05
     defaultAudioInfo: {fileID: 11400000, guid: b4e5f73338b371a44929372ad74869da, type: 2}
     audioInfos:
     - {fileID: 11400000, guid: 219d3876174315b48b4dc41a5e095c79, type: 2}
