@@ -1,23 +1,19 @@
 using Core.Abstractions;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Systems.Game;
+using UnityEngine.SceneManagement;
 using VContainer;
 
-namespace ResponsibilityGame.GameSystems.Levels
+namespace Features.Levels
 {
     public class LevelManager : ILevelManager
     {
-        public GameState GameState { get; set; }
-        public bool IsTransitionAnimationPlaying { get; set; }
-
-        [Inject] private GameState gameState;
+        [Inject] private GameState _gameState;
 
         public void OnLevelExit(string nextSceneName, string playerSpawnTransformName)
         {
-            if (gameState)
+            if (_gameState)
             {
-                gameState.playerSpawnLocation = playerSpawnTransformName;
+                _gameState.playerSpawnLocation = playerSpawnTransformName;
             }
             SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
         }

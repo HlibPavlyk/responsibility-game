@@ -1,21 +1,24 @@
 using System;
 using Core.Abstractions;
+using Core.Abstractions.Menu;
 using Core.DI;
 using Core.Events;
+using Features.Menu.Options;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using VContainer;
 
-namespace Features.Menu
+namespace Features.Menu.PauseMenu
 {
     [InjectableMonoBehaviour]
-    public class PauseMenuUI : MonoBehaviour
+    public class PauseMenuUI : MonoBehaviour, IMenuInteraction
     {
         // serialized fields
         [Header("UI References")]
         [SerializeField] private GameObject pauseMenuPanel;
+        [SerializeField] private OptionsWindowUI optionsWindowUI;
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button resetButton;
@@ -36,6 +39,24 @@ namespace Features.Menu
         // actions for input controls
         private Action<InputAction.CallbackContext> _onPause;
 
+        // IMenuInteraction implementation
+        public void EnableInteraction(bool enable)
+        {
+            if (resumeButton) resumeButton.interactable = enable;
+            if (optionsButton) optionsButton.interactable = enable;
+            if (resetButton) resetButton.interactable = enable;
+            if (mainMenuButton) mainMenuButton.interactable = enable;
+            if (quitButton) quitButton.interactable = enable;
+        }
+        
+        public void SelectOptionsButton()
+        {
+            if (_eventSystem && optionsButton)
+            {
+                _eventSystem.SetSelectedGameObject(optionsButton.gameObject);
+            }
+        }
+        
         private void Awake()
         {
             pauseMenuPanel.SetActive(false);
@@ -86,6 +107,12 @@ namespace Features.Menu
 
         private void Update()
         {
+            // Don't handle pause input when options menu is open
+            if (optionsWindowUI && optionsWindowUI.gameObject.activeSelf)
+            {
+                return;
+            }
+
             if (_inputManager.GetPausePressed())
             {
                 Debug.Log("Pause button pressed");
@@ -95,7 +122,7 @@ namespace Features.Menu
 
         private void ShowMenu()
         {
-            if (menuAnimator != null)
+            if (menuAnimator)
             {
                 menuAnimator.Show();
             }
@@ -103,13 +130,13 @@ namespace Features.Menu
             {
                 pauseMenuPanel.SetActive(true);
             }
-            
+ 
             SelectFirstButton();
         }
 
         private void HideMenu()
         {
-            if (menuAnimator != null)
+            if (menuAnimator)
             {
                 menuAnimator.Hide();
             }
@@ -117,8 +144,8 @@ namespace Features.Menu
             {
                 pauseMenuPanel.SetActive(false);
             }
-            
-            if (_eventSystem != null)
+
+            if (_eventSystem)
             {
                 _eventSystem.SetSelectedGameObject(null);
             }
@@ -126,14 +153,20 @@ namespace Features.Menu
         
         private void SelectFirstButton()
         {
-            if (_eventSystem != null && resumeButton != null)
+            if (_eventSystem && resumeButton)
             {
                 _eventSystem.SetSelectedGameObject(resumeButton.gameObject);
             }
         }
 
         private void OnResumeClicked() => _pauseMenuManager.Resume();
-        private void OnOptionsClicked() => _pauseMenuManager.OpenOptions();
+        private void OnOptionsClicked()
+        {
+            // Disable pause menu interaction while options is open
+            EnableInteraction(false);
+            _pauseMenuManager.OpenOptions(optionsWindowUI);
+        }
+
         private void OnResetClicked() => _pauseMenuManager.ResetLevel();
         private void OnMainMenuClicked() => _pauseMenuManager.ReturnToMainMenu();
         private void OnQuitClicked() => _pauseMenuManager.QuitGame();

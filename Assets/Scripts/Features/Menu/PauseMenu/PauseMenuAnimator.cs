@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Features.Menu
+namespace Features.Menu.PauseMenu
 {
     public class PauseMenuAnimator : MonoBehaviour
     {
@@ -141,17 +141,6 @@ namespace Features.Menu
         public void Hide()
         {
             PlayHideAnimation(() => gameObject.SetActive(false));
-        }
-
-        public void HideImmediate()
-        {
-            if (_currentAnimation != null)
-                StopCoroutine(_currentAnimation);
-            
-            canvasGroup.alpha = 0f;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-            gameObject.SetActive(false);
         }
     }
 }

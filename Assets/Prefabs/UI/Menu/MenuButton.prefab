@@ -139,7 +139,7 @@ MonoBehaviour:
   highlightedTextColor: {r: 0.3, g: 0.8, b: 1, a: 1}
   useOutline: 0
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
-  outlineWidth: 20
+  outlineWidth: 1
   useScaleAnimation: 1
   normalScale: 1
   highlightedScale: 1.1
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: New Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5d72cce1c6596ea4fb593f92730e94c9, type: 2}
   m_sharedMaterial: {fileID: -927410181979764599, guid: 5d72cce1c6596ea4fb593f92730e94c9, type: 2}

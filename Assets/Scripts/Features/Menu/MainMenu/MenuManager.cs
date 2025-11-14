@@ -1,11 +1,14 @@
 using System.Runtime.InteropServices;
 using Core.Abstractions;
+using Core.Abstractions.Menu;
 using Core.Events;
+using Features.Menu.About;
+using Features.Menu.Options;
+using Systems.Game;
 using UnityEngine;
 using VContainer;
-using Systems.Game;
 
-namespace Features.Menu
+namespace Features.Menu.MainMenu
 {
     public class MenuManager : IMenuManager
     {
@@ -13,6 +16,7 @@ namespace Features.Menu
         [Inject] private readonly GameState _gameState;
         [Inject] private readonly MenuManagerSettings _settings;
         [Inject] private readonly ISaveLoadManager _saveLoadManager;
+        [Inject] private readonly IOptionsManager _optionsManager;
 
         // public properties
         public bool hasSaveGame => _saveLoadManager.HasSaveFile();
@@ -42,16 +46,24 @@ namespace Features.Menu
             Debug.Log("Loading game...");
         }
 
-        public void OpenSettings()
+        public void OpenSettings(OptionsWindowUI optionsWindowUI)
         {
-            // Will be implemented to show settings panel
-            Debug.Log("Opening settings...");
+            if (!optionsWindowUI)
+            {
+                Debug.LogWarning("Options window UI is null");
+            }
+            
+            optionsWindowUI.Show();
         }
 
-        public void ShowAboutInfo()
+        public void ShowAboutInfo(AboutWindowUI aboutWindowUI)
         {
-            // Will be implemented to show about panel
-            Debug.Log("Showing about info...");
+            if (!aboutWindowUI)
+            {
+                Debug.LogWarning("About window UI is null");
+            }
+            
+            aboutWindowUI.Show();
         }
 
         public void ExitGame()

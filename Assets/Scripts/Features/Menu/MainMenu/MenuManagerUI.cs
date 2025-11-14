@@ -1,30 +1,61 @@
 using Core.Abstractions;
+using Core.Abstractions.Menu;
 using Core.DI;
+using Features.Menu.About;
+using Features.Menu.Options;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using VContainer;
-using UnityEngine.EventSystems;
 
-namespace Features.Menu
+namespace Features.Menu.MainMenu
 {
     [InjectableMonoBehaviour]
-    public class MenuManagerUI : MonoBehaviour
+    public class MenuManagerUI : MonoBehaviour, IMenuInteraction
     {
         // serialized fields
         [Header("UI References")]
         [SerializeField] private GameObject mainMenuPanel;
+        [SerializeField] private OptionsWindowUI optionsWindowUI;
+        [SerializeField] private AboutWindowUI aboutWindowUI;
         [SerializeField] private Button newGameButton;
         [SerializeField] private Button continueButton;
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button aboutButton;
         [SerializeField] private Button quitButton;
-        
+
         // injectable dependencies
         [Inject] private readonly IMenuManager _menuManager;
         [Inject] private readonly IInputManager _inputManager;
-        
+
         // unity components
         private EventSystem _eventSystem;
+        
+        // IMenuInteraction implementation
+        public void EnableInteraction(bool enable)
+        {
+            if (newGameButton) newGameButton.interactable = enable;
+            if (continueButton) continueButton.interactable = enable;
+            if (settingsButton) settingsButton.interactable = enable;
+            if (aboutButton) aboutButton.interactable = enable;
+            if (quitButton) quitButton.interactable = enable;
+        }
+
+        public void SelectOptionsButton()
+        {
+            if (_eventSystem && settingsButton)
+            {
+                _eventSystem.SetSelectedGameObject(settingsButton.gameObject);
+            }
+        }
+        
+        public void SelectAboutButton()
+        {
+            if (_eventSystem && aboutButton)
+            {
+                _eventSystem.SetSelectedGameObject(aboutButton.gameObject);
+            }
+        }
 
         private void Awake()
         {
@@ -38,10 +69,10 @@ namespace Features.Menu
             settingsButton.onClick.AddListener(OnOpenSettings);
             aboutButton.onClick.AddListener(OnShowAboutInfo);
             quitButton.onClick.AddListener(OnExitGame);
-                
+
             // Show the main menu
             mainMenuPanel.SetActive(true);
-            
+
             // Disable continue button if no save exists
             continueButton.interactable = _menuManager.hasSaveGame;
 
@@ -65,19 +96,21 @@ namespace Features.Menu
 
         private void OnOpenSettings()
         {
-            _menuManager.OpenSettings();
+            EnableInteraction(false);
+            _menuManager.OpenSettings(optionsWindowUI);
         }
 
         private void OnShowAboutInfo()
         {
-            _menuManager.ShowAboutInfo();
+            EnableInteraction(false);
+            _menuManager.ShowAboutInfo(aboutWindowUI);
         }
 
         private void OnExitGame()
         {
             _menuManager.ExitGame();
         }
-        
+
         private void SelectFirstButton()
         {
             if (_eventSystem != null && newGameButton != null)
@@ -85,7 +118,7 @@ namespace Features.Menu
                 _eventSystem.SetSelectedGameObject(newGameButton.gameObject);
             }
         }
-        
+
         private void SetupButtonNavigation()
         {
             // Set up navigation for New Game button

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Features.Menu
+namespace Features.Menu.PauseMenu
 {
     [RequireComponent(typeof(Button))]
     public class PauseMenuButtonStyle : MonoBehaviour, IPointerEnterHandler, ISelectHandler, IDeselectHandler
@@ -117,8 +117,6 @@ namespace Features.Menu
 
         public void OnDeselect(BaseEventData eventData)
         {
-            if (!_button.interactable) return;
-
             // Reset visual state when deselected
             if (buttonText != null)
                 buttonText.color = normalTextColor;
