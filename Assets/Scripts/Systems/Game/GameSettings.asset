@@ -19,7 +19,7 @@ MonoBehaviour:
   menuManagerSettings:
     startSceneName: Hall
   dialogueManagerSettings:
-    typingSpeed: 0.04
+    typingSpeed: 0.05
     defaultAudioInfo: {fileID: 11400000, guid: b4e5f73338b371a44929372ad74869da, type: 2}
     audioInfos:
     - {fileID: 11400000, guid: 219d3876174315b48b4dc41a5e095c79, type: 2}
@@ -27,6 +27,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 92a18905cffe4c049a050fe45c8775b1, type: 2}
     - {fileID: 11400000, guid: 41d4b2a98abf6db4fb6e0d5f6390c36b, type: 2}
     makePredictable: 1
+  audioManagerSettings:
+    musicVolume: 0.5
+    sfxVolume: 0.5
+  generalSettings:
+    language: ua
   musicManagerSettings: {fileID: 11400000, guid: 9a99e1774458047049ecad2cfe13265e, type: 2}
   sfxLibrarySettings: {fileID: 11400000, guid: 3c78e502bd9f14265b5fe72359a40579, type: 2}
   footstepSettings: {fileID: 11400000, guid: a2eeda1d98df7487b84f02dfb07872a7, type: 2}

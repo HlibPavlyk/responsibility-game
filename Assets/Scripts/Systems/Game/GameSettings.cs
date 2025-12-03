@@ -13,6 +13,8 @@ namespace Systems.Game
         public Features.Audio.MusicManagerSettings musicManagerSettings;
         public Features.Audio.SfxLibrarySettings sfxLibrarySettings;
         public Features.Audio.FootstepSettings footstepSettings;
+        public AudioManagerSettings audioManagerSettings;
+        public GeneralSettings generalSettings;
     }
     
     [Serializable]
@@ -39,6 +41,21 @@ namespace Systems.Game
         public PlayerStats startingPlayerStats;
         public GameObject playerPrefab;
         public string spawnTag = "Respawn";
+    }
+
+    [Serializable]
+    public class AudioManagerSettings
+    {
+        [Header("Volume Settings")]
+        [Range(0f, 1f)] public float musicVolume = 0.8f;
+        [Range(0f, 1f)] public float sfxVolume = 1f;
+    }
+
+    [Serializable]
+    public class GeneralSettings
+    {
+        [Header("Localization")]
+        public string language = "ua"; // "ua" for Ukrainian, "en" for English
     }
 
     [Serializable]

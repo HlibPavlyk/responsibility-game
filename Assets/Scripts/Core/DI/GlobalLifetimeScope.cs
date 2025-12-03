@@ -1,10 +1,12 @@
 using Core.Abstractions;
+using Core.Abstractions.Menu;
 using Features.Bootstrap;
 using Features.Characters.Player;
-using Features.Menu;
+using Features.Levels;
+using Features.Menu.MainMenu;
+using Features.Menu.Options;
+using Features.Menu.PauseMenu;
 using ResponsibilityGame.GameSystems.Dialogue;
-using ResponsibilityGame.GameSystems.Levels;
-using ResponsibilityGame.GameSystems.Menu;
 using Systems.Game;
 using Systems.Input;
 using Systems.SaveLoad;
@@ -19,21 +21,24 @@ namespace Core.DI
     {
         [SerializeField] private GameSettings settings;
         [SerializeField] private GameState state;
-        
+
         protected override void Configure(IContainerBuilder builder)
         {
             // Register MonoBehaviour components
             builder.RegisterComponentInHierarchy<BootstrapBehaviour>();
-            
+
             // Register scriptable objects
+            builder.RegisterInstance(settings);
             builder.RegisterInstance(settings.playerManagerSettings);
             builder.RegisterInstance(settings.menuManagerSettings);
             builder.RegisterInstance(settings.dialogueManagerSettings);
+            builder.RegisterInstance(settings.audioManagerSettings);
+            builder.RegisterInstance(settings.generalSettings);
             builder.RegisterInstance(state);
             builder.RegisterInstance(settings.musicManagerSettings);
             builder.RegisterInstance(settings.sfxLibrarySettings);
             builder.RegisterInstance(settings.footstepSettings);
-
+            
             // Register core managers
             builder.Register<IPlayerManager, PlayerManager>(Lifetime.Scoped);
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
@@ -41,6 +46,7 @@ namespace Core.DI
             builder.Register<IPauseMenuManager, PauseMenuManager>(Lifetime.Singleton);
             builder.Register<IDialogueManager, DialogueManager>(Lifetime.Scoped);
             builder.Register<IInputManager, InputManager>(Lifetime.Singleton);
+            builder.Register<IOptionsManager, OptionsManager>(Lifetime.Singleton);
             builder.Register<IMusicManager, MusicManager>(Lifetime.Singleton);
             builder.Register<ISfxManager, SfxManager>(Lifetime.Singleton);
             

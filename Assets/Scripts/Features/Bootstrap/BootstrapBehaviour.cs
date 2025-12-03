@@ -1,4 +1,5 @@
 using Core.Abstractions;
+using Core.Abstractions.Menu;
 using Core.Events;
 using Systems.Game;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Features.Bootstrap
         [SerializeField] private string initialSceneName;
         
         [Inject] private readonly IPlayerManager _playerManager;
+        [Inject] private readonly IOptionsManager _optionsManager;
         [Inject] private readonly ILevelManager _levelManager;
         [Inject] private readonly GameState _gameState;
 
@@ -25,6 +27,9 @@ namespace Features.Bootstrap
             _gameState.isPaused = false;
             _gameState.isDialoguePlaying = false;
             _gameState.isTransitionAnimationPlaying = false;
+            
+            // load default settings
+            _optionsManager.LoadSettings();
             
             // load initial scene
             if (string.IsNullOrEmpty(initialSceneName))
