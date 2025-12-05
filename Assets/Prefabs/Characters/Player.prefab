@@ -248,6 +248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29531453e31b416e9d6bac6b4d1e63bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideSettings: {fileID: 11400000, guid: a2eeda1d98df7487b84f02dfb07872a7, type: 2}
+  overrideSettings: {fileID: 11400000, guid: 7512a464178fa4cc2860d40959d4f5c3, type: 2}
   footPoint: {fileID: 0}
   playAs2D: 1
