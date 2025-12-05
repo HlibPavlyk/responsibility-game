@@ -1,6 +1,8 @@
 using UnityEngine;
 using VContainer;
 using Core.DI; 
+using VContainer.Unity;
+using Core.Abstractions;
 
 namespace Features.Audio
 {
@@ -9,23 +11,31 @@ namespace Features.Audio
     {
         [Header("Assign if you want to override injected settings")]
         [SerializeField] private FootstepSettings overrideSettings;
-        [SerializeField] private Transform footPoint; // point near feet; if null, uses transform
+        [SerializeField] private Transform footPoint;
         [SerializeField] private bool playAs2D = true; 
-    [Inject] private readonly FootstepSettings injectedSettings;
+        [Inject] private FootstepSettings injectedSettings;
+        [Inject] private ISfxManager sfx;
 
     private FootstepSettings settings;
     private Rigidbody2D rb;
-    private AudioSource src;
     private float timer;
 
     private void Awake()
     {
         settings = overrideSettings != null ? overrideSettings : injectedSettings;
         rb = GetComponentInParent<Rigidbody2D>() ?? GetComponent<Rigidbody2D>();
-        src = gameObject.GetComponent<AudioSource>();
-        if (!src) src = gameObject.AddComponent<AudioSource>();
-        src.playOnAwake = false;
-        src.spatialBlend = playAs2D ? 0f : 1f;
+
+        if (sfx == null)
+        {
+            var scope = GetComponentInParent<LifetimeScope>() ?? FindFirstObjectByType<GlobalLifetimeScope>();
+            if (scope != null)
+            {
+                try { sfx = scope.Container.Resolve<ISfxManager>(); }
+                catch { /* ignore */ }
+            }
+            if (sfx == null)
+                Debug.LogError($"FootstepEmitter on {name}: ISfxManager not injected/resolved. Check DI setup.");
+        }
     }
 
     private void Update()
@@ -40,7 +50,7 @@ namespace Features.Audio
         if (timer <= 0f)
         {
             PlayStep();
-            timer = settings.baseInterval;
+            timer = Mathf.Max(0.01f, settings.baseInterval);
         }
     }
 
@@ -53,16 +63,26 @@ namespace Features.Audio
 
     private void PlayStep()
     {
+        if (sfx == null) return;
+
         Vector3 origin = footPoint ? footPoint.position : transform.position;
         var hit = Physics2D.Raycast(origin, Vector2.down, settings.groundCheckDistance, settings.groundMask);
-        string tag = hit.collider ? hit.collider.tag : "Untagged";
+        string tag = (hit.collider != null) ? hit.collider.tag : "Untagged";
 
         var set = settings.GetSetForTag(tag);
         if (set == null || set.clips == null || set.clips.Length == 0) return;
 
         var clip = set.clips[Random.Range(0, set.clips.Length)];
-        src.pitch = Random.Range(set.pitchRange.x, set.pitchRange.y);
-        src.PlayOneShot(clip, set.volume);
+        if (clip == null) return;
+
+        var opt = new SfxOptions
+        {
+            volumeScale = set.volume,
+            pitch = Random.Range(set.pitchRange.x, set.pitchRange.y),
+            spatialBlend = playAs2D ? 0f : 1f,
+            mixer = null
+        };
+        sfx.PlayClipAt(clip, origin, opt);
     }
 }
 
