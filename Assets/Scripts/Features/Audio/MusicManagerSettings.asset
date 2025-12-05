@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracks:
   - id: default_song
-    clip: {fileID: 8300000, guid: 39431dc23aef4448fb8b2ee8a60c4264, type: 3}
+    clip: {fileID: 8300000, guid: adb50b78907444261afd0af5a0649a5b, type: 3}
     volume: 0.134
     loop: 1
   - id: office_song
-    clip: {fileID: 8300000, guid: f42789ff65c4e44c3afe1f51c00689f3, type: 3}
+    clip: {fileID: 8300000, guid: cfd02d5d62d3d4403a1b5ebc5187be64, type: 3}
     volume: 0.105
     loop: 1
   - id: game_song
-    clip: {fileID: 8300000, guid: 47d5a869466854190a5d9e7b9262c20a, type: 3}
+    clip: {fileID: 8300000, guid: 89b8a109205304279aaf056e573d1c0c, type: 3}
     volume: 0.22
     loop: 1
   fallbackTrackId: 

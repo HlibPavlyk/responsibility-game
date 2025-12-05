@@ -15,6 +15,6 @@ MonoBehaviour:
   output: {fileID: 0}
   entries:
   - id: door_open
-    clip: {fileID: 8300000, guid: 97bfeb1818db94a4aba5c7a7436b4faf, type: 3}
+    clip: {fileID: 8300000, guid: a518fa0fd8a8e4e9a923ee6add51cfa0, type: 3}
     volume: 0.949
     pitchRange: {x: 1, y: 1}

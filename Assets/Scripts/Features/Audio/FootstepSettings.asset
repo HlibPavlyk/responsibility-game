@@ -21,9 +21,9 @@ MonoBehaviour:
   defaultSet:
     surfaceTag: foot_step_def
     clips:
-    - {fileID: 8300000, guid: c0de7bf671e834396bf55a6191bef0ae, type: 3}
-    - {fileID: 8300000, guid: e2390e64f7c084d1ea3c9db6c6fa0d6a, type: 3}
-    - {fileID: 8300000, guid: d4b8329cb3e0048958d2740006cd776d, type: 3}
+    - {fileID: 8300000, guid: cd973510ec4a1415fad28cece191c637, type: 3}
+    - {fileID: 8300000, guid: fe053f551cf8c4700831ac07976de6a9, type: 3}
+    - {fileID: 8300000, guid: fe7e72e21cb3345ac8ee4673220b175d, type: 3}
     volume: 1
     pitchRange: {x: 1, y: 1}
   surfaceSets: []
