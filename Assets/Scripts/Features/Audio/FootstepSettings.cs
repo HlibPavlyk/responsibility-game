@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Features.Audio
 {
-    [CreateAssetMenu(menuName = "Audio/Footstep Settings")]
-    public class FootstepSettings : ScriptableObject
+    [Serializable]
+    public class FootstepSettings
     {
         [Serializable]
         public class SurfaceSet
-        {
+        { 
             public string surfaceTag = "Untagged"; // Tag on ground colliders
             public AudioClip[] clips;
             [Range(0f, 1f)] public float volume = 1f;
