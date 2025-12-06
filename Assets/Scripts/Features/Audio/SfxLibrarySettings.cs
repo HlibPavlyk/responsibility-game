@@ -5,8 +5,8 @@ using UnityEngine.Audio;
 
 namespace Features.Audio
 {
-    [CreateAssetMenu(menuName = "Audio/SFX Library Settings")]
-    public class SfxLibrarySettings : ScriptableObject
+    [Serializable]
+    public class SfxLibrarySettings
     {
         [Serializable]
         public class SfxEntry
