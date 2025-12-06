@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using UnityEngine.Audio;
+using Features.Audio;
 
 namespace Systems.Game
 {
@@ -10,9 +10,9 @@ namespace Systems.Game
         public PlayerManagerSettings playerManagerSettings;
         public MenuManagerSettings menuManagerSettings;
         public DialogueManagerSettings dialogueManagerSettings;
-        public Features.Audio.MusicManagerSettings musicManagerSettings;
-        public Features.Audio.SfxLibrarySettings sfxLibrarySettings;
-        public Features.Audio.FootstepSettings footstepSettings;
+        public MusicManagerSettings musicManagerSettings;
+        public SfxLibrarySettings sfxLibrarySettings;
+        public FootstepSettings footstepSettings;
         public AudioManagerSettings audioManagerSettings;
         public GeneralSettings generalSettings;
     }
@@ -56,27 +56,5 @@ namespace Systems.Game
     {
         [Header("Localization")]
         public string language = "ua"; // "ua" for Ukrainian, "en" for English
-    }
-
-    [Serializable]
-    public class MusicManagerSettings
-    {
-        [Serializable]
-        public class SceneMusicEntry
-        {
-            public string sceneName;
-            public AudioClip clip;
-            [Range(0f, 1f)] public float volumeOverride = -1f; // -1 => use defaultVolume
-            public bool loop = true;
-        }
-
-        [Header("Output")] public AudioMixerGroup output; // optional
-
-        [Header("Defaults")] [Range(0f, 1f)] public float defaultVolume = 0.8f;
-        [Range(0f, 5f)] public float crossfadeSeconds = 0.75f;
-        public AudioClip defaultClip;
-
-        [Header("Per-Scene Mapping")] public SceneMusicEntry[] sceneMusic;
-
     }
 }
