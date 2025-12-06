@@ -7,78 +7,78 @@ namespace Features.Audio
 {
     public class SfxManager : ISfxManager
     {
-        [Inject] private readonly SfxLibrarySettings settings;
-        [Inject] private readonly Systems.Game.GameSettings gameSettings;
+        [Inject] private readonly SfxLibrarySettings _settings;
+        [Inject] private readonly Systems.Game.GameSettings _gameSettings;
 
         private class Host : MonoBehaviour {}
 
-        private GameObject root;
-        private Host host;
-        private AudioSource global2D;
-        private Dictionary<string, SfxLibrarySettings.SfxEntry> map;
-        private bool initialized;
+        private GameObject _root;
+        private Host _host;
+        private AudioSource _global2D;
+        private Dictionary<string, SfxLibrarySettings.SfxEntry> _map;
+        private bool _initialized;
 
         private void InitializeIfNeeded()
         {
-            if (initialized) return;
+            if (_initialized) return;
 
-            if (settings == null)
+            if (_settings == null)
             {
                 Debug.LogError("SfxLibrarySettings not registered/assigned.");
                 return;
             }
 
-            map = new Dictionary<string, SfxLibrarySettings.SfxEntry>(System.StringComparer.Ordinal);
-            foreach (var e in settings.entries)
+            _map = new Dictionary<string, SfxLibrarySettings.SfxEntry>(System.StringComparer.Ordinal);
+            foreach (var e in _settings.entries)
             {
                 if (e != null && !string.IsNullOrEmpty(e.id) && e.clip != null)
-                    map[e.id] = e;
+                    _map[e.id] = e;
             }
 
-            root = new GameObject("SfxManager_AudioRoot");
-            Object.DontDestroyOnLoad(root);
+            _root = new GameObject("SfxManager_AudioRoot");
+            Object.DontDestroyOnLoad(_root);
 
-            host = root.AddComponent<Host>();
+            _host = _root.AddComponent<Host>();
 
-            global2D = root.AddComponent<AudioSource>();
-            global2D.playOnAwake = false;
-            global2D.spatialBlend = 0f; // 2D за замовчуванням
-            if (settings.output) global2D.outputAudioMixerGroup = settings.output;
+            _global2D = _root.AddComponent<AudioSource>();
+            _global2D.playOnAwake = false;
+            _global2D.spatialBlend = 0f;
+            if (_settings.output) _global2D.outputAudioMixerGroup = _settings.output;
 
-            initialized = true;
+            _initialized = true;
         }
 
         public void Play(string id, float volumeScale = 1f)
         {
             InitializeIfNeeded();
-            if (!initialized) return;
+            if (!_initialized) return;
 
-            if (!map.TryGetValue(id, out var e) || e.clip == null) return;
+            if (!_map.TryGetValue(id, out var e) || e.clip == null) return;
 
-            float master = Mathf.Clamp01(gameSettings.audioManagerSettings.sfxVolume);
+            float master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
             
-            global2D.outputAudioMixerGroup = settings.output;
-            global2D.spatialBlend = 0f;
-            global2D.pitch = Random.Range(e.pitchRange.x, e.pitchRange.y);
-            global2D.PlayOneShot(e.clip, Mathf.Clamp01(e.volume * volumeScale * master));
+            _global2D.outputAudioMixerGroup = _settings.output;
+            _global2D.spatialBlend = 0f;
+            _global2D.pitch = Random.Range(e.pitchRange.x, e.pitchRange.y);
+            _global2D.PlayOneShot(e.clip, Mathf.Clamp01(e.volume * volumeScale * master));
         }
 
         public void PlayAt(string id, Vector3 position, float volumeScale = 1f)
         {
             InitializeIfNeeded();
-            if (!initialized) return;
+            if (!_initialized) return;
 
-            if (!map.TryGetValue(id, out var e) || e.clip == null) return;
+            if (!_map.TryGetValue(id, out var e) || e.clip == null) return;
 
-            float master = Mathf.Clamp01(gameSettings.audioManagerSettings.sfxVolume);
+            float master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
 
             var go = new GameObject($"SFX_{id}");
             go.transform.position = position;
 
             var src = go.AddComponent<AudioSource>();
             src.playOnAwake = false;
-            src.spatialBlend = 0f; // 2D; якщо треба 3D — встановіть 1f або керуйте через PlayClipAt
-            if (settings.output) src.outputAudioMixerGroup = settings.output;
+            src.spatialBlend = 0f;
+            if (_settings.output) src.outputAudioMixerGroup = _settings.output;
 
             src.pitch = Random.Range(e.pitchRange.x, e.pitchRange.y);
             src.PlayOneShot(e.clip, Mathf.Clamp01(e.volume * volumeScale * master));
@@ -89,35 +89,35 @@ namespace Features.Audio
         public void PlayClip(AudioClip clip, in SfxOptions opt)
         {
             InitializeIfNeeded();
-            if (!initialized || clip == null) return;
+            if (!_initialized || clip == null) return;
 
-            float master = Mathf.Clamp01(gameSettings.audioManagerSettings.sfxVolume);
+            var master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
 
-            global2D.outputAudioMixerGroup = opt.mixer ? opt.mixer : settings.output;
-            global2D.spatialBlend = Mathf.Clamp01(opt.spatialBlend);
-            global2D.pitch = (opt.pitch == 0f) ? 1f : opt.pitch;
+            _global2D.outputAudioMixerGroup = opt.mixer ? opt.mixer : _settings.output;
+            _global2D.spatialBlend = Mathf.Clamp01(opt.spatialBlend);
+            _global2D.pitch = (opt.pitch == 0f) ? 1f : opt.pitch;
 
-            global2D.PlayOneShot(clip, Mathf.Clamp01(opt.volumeScale * master));
+            _global2D.PlayOneShot(clip, Mathf.Clamp01(opt.volumeScale * master));
         }
 
         public void PlayClipAt(AudioClip clip, Vector3 position, in SfxOptions opt)
         {
             InitializeIfNeeded();
-            if (!initialized || clip == null) return;
+            if (!_initialized || clip == null) return;
 
             var go = new GameObject("SFX_OneShot");
             go.transform.position = position;
 
             var src = go.AddComponent<AudioSource>();
             src.playOnAwake = false;
-            src.outputAudioMixerGroup = opt.mixer ? opt.mixer : settings.output;
+            src.outputAudioMixerGroup = opt.mixer ? opt.mixer : _settings.output;
             src.spatialBlend = Mathf.Clamp01(opt.spatialBlend);
             if (opt.spatialBlend > 0f && opt.maxDistance > 0f)
                 src.maxDistance = opt.maxDistance;
 
             src.pitch = (opt.pitch == 0f) ? 1f : opt.pitch;
 
-            float master = Mathf.Clamp01(gameSettings.audioManagerSettings.sfxVolume);
+            float master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
             src.PlayOneShot(clip, Mathf.Clamp01(opt.volumeScale * master));
 
             Object.Destroy(go, (clip.length / Mathf.Max(src.pitch, 0.01f)) + 0.1f);
@@ -125,12 +125,12 @@ namespace Features.Audio
 
         public void Cleanup()
         {
-            if (root != null) Object.Destroy(root);
-            root = null;
-            host = null;
-            global2D = null;
-            map = null;
-            initialized = false;
+            if (_root != null) Object.Destroy(_root);
+            _root = null;
+            _host = null;
+            _global2D = null;
+            _map = null;
+            _initialized = false;
         }
     }
 }
