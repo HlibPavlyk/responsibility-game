@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Features.Audio
 {
-    [CreateAssetMenu(menuName = "Audio/Music Manager Settings")]
-    public class MusicManagerSettings : ScriptableObject
+    [Serializable]
+    public class MusicManagerSettings
     {
         [Serializable]
         public class MusicTrack
