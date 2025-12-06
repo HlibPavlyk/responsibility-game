@@ -27,11 +27,71 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 92a18905cffe4c049a050fe45c8775b1, type: 2}
     - {fileID: 11400000, guid: 41d4b2a98abf6db4fb6e0d5f6390c36b, type: 2}
     makePredictable: 1
-  musicManagerSettings: {fileID: 11400000, guid: ec1430f31d0374227a8837267e47427e, type: 2}
-  sfxLibrarySettings: {fileID: 11400000, guid: 724019ff1d1f244ddb49b33d936a23f6, type: 2}
-  footstepSettings: {fileID: 11400000, guid: 7512a464178fa4cc2860d40959d4f5c3, type: 2}
+  musicManagerSettings:
+    tracks:
+    - id: default_song
+      clip: {fileID: 8300000, guid: adb50b78907444261afd0af5a0649a5b, type: 3}
+      volume: 0.712
+      loop: 1
+    - id: office_song
+      clip: {fileID: 8300000, guid: cfd02d5d62d3d4403a1b5ebc5187be64, type: 3}
+      volume: 0.712
+      loop: 1
+    - id: game_song
+      clip: {fileID: 8300000, guid: 89b8a109205304279aaf056e573d1c0c, type: 3}
+      volume: 0.712
+      loop: 1
+    fallbackTrackId: 
+    sceneBindings:
+    - sceneName: Hall
+      trackId: default_song
+    - sceneName: Administration
+      trackId: default_song
+    - sceneName: Office
+      trackId: office_song
+    - sceneName: WC
+      trackId: game_song
+    - sceneName: BossRoom
+      trackId: default_song
+    - sceneName: Catch the virus
+      trackId: game_song
+    - sceneName: Desktop
+      trackId: game_song
+    - sceneName: Multiply
+      trackId: game_song
+    - sceneName: Pipes
+      trackId: game_song
+    - sceneName: MainMenu
+      trackId: office_song
+    playOnLevelLoaded: 1
+    defaultFadeDuration: 1.5
+    dialogueDuckVolume: 0.5
+    duckFadeDuration: 0.25
+  sfxLibrarySettings:
+    output: {fileID: 0}
+    entries:
+    - id: door_open
+      clip: {fileID: 8300000, guid: a518fa0fd8a8e4e9a923ee6add51cfa0, type: 3}
+      volume: 1
+      pitchRange: {x: 1, y: 1}
+  footstepSettings:
+    baseInterval: 0.85
+    minSpeedToStep: 0.1
+    groundMask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    groundCheckDistance: 0.2
+    defaultSet:
+      surfaceTag: Default Surface
+      clips:
+      - {fileID: 8300000, guid: cd973510ec4a1415fad28cece191c637, type: 3}
+      - {fileID: 8300000, guid: fe053f551cf8c4700831ac07976de6a9, type: 3}
+      - {fileID: 8300000, guid: fe7e72e21cb3345ac8ee4673220b175d, type: 3}
+      volume: 0.85
+      pitchRange: {x: 1, y: 1}
+    surfaceSets: []
   audioManagerSettings:
-    musicVolume: 0.5
-    sfxVolume: 0.5
+    musicVolume: 0.14321584
+    sfxVolume: 0.2188079
   generalSettings:
     language: ua
