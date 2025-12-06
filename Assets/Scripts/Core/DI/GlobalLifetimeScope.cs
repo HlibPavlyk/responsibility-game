@@ -50,12 +50,14 @@ namespace Core.DI
             builder.Register<IMusicManager, MusicManager>(Lifetime.Singleton);
             builder.Register<ISfxManager, SfxManager>(Lifetime.Singleton);
             
-            builder.RegisterBuildCallback(r => r.Resolve<IMusicManager>().Initialize()); 
             #if UNITY_WEBGL && !UNITY_EDITOR
                 builder.Register<ISaveLoadManager, WebSaveLoadManager>(Lifetime.Scoped);
             #else
                 builder.Register<ISaveLoadManager, SaveLoadManager>(Lifetime.Scoped);
             #endif
+            builder.RegisterBuildCallback(
+                r => r.Resolve<IMusicManager>().Initialize()
+            ); 
         }
         
         protected override void Awake()
