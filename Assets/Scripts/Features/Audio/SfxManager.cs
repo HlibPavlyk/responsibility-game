@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Abstractions;
+using Systems.Game;
 using UnityEngine;
 using VContainer; 
 
@@ -8,7 +9,7 @@ namespace Features.Audio
     public class SfxManager : ISfxManager
     {
         [Inject] private readonly SfxLibrarySettings _settings;
-        [Inject] private readonly Systems.Game.GameSettings _gameSettings;
+        [Inject] private readonly GameSettings _gameSettings;
 
         private class Host : MonoBehaviour {}
 
