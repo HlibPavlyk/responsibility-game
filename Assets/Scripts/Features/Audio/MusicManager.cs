@@ -17,10 +17,6 @@ namespace Features.Audio
         // Nested
         private class CoroutineHost : MonoBehaviour { }
 
-        // Static shared instance/rig
-        private static MusicManager _sInstance;
-        private static GameObject _sSharedRig;
-
         // Unity objects
         private GameObject _audioRoot;
         private CoroutineHost _host;
@@ -51,15 +47,8 @@ namespace Features.Audio
         // Initialization
         public void Initialize()
         {
-            if (_sInstance != null && !ReferenceEquals(_sInstance, this))
-            {
-                Debug.LogWarning("[MusicManager] Duplicate Initialize ignored.");
-                return;
-            }
-
-            _sInstance = this;
-
             if (_initialized && !_isDisposed) return;
+
             if (settings == null)
             {
                 Debug.LogError("MusicManagerSettings is null.");
@@ -168,8 +157,7 @@ namespace Features.Audio
         {
             _isDisposed = true;
 
-            UnsubscribeUnitySceneEvents();
-            UnsubscribeEvents();
+            SafeUnsubscribe();
 
             if (_host != null)
             {
@@ -195,6 +183,17 @@ namespace Features.Audio
             _unitySceneEventsSubscribed = true;
         }
 
+        private void SafeUnsubscribe()
+        {
+            try { UnsubscribeUnitySceneEvents(); }
+            catch (Exception e)
+            { Debug.LogWarning($"[MusicManager] Failed to unsubscribe Unity scene events: {e}"); }
+
+            try { UnsubscribeEvents(); }
+            catch (Exception e)
+            { Debug.LogWarning($"[MusicManager] Failed to unsubscribe MusicManager events: {e}"); }
+        }
+        
         private void UnsubscribeUnitySceneEvents()
         {
             if (!_unitySceneEventsSubscribed) return;
@@ -285,11 +284,7 @@ namespace Features.Audio
         // Audio rig lifecycle
         private void CreateAudioRig()
         {
-            if (_sSharedRig != null && _sSharedRig)
-            {
-                AttachToRig(_sSharedRig);
-                return;
-            }
+            if (_audioRoot != null) return;
 
             _audioRoot = new GameObject("MusicManager_AudioRoot");
             UnityEngine.Object.DontDestroyOnLoad(_audioRoot);
@@ -297,32 +292,6 @@ namespace Features.Audio
             _host = _audioRoot.AddComponent<CoroutineHost>();
             _sourceA = _audioRoot.AddComponent<AudioSource>();
             _sourceB = _audioRoot.AddComponent<AudioSource>();
-
-            _sourceA.playOnAwake = false;
-            _sourceB.playOnAwake = false;
-
-            _activeSource = _sourceA;
-            _idleSource = _sourceB;
-
-            _sSharedRig = _audioRoot;
-        }
-
-        private void AttachToRig(GameObject rig)
-        {
-            _audioRoot = rig;
-
-            _host = rig.GetComponent<CoroutineHost>();
-            if (!_host) _host = rig.AddComponent<CoroutineHost>();
-
-            var sources = rig.GetComponents<AudioSource>();
-            while (sources.Length < 2)
-            {
-                rig.AddComponent<AudioSource>();
-                sources = rig.GetComponents<AudioSource>();
-            }
-
-            _sourceA = sources[0];
-            _sourceB = sources[1];
 
             _sourceA.playOnAwake = false;
             _sourceB.playOnAwake = false;
