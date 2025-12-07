@@ -2,6 +2,7 @@ using Core.Abstractions.Menu;
 using Systems.Game;
 using UnityEngine;
 using VContainer;
+using Core.Abstractions; 
 
 namespace Features.Menu.Options
 {
@@ -15,6 +16,7 @@ namespace Features.Menu.Options
 
         // Injected dependencies
         [Inject] private readonly GameSettings _gameSettings;
+        [Inject] private readonly IMusicManager _musicManager;
 
         // Store default values for reset functionality
         private float _defaultMusicVolume;
@@ -68,10 +70,14 @@ namespace Features.Menu.Options
             _defaultLanguage = _gameSettings.generalSettings.language;
 
             // Load from PlayerPrefs or use current GameSettings values as defaults
-            _gameSettings.audioManagerSettings.musicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, _defaultMusicVolume);
-            _gameSettings.audioManagerSettings.sfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, _defaultSfxVolume);
-            _gameSettings.dialogueManagerSettings.typingSpeed = PlayerPrefs.GetFloat(DialogueSpeedKey, _defaultDialogueSpeed);
-            _gameSettings.generalSettings.language = PlayerPrefs.GetString(LanguageKey, _defaultLanguage);
+            _gameSettings.audioManagerSettings.musicVolume =
+                PlayerPrefs.GetFloat(MusicVolumeKey, _defaultMusicVolume);
+            _gameSettings.audioManagerSettings.sfxVolume =
+                PlayerPrefs.GetFloat(SfxVolumeKey, _defaultSfxVolume);
+            _gameSettings.dialogueManagerSettings.typingSpeed =
+                PlayerPrefs.GetFloat(DialogueSpeedKey, _defaultDialogueSpeed);
+            _gameSettings.generalSettings.language =
+                PlayerPrefs.GetString(LanguageKey, _defaultLanguage);
 
             ApplyAllSettings();
         }
@@ -106,10 +112,12 @@ namespace Features.Menu.Options
 
         private void ApplyAudioSettings()
         {
-            // Audio volumes will be used by your audio system
-            // You can extend this to use an Audio Mixer if needed
-            Debug.Log($"Audio settings applied - Music: {_gameSettings.audioManagerSettings.musicVolume}, " +
-                      $"SFX: {_gameSettings.audioManagerSettings.sfxVolume}");
+            // Music goes through MusicManager master
+            _musicManager.SetMasterVolume(_gameSettings.audioManagerSettings.musicVolume);
+
+            // SFX volume is read on-play by SfxManager and FootstepEmitter from GameSettings,
+            // so nothing else is required here.
+            Debug.Log($"Audio settings applied - Music: {_gameSettings.audioManagerSettings.musicVolume}, SFX: {_gameSettings.audioManagerSettings.sfxVolume}");
         }
 
         private void ApplyLanguageSettings()

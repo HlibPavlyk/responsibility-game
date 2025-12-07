@@ -13,6 +13,7 @@ using Systems.SaveLoad;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Features.Audio;
 
 namespace Core.DI
 {
@@ -34,7 +35,10 @@ namespace Core.DI
             builder.RegisterInstance(settings.audioManagerSettings);
             builder.RegisterInstance(settings.generalSettings);
             builder.RegisterInstance(state);
-
+            builder.RegisterInstance(settings.musicManagerSettings);
+            builder.RegisterInstance(settings.sfxLibrarySettings);
+            builder.RegisterInstance(settings.footstepSettings);
+            
             // Register core managers
             builder.Register<IPlayerManager, PlayerManager>(Lifetime.Scoped);
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
@@ -43,12 +47,17 @@ namespace Core.DI
             builder.Register<IDialogueManager, DialogueManager>(Lifetime.Scoped);
             builder.Register<IInputManager, InputManager>(Lifetime.Singleton);
             builder.Register<IOptionsManager, OptionsManager>(Lifetime.Singleton);
+            builder.Register<IMusicManager, MusicManager>(Lifetime.Singleton);
+            builder.Register<ISfxManager, SfxManager>(Lifetime.Singleton);
             
             #if UNITY_WEBGL && !UNITY_EDITOR
                 builder.Register<ISaveLoadManager, WebSaveLoadManager>(Lifetime.Scoped);
             #else
                 builder.Register<ISaveLoadManager, SaveLoadManager>(Lifetime.Scoped);
             #endif
+            builder.RegisterBuildCallback(
+                r => r.Resolve<IMusicManager>().Initialize()
+            ); 
         }
         
         protected override void Awake()

@@ -4,6 +4,7 @@ using Core.Events;
 using Systems.Game;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace Features.Characters.Player
 {
@@ -11,7 +12,13 @@ namespace Features.Characters.Player
     {
         [Inject] private readonly PlayerManagerSettings _settings;
         [Inject] private readonly GameState _gameState;
-
+        private readonly IObjectResolver _container; // Reference to the DI Container
+        
+        public PlayerManager(IObjectResolver container)
+        {
+            _container = container;
+        }
+        
         public void SpawnPlayer(Transform defaultSpawnTransform)
         {
             if (_gameState?.playerSpawnLocation == null)
@@ -31,6 +38,7 @@ namespace Features.Characters.Player
                     {
                         foundSpawn = true;
                         _gameState.activePlayer = Object.Instantiate(_settings.playerPrefab, spawn.transform.position, Quaternion.identity);
+                        _container.InjectGameObject(_gameState.activePlayer);
                         break;
                     }
                 }
@@ -43,6 +51,7 @@ namespace Features.Characters.Player
             else
             {
                 _gameState.activePlayer = Object.Instantiate(_settings.playerPrefab, defaultSpawnTransform.position, Quaternion.identity);
+                _container.InjectGameObject(_gameState.activePlayer);
                 Debug.Log($"Player spawned at default location: {defaultSpawnTransform}");
             }
 
