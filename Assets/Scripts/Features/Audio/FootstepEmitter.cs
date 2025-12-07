@@ -54,6 +54,9 @@ namespace Features.Audio
 
             var origin = footPoint ? footPoint.position : transform.position;
             var hit = Physics2D.Raycast(origin, Vector2.down, _settings.groundCheckDistance, _settings.groundMask);
+            
+            if (!hit.collider) return;
+            
             var tag = (hit.collider != null) ? hit.collider.tag : "Untagged";
 
             var set = _settings.GetSetForTag(tag);
