@@ -130,9 +130,7 @@ namespace Features.Audio
             if (!EnsureInitialized()) return;
             EnsureAudioRig();
             if (!_host || !_activeSource || !_idleSource) return;
-
-            if (!EnsureInitialized()) return;
-
+            
             var duration = Mathf.Max(0f, fadeDuration ?? settings.defaultFadeDuration);
 
             StopAndClearCoroutine(ref _crossfadeRoutine);
