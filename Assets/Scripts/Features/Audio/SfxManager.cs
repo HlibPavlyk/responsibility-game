@@ -84,7 +84,7 @@ namespace Features.Audio
             src.pitch = Random.Range(e.pitchRange.x, e.pitchRange.y);
             src.PlayOneShot(e.clip, Mathf.Clamp01(e.volume * volumeScale * master));
 
-            Object.Destroy(go, (e.clip.length / Mathf.Max(src.pitch, 0.01f)) + 0.1f);
+            Object.Destroy(go, (e.clip.length / Mathf.Max(src.pitch, 0.5f)) + 0.1f);
         }
 
         public void PlayClip(AudioClip clip, in SfxOptions opt)
