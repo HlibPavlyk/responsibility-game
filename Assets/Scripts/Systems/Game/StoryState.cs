@@ -1,67 +1,59 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Systems.Game
 {
     [CreateAssetMenu(fileName = "StoryState", menuName = "ScriptableObjects/StoryState", order = 2)]
     public class StoryState : ScriptableObject
     {
-        [SerializeField] private List<string> _activeFlagsList = new List<string>();
-        [SerializeField] private List<string> _firedTriggersList = new List<string>();
+        [SerializeField] private List<string> activeFlagsList = new();
+        [SerializeField] private List<string> firedTriggersList = new();
 
-        private HashSet<string> _activeFlags;
-        private HashSet<string> _firedTriggers;
-
-        private void OnEnable()
+        private void OnValidate()
         {
-            InitializeHashSets();
+            // Remove duplicates and null/empty entries when edited in Inspector
+            RemoveDuplicatesAndEmpty(activeFlagsList);
+            RemoveDuplicatesAndEmpty(firedTriggersList);
         }
 
-        private void InitializeHashSets()
+        private void RemoveDuplicatesAndEmpty(List<string> list)
         {
-            _activeFlags = new HashSet<string>(_activeFlagsList);
-            _firedTriggers = new HashSet<string>(_firedTriggersList);
+            if (list == null) return;
+
+            // Remove null or empty strings
+            list.RemoveAll(string.IsNullOrEmpty);
+
+            // Remove duplicates by converting to HashSet and back
+            var uniqueItems = new HashSet<string>(list);
+            list.Clear();
+            list.AddRange(uniqueItems);
         }
 
         // Flag management
         public bool HasFlag(string flagName)
         {
-            if (_activeFlags == null)
-                InitializeHashSets();
-
-            return _activeFlags.Contains(flagName);
+            return activeFlagsList.Contains(flagName);
         }
 
         public void SetFlag(string flagName)
         {
-            if (_activeFlags == null)
-                InitializeHashSets();
-
-            if (_activeFlags.Add(flagName))
+            if (!activeFlagsList.Contains(flagName))
             {
-                _activeFlagsList.Add(flagName);
+                activeFlagsList.Add(flagName);
             }
         }
 
         public void ClearFlag(string flagName)
         {
-            if (_activeFlags == null)
-                InitializeHashSets();
-
-            if (_activeFlags.Remove(flagName))
-            {
-                _activeFlagsList.Remove(flagName);
-            }
+            activeFlagsList.Remove(flagName);
         }
 
         public bool HasAllFlags(params string[] flagNames)
         {
-            if (_activeFlags == null)
-                InitializeHashSets();
-
             foreach (var flag in flagNames)
             {
-                if (!_activeFlags.Contains(flag))
+                if (!activeFlagsList.Contains(flag))
                     return false;
             }
             return true;
@@ -69,12 +61,9 @@ namespace Systems.Game
 
         public bool HasAnyFlag(params string[] flagNames)
         {
-            if (_activeFlags == null)
-                InitializeHashSets();
-
             foreach (var flag in flagNames)
             {
-                if (_activeFlags.Contains(flag))
+                if (activeFlagsList.Contains(flag))
                     return true;
             }
             return false;
@@ -83,72 +72,80 @@ namespace Systems.Game
         // Trigger management
         public bool HasTriggered(string triggerID)
         {
-            if (_firedTriggers == null)
-                InitializeHashSets();
-
-            return _firedTriggers.Contains(triggerID);
+            return firedTriggersList.Contains(triggerID);
         }
 
         public void MarkTriggered(string triggerID)
         {
-            if (_firedTriggers == null)
-                InitializeHashSets();
-
-            if (_firedTriggers.Add(triggerID))
+            if (!firedTriggersList.Contains(triggerID))
             {
-                _firedTriggersList.Add(triggerID);
+                firedTriggersList.Add(triggerID);
             }
         }
 
         public void ResetTrigger(string triggerID)
         {
-            if (_firedTriggers == null)
-                InitializeHashSets();
-
-            if (_firedTriggers.Remove(triggerID))
-            {
-                _firedTriggersList.Remove(triggerID);
-            }
+            firedTriggersList.Remove(triggerID);
         }
 
         // Serialization support for SaveLoadManager
         public List<string> GetAllFlags()
         {
-            if (_activeFlags == null)
-                InitializeHashSets();
-
-            return new List<string>(_activeFlags);
+            return new List<string>(activeFlagsList);
         }
 
         public List<string> GetAllTriggeredIDs()
         {
-            if (_firedTriggers == null)
-                InitializeHashSets();
-
-            return new List<string>(_firedTriggers);
+            return new List<string>(firedTriggersList);
         }
 
         public void LoadFlags(List<string> flags)
         {
-            _activeFlagsList = new List<string>(flags);
-            _activeFlags = new HashSet<string>(flags);
+            activeFlagsList = new List<string>(flags);
+            RemoveDuplicatesAndEmpty(activeFlagsList);
         }
 
         public void LoadTriggers(List<string> triggers)
         {
-            _firedTriggersList = new List<string>(triggers);
-            _firedTriggers = new HashSet<string>(triggers);
+            firedTriggersList = new List<string>(triggers);
+            RemoveDuplicatesAndEmpty(firedTriggersList);
         }
 
         // Debug utility
         public void ResetAll()
         {
-            _activeFlagsList.Clear();
-            _firedTriggersList.Clear();
-            _activeFlags = new HashSet<string>();
-            _firedTriggers = new HashSet<string>();
+            activeFlagsList.Clear();
+            firedTriggersList.Clear();
 
             Debug.Log("StoryState reset: All flags and triggers cleared");
         }
+
+        // Inspector utilities for manual management
+#if UNITY_EDITOR
+        [ContextMenu("Remove Duplicates")]
+        private void RemoveDuplicatesManual()
+        {
+            RemoveDuplicatesAndEmpty(activeFlagsList);
+            RemoveDuplicatesAndEmpty(firedTriggersList);
+            UnityEditor.EditorUtility.SetDirty(this);
+            Debug.Log("StoryState: Removed duplicates and empty entries");
+        }
+
+        [ContextMenu("Clear All Flags")]
+        private void ClearAllFlags()
+        {
+            activeFlagsList.Clear();
+            UnityEditor.EditorUtility.SetDirty(this);
+            Debug.Log("StoryState: All flags cleared");
+        }
+
+        [ContextMenu("Clear All Triggers")]
+        private void ClearAllTriggers()
+        {
+            firedTriggersList.Clear();
+            UnityEditor.EditorUtility.SetDirty(this);
+            Debug.Log("StoryState: All fired triggers cleared");
+        }
+#endif
     }
 }

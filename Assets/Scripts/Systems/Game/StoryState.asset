@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4719608934b9b4997aa084f0110f00, type: 3}
   m_Name: StoryState
   m_EditorClassIdentifier: 
-  _activeFlagsList: []
-  _firedTriggersList: []
+  activeFlagsList:
+  - unlock_admin
+  firedTriggersList:
+  - hall_day1_sofa
