@@ -10,10 +10,18 @@ namespace Systems.SaveLoad
         private const string WebSaveKey = "GameSave";
 
         [Inject] private readonly GameState _gameState;
+        [Inject] private readonly StoryState _storyState;
 
         public void SaveGame()
         {
-            var json = JsonUtility.ToJson(_gameState.playerStats, true);
+            var saveData = new SaveData
+            {
+                currentSceneName = _gameState.playerStats.currentSceneName,
+                activeFlags = _storyState.GetAllFlags(),
+                firedTriggers = _storyState.GetAllTriggeredIDs()
+            };
+
+            var json = JsonUtility.ToJson(saveData, true);
             PlayerPrefs.SetString(WebSaveKey, json);
             PlayerPrefs.Save();
             Debug.Log("Game saved in browser PlayerPrefs");
@@ -28,7 +36,12 @@ namespace Systems.SaveLoad
             }
 
             var json = PlayerPrefs.GetString(WebSaveKey);
-            JsonUtility.FromJsonOverwrite(json, _gameState.playerStats);
+            var saveData = JsonUtility.FromJson<SaveData>(json);
+
+            _gameState.playerStats.currentSceneName = saveData.currentSceneName;
+            _storyState.LoadFlags(saveData.activeFlags);
+            _storyState.LoadTriggers(saveData.firedTriggers);
+
             Debug.Log("Game loaded from browser PlayerPrefs");
         }
 

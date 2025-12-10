@@ -29,5 +29,12 @@ namespace Core.Events
             public static UnityAction OnGamePaused;
             public static UnityAction OnGameResumed;
         }
+
+        public static class Story
+        {
+            public static UnityAction<string> OnFlagSet;
+            public static UnityAction<string> OnFlagCleared;
+            public static UnityAction<string> OnTriggerActivated;
+        }
     }
 }

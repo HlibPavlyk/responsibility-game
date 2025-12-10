@@ -177,11 +177,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480021284503752752, guid: 4220bc82ffed5e64e8c1c1d2428a7e54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3780327
+      value: 3.3794565
       objectReference: {fileID: 0}
     - target: {fileID: 3480021284503752752, guid: 4220bc82ffed5e64e8c1c1d2428a7e54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.96859336
+      value: -0.9685924
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3784,6 +3784,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6093455940522587416, guid: 5190ac246cbca4544b56e81178e02e57, type: 3}
   m_PrefabInstance: {fileID: 1510261624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1941806505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1941806506}
+  m_Layer: 0
+  m_Name: Triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1941806506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941806505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.884649, y: 3.062924, z: -0.055718355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2101080094}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1970510967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4114,6 +4146,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7414175205736659040, guid: b2925e153e05de14a81c3c958ea28429, type: 3}
   m_PrefabInstance: {fileID: 2066282770}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2101080093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2101080094}
+  - component: {fileID: 2101080095}
+  m_Layer: 0
+  m_Name: SofaTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2101080094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101080093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1941806506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2101080095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101080093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bfbf2aa82e8e94d89505bbc01ae2f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerID: sofa_description
+  oneTimeOnly: 1
+  startEnabled: 1
+  visualCue: {fileID: 397569494}
+  conditions: []
+  actions: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &2145988633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4745961761764380844, guid: 2964798a08ae7da4a92b909488019dfc, type: 3}
@@ -4251,3 +4336,4 @@ SceneRoots:
   - {fileID: 829428331}
   - {fileID: 1726095171}
   - {fileID: 6437841764764863841}
+  - {fileID: 1941806506}
