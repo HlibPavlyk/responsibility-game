@@ -12,34 +12,34 @@ EditorBuildSettings:
     path: Assets/Scenes/Core/MainMenu.unity
     guid: 6a55bda526df23d44b832715ba094684
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Day/HallDay.unity
+    path: Assets/Scenes/Levels/Day1/Day/HallDay1.unity
     guid: a85245857cfd18344be6226965148e7b
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Night/HallNight.unity
+    path: Assets/Scenes/Levels/Day1/Night/HallNight1.unity
     guid: f32358dbd466b144494081da0109fa47
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Day/AdministrationDay.unity
+    path: Assets/Scenes/Levels/Day1/Day/AdministrationDay1.unity
     guid: 0286abc8236aa804ab67cad8b9c0b9c9
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Night/AdministrationNight.unity
+    path: Assets/Scenes/Levels/Day1/Night/AdministrationNight1.unity
     guid: 5039788e2daa23e4a900735fbfc74837
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Day/WCDay.unity
+    path: Assets/Scenes/Levels/Day1/Day/WCDay1.unity
     guid: e0038c70898599e49a2c8b08f48304f1
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Night/WCNight.unity
+    path: Assets/Scenes/Levels/Day1/Night/WCNight1.unity
     guid: 05e418adba178a847a1b61ebf4284b58
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Day/OfficeDay.unity
+    path: Assets/Scenes/Levels/Day1/Day/OfficeDay1.unity
     guid: 2c55de9efd540dd46ba08bd95dfd5148
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Night/OfficeNight.unity
+    path: Assets/Scenes/Levels/Day1/Night/OfficeNight1.unity
     guid: 8ab601b996b637c4a9591bd212412caf
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Day/BossRoomDay.unity
+    path: Assets/Scenes/Levels/Day1/Day/BossRoomDay1.unity
     guid: f81dc2773a4145040915cfbfe7c8dadf
   - enabled: 1
-    path: Assets/Scenes/Levels/Template/Night/BossRoomNight.unity
+    path: Assets/Scenes/Levels/Day1/Night/BossRoomNight1.unity
     guid: 204abd9ee1644e645bff9f39f7a814a3
   - enabled: 1
     path: Assets/Scenes/Levels/Test/Hall.unity

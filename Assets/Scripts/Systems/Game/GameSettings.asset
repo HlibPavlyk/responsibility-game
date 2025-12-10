@@ -17,7 +17,7 @@ MonoBehaviour:
     playerPrefab: {fileID: 3581022016258163397, guid: 5d70e55e79df6ec4a93e435266843335, type: 3}
     spawnTag: Respawn
   menuManagerSettings:
-    startSceneName: HallNight
+    startSceneName: HallDay1
   dialogueManagerSettings:
     typingSpeed: 0.059988525
     defaultAudioInfo: {fileID: 11400000, guid: b4e5f73338b371a44929372ad74869da, type: 2}
@@ -43,25 +43,25 @@ MonoBehaviour:
       loop: 1
     fallbackTrackId: 
     sceneBindings:
-    - sceneName: HallDay
+    - sceneName: HallDay1
       trackId: default_song
-    - sceneName: HallNight
+    - sceneName: HallNight1
       trackId: default_song
-    - sceneName: AdministrationDay
+    - sceneName: AdministrationDay1
       trackId: default_song
-    - sceneName: AdministrationNight
+    - sceneName: AdministrationNight1
       trackId: default_song
-    - sceneName: OfficeDay
+    - sceneName: OfficeDay1
       trackId: office_song
-    - sceneName: OfficeNight
+    - sceneName: OfficeNight1
       trackId: office_song
-    - sceneName: WCDay
+    - sceneName: WCDay1
       trackId: game_song
-    - sceneName: WCNight
+    - sceneName: WCNight1
       trackId: game_song
-    - sceneName: BossRoomDay
+    - sceneName: BossRoomDay1
       trackId: default_song
-    - sceneName: BossRoomNight
+    - sceneName: BossRoomNight1
       trackId: default_song
     - sceneName: Catch the virus
       trackId: game_song
