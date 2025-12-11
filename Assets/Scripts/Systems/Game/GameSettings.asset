@@ -17,9 +17,9 @@ MonoBehaviour:
     playerPrefab: {fileID: 3581022016258163397, guid: 5d70e55e79df6ec4a93e435266843335, type: 3}
     spawnTag: Respawn
   menuManagerSettings:
-    startSceneName: Hall
+    startSceneName: HallDay1
   dialogueManagerSettings:
-    typingSpeed: 0.05
+    typingSpeed: 0.059988525
     defaultAudioInfo: {fileID: 11400000, guid: b4e5f73338b371a44929372ad74869da, type: 2}
     audioInfos:
     - {fileID: 11400000, guid: 219d3876174315b48b4dc41a5e095c79, type: 2}
@@ -43,15 +43,25 @@ MonoBehaviour:
       loop: 1
     fallbackTrackId: 
     sceneBindings:
-    - sceneName: Hall
+    - sceneName: HallDay1
       trackId: default_song
-    - sceneName: Administration
+    - sceneName: HallNight1
       trackId: default_song
-    - sceneName: Office
+    - sceneName: AdministrationDay1
+      trackId: default_song
+    - sceneName: AdministrationNight1
+      trackId: default_song
+    - sceneName: OfficeDay1
       trackId: office_song
-    - sceneName: WC
+    - sceneName: OfficeNight1
+      trackId: office_song
+    - sceneName: WCDay1
       trackId: game_song
-    - sceneName: BossRoom
+    - sceneName: WCNight1
+      trackId: game_song
+    - sceneName: BossRoomDay1
+      trackId: default_song
+    - sceneName: BossRoomNight1
       trackId: default_song
     - sceneName: Catch the virus
       trackId: game_song
@@ -91,7 +101,7 @@ MonoBehaviour:
       pitchRange: {x: 1, y: 1}
     surfaceSets: []
   audioManagerSettings:
-    musicVolume: 0.14321584
-    sfxVolume: 0.2188079
+    musicVolume: 1
+    sfxVolume: 1
   generalSettings:
     language: ua

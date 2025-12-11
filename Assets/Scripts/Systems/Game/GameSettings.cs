@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Features.Audio.Dialogue;
 using UnityEngine;
 using UnityEngine.Audio; 
 namespace Systems.Game
@@ -58,7 +59,6 @@ namespace Systems.Game
         public string language = "ua"; // "ua" for Ukrainian, "en" for English
     }
     
-    
     [Serializable]
     public class MusicManagerSettings
     {
@@ -79,11 +79,11 @@ namespace Systems.Game
         }
 
         [Header("Tracks")]
-        public List<MusicTrack> tracks = new List<MusicTrack>();
+        public List<MusicTrack> tracks = new();
         public string fallbackTrackId;
 
         [Header("Scene Bindings")]
-        public List<SceneMusicBinding> sceneBindings = new List<SceneMusicBinding>();
+        public List<SceneMusicBinding> sceneBindings = new();
         public bool playOnLevelLoaded = true;
 
         [Header("Fades")]
@@ -94,7 +94,6 @@ namespace Systems.Game
         public float duckFadeDuration = 0.25f;
     }
     
-    
     [Serializable]
     public class FootstepSettings
     {
@@ -104,7 +103,7 @@ namespace Systems.Game
             public string surfaceTag = "Untagged"; // Tag on ground colliders
             public AudioClip[] clips;
             [Range(0f, 1f)] public float volume = 1f;
-            public Vector2 pitchRange = new Vector2(1f, 1f);
+            public Vector2 pitchRange = new(1f, 1f);
         } 
         [Header("Cadence")]
         [Tooltip("Seconds between steps at speed = 1. Lower for faster cadence.")]
@@ -117,16 +116,8 @@ namespace Systems.Game
 
         [Header("Sets")]
         public SurfaceSet defaultSet;
-        public List<SurfaceSet> surfaceSets = new List<SurfaceSet>();
-
-        public SurfaceSet GetSetForTag(string tag)
-        {
-            foreach (var s in surfaceSets)
-                if (s != null && s.surfaceTag == tag) return s;
-            return defaultSet;
-        }
+        public List<SurfaceSet> surfaceSets = new();
     }
-    
     
     [Serializable]
     public class SfxLibrarySettings
@@ -137,9 +128,9 @@ namespace Systems.Game
             public string id;
             public AudioClip clip;
             [Range(0f, 1f)] public float volume = 1f;
-            public Vector2 pitchRange = new Vector2(1f, 1f);
+            public Vector2 pitchRange = new(1f, 1f);
         } 
         public AudioMixerGroup output;
-        public List<SfxEntry> entries = new List<SfxEntry>();
+        public List<SfxEntry> entries = new();
     }
 }

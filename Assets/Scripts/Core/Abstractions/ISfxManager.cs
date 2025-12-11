@@ -1,16 +1,8 @@
+using Core.ValueObjects;
 using UnityEngine;
-using UnityEngine.Audio; 
 
 namespace Core.Abstractions
 {
-    public struct SfxOptions
-    {
-        public float volumeScale;
-        public float pitch;
-        public float spatialBlend;
-        public AudioMixerGroup mixer;
-        public float maxDistance;
-    } 
     public interface ISfxManager
     {
         void Play(string id, float volumeScale = 1f);

@@ -21,6 +21,7 @@ namespace Core.DI
     {
         [SerializeField] private GameSettings settings;
         [SerializeField] private GameState state;
+        [SerializeField] private StoryState storyState;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -35,10 +36,11 @@ namespace Core.DI
             builder.RegisterInstance(settings.audioManagerSettings);
             builder.RegisterInstance(settings.generalSettings);
             builder.RegisterInstance(state);
+            builder.RegisterInstance(storyState);
             builder.RegisterInstance(settings.musicManagerSettings);
             builder.RegisterInstance(settings.sfxLibrarySettings);
             builder.RegisterInstance(settings.footstepSettings);
-            
+
             // Register core managers
             builder.Register<IPlayerManager, PlayerManager>(Lifetime.Scoped);
             builder.Register<ILevelManager, LevelManager>(Lifetime.Scoped);
@@ -49,6 +51,7 @@ namespace Core.DI
             builder.Register<IOptionsManager, OptionsManager>(Lifetime.Singleton);
             builder.Register<IMusicManager, MusicManager>(Lifetime.Singleton);
             builder.Register<ISfxManager, SfxManager>(Lifetime.Singleton);
+            builder.Register<IStoryManager, Features.Story.StoryManager>(Lifetime.Singleton);
             
             #if UNITY_WEBGL && !UNITY_EDITOR
                 builder.Register<ISaveLoadManager, WebSaveLoadManager>(Lifetime.Scoped);

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Core.Abstractions;
+using Core.ValueObjects;
 using Systems.Game;
 using UnityEngine;
 using VContainer; 
@@ -29,12 +31,9 @@ namespace Features.Audio
                 return;
             }
 
-            _map = new Dictionary<string, SfxLibrarySettings.SfxEntry>(System.StringComparer.Ordinal);
-            foreach (var e in _settings.entries)
-            {
-                if (e != null && !string.IsNullOrEmpty(e.id) && e.clip != null)
-                    _map[e.id] = e;
-            }
+            _map = _settings.entries
+                .Where(e => e != null && !string.IsNullOrEmpty(e.id) && e.clip)
+                .ToDictionary(e => e.id, e => e);
 
             _root = new GameObject("SfxManager_AudioRoot");
             Object.DontDestroyOnLoad(_root);
@@ -54,9 +53,9 @@ namespace Features.Audio
             InitializeIfNeeded();
             if (!_initialized) return;
 
-            if (!_map.TryGetValue(id, out var e) || e.clip == null) return;
+            if (!_map.TryGetValue(id, out var e) || !e.clip) return;
 
-            float master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
+            var master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
             
             _global2D.outputAudioMixerGroup = _settings.output;
             _global2D.spatialBlend = 0f;
@@ -71,10 +70,12 @@ namespace Features.Audio
 
             if (!_map.TryGetValue(id, out var e) || e.clip == null) return;
 
-            float master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
+            var master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
 
-            var go = new GameObject($"SFX_{id}");
-            go.transform.position = position;
+            var go = new GameObject($"SFX_{id}")
+            {
+                transform = { position = position }
+            };
 
             var src = go.AddComponent<AudioSource>();
             src.playOnAwake = false;
@@ -84,7 +85,7 @@ namespace Features.Audio
             src.pitch = Random.Range(e.pitchRange.x, e.pitchRange.y);
             src.PlayOneShot(e.clip, Mathf.Clamp01(e.volume * volumeScale * master));
 
-            Object.Destroy(go, (e.clip.length / Mathf.Max(src.pitch, 0.5f)) + 0.1f);
+            Object.Destroy(go, e.clip.length / Mathf.Max(src.pitch, 0.5f) + 0.1f);
         }
 
         public void PlayClip(AudioClip clip, in SfxOptions opt)
@@ -94,34 +95,36 @@ namespace Features.Audio
 
             var master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
 
-            _global2D.outputAudioMixerGroup = opt.mixer ? opt.mixer : _settings.output;
-            _global2D.spatialBlend = Mathf.Clamp01(opt.spatialBlend);
-            _global2D.pitch = (opt.pitch == 0f) ? 1f : opt.pitch;
+            _global2D.outputAudioMixerGroup = opt.Mixer ? opt.Mixer : _settings.output;
+            _global2D.spatialBlend = Mathf.Clamp01(opt.SpatialBlend);
+            _global2D.pitch = opt.Pitch == 0f ? 1f : opt.Pitch;
 
-            _global2D.PlayOneShot(clip, Mathf.Clamp01(opt.volumeScale * master));
+            _global2D.PlayOneShot(clip, Mathf.Clamp01(opt.VolumeScale * master));
         }
 
         public void PlayClipAt(AudioClip clip, Vector3 position, in SfxOptions opt)
         {
             InitializeIfNeeded();
-            if (!_initialized || clip == null) return;
+            if (!_initialized || !clip) return;
 
-            var go = new GameObject("SFX_OneShot");
-            go.transform.position = position;
+            var go = new GameObject("SFX_OneShot")
+            {
+                transform = { position = position }
+            };
 
             var src = go.AddComponent<AudioSource>();
             src.playOnAwake = false;
-            src.outputAudioMixerGroup = opt.mixer ? opt.mixer : _settings.output;
-            src.spatialBlend = Mathf.Clamp01(opt.spatialBlend);
-            if (opt.spatialBlend > 0f && opt.maxDistance > 0f)
-                src.maxDistance = opt.maxDistance;
+            src.outputAudioMixerGroup = opt.Mixer ? opt.Mixer : _settings.output;
+            src.spatialBlend = Mathf.Clamp01(opt.SpatialBlend);
+            if (opt is { SpatialBlend: > 0f, MaxDistance: > 0f })
+                src.maxDistance = opt.MaxDistance;
 
-            src.pitch = (opt.pitch == 0f) ? 1f : opt.pitch;
+            src.pitch = opt.Pitch == 0f ? 1f : opt.Pitch;
 
-            float master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
-            src.PlayOneShot(clip, Mathf.Clamp01(opt.volumeScale * master));
+            var master = Mathf.Clamp01(_gameSettings.audioManagerSettings.sfxVolume);
+            src.PlayOneShot(clip, Mathf.Clamp01(opt.VolumeScale * master));
 
-            Object.Destroy(go, (clip.length / Mathf.Max(src.pitch, 0.01f)) + 0.1f);
+            Object.Destroy(go, clip.length / Mathf.Max(src.pitch, 0.01f) + 0.1f);
         }
 
         public void Cleanup()

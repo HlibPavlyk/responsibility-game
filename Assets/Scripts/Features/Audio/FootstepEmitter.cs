@@ -1,7 +1,9 @@
+using System.Linq;
 using UnityEngine;
 using VContainer;
 using Core.DI; 
 using Core.Abstractions;
+using Core.ValueObjects;
 using Systems.Game;
 
 namespace Features.Audio
@@ -45,7 +47,7 @@ namespace Features.Audio
         {
             var origin = footPoint ? footPoint.position : transform.position;
             var hit = Physics2D.Raycast(origin, Vector2.down, _settings.groundCheckDistance, _settings.groundMask);
-            return hit.collider != null;
+            return hit.collider;
         }
 
         private void PlayStep()
@@ -57,22 +59,28 @@ namespace Features.Audio
             
             if (!hit.collider) return;
             
-            var tag = (hit.collider != null) ? hit.collider.tag : "Untagged";
+            var colliderTag = hit.collider ? hit.collider.tag : "Untagged";
 
-            var set = _settings.GetSetForTag(tag);
-            if (set == null || set.clips == null || set.clips.Length == 0) return;
+            var set = GetSetForTag(colliderTag);
+            if (set?.clips == null || set.clips.Length == 0) return;
 
             var clip = set.clips[Random.Range(0, set.clips.Length)];
-            if (clip == null) return;
+            if (!clip) return;
 
             var opt = new SfxOptions
             {
-                volumeScale = set.volume,
-                pitch = Random.Range(set.pitchRange.x, set.pitchRange.y),
-                spatialBlend = playAs2D ? 0f : 1f,
-                mixer = null
+                VolumeScale = set.volume,
+                Pitch = Random.Range(set.pitchRange.x, set.pitchRange.y),
+                SpatialBlend = playAs2D ? 0f : 1f,
+                Mixer = null
             };
             _sfx.PlayClipAt(clip, origin, opt);
+        }
+        
+        private FootstepSettings.SurfaceSet GetSetForTag(string componentTag)
+        {
+            return _settings.surfaceSets.FirstOrDefault(s => s != null && s.surfaceTag == componentTag)
+                   ?? _settings.defaultSet;
         }
     }
 

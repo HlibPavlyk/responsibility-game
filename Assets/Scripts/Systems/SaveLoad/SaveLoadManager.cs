@@ -12,17 +12,25 @@ namespace Systems.SaveLoad
         private string saveFile => Path.Combine(saveDirectory, "LastSave.json");
 
         [Inject] private readonly GameState _gameState;
-        
+        [Inject] private readonly StoryState _storyState;
+
         public void SaveGame()
         {
             if (!Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
             }
-            
-            var json = JsonUtility.ToJson(_gameState.playerStats, true);
+
+            var saveData = new SaveData
+            {
+                currentSceneName = _gameState.playerStats.currentSceneName,
+                activeFlags = _storyState.GetAllFlags(),
+                firedTriggers = _storyState.GetAllTriggeredIDs()
+            };
+
+            var json = JsonUtility.ToJson(saveData, true);
             File.WriteAllText(saveFile, json);
-            
+
             Debug.Log($"Game saved to: {saveFile}");
         }
 
@@ -35,8 +43,12 @@ namespace Systems.SaveLoad
             }
 
             var json = File.ReadAllText(saveFile);
-            JsonUtility.FromJsonOverwrite(json, _gameState.playerStats);
-            
+            var saveData = JsonUtility.FromJson<SaveData>(json);
+
+            _gameState.playerStats.currentSceneName = saveData.currentSceneName;
+            _storyState.LoadFlags(saveData.activeFlags);
+            _storyState.LoadTriggers(saveData.firedTriggers);
+
             Debug.Log($"Game loaded from: {saveFile}");
         }
 

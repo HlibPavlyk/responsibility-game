@@ -7,6 +7,7 @@ using System.Text;
 using Core.Abstractions;
 using Core.DI;
 using Core.Events;
+using Features.Audio.Dialogue;
 using TMPro;
 using UnityEngine;
 using VContainer;

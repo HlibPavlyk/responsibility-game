@@ -14,6 +14,7 @@ namespace Features.Menu.MainMenu
     {
         // injectable dependencies
         [Inject] private readonly GameState _gameState;
+        [Inject] private readonly StoryState _storyState;
         [Inject] private readonly MenuManagerSettings _settings;
         [Inject] private readonly ISaveLoadManager _saveLoadManager;
         [Inject] private readonly IOptionsManager _optionsManager;
@@ -27,6 +28,7 @@ namespace Features.Menu.MainMenu
         public void NewGame()
         {
             _saveLoadManager.DeleteSaves();
+            _storyState.ResetAll();
             _gameState.playerStats.currentSceneName = _settings.startSceneName;
             GameEvents.Level.LevelExit?.Invoke(_settings.startSceneName, "");
         }

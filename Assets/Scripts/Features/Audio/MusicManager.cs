@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Abstractions;
 using Core.Events;
 using Systems.Game;
@@ -12,7 +13,7 @@ namespace Features.Audio
 {
     public class MusicManager : IMusicManager
     {
-        [Inject] private readonly MusicManagerSettings settings;
+        [Inject] private readonly MusicManagerSettings _settings;
 
         // Nested
         private class CoroutineHost : MonoBehaviour { }
@@ -49,7 +50,7 @@ namespace Features.Audio
         {
             if (_initialized && !_isDisposed) return;
 
-            if (settings == null)
+            if (_settings == null)
             {
                 Debug.LogError("MusicManagerSettings is null.");
                 return;
@@ -66,7 +67,7 @@ namespace Features.Audio
             _subscribed = true;
             _isDisposed = false;
 
-            if (settings.playOnLevelLoaded)
+            if (_settings.playOnLevelLoaded)
             {
                 var sceneName = SceneManager.GetActiveScene().name;
                 PlaySceneMusic(sceneName);
@@ -90,7 +91,7 @@ namespace Features.Audio
                 return;
             }
 
-            StartCrossfade(track, fadeDuration ?? settings.defaultFadeDuration);
+            StartCrossfade(track, fadeDuration ?? _settings.defaultFadeDuration);
         }
 
         public void PlaySceneMusic(string sceneName, float? fadeDuration = null)
@@ -107,10 +108,10 @@ namespace Features.Audio
             {
                 Play(trackId, fadeDuration);
             }
-            else if (!string.IsNullOrEmpty(settings.fallbackTrackId))
+            else if (!string.IsNullOrEmpty(_settings.fallbackTrackId))
             {
-                Debug.LogWarning($"No scene binding for '{sceneName}'. Using fallback track '{settings.fallbackTrackId}'.");
-                Play(settings.fallbackTrackId, fadeDuration);
+                Debug.LogWarning($"No scene binding for '{sceneName}'. Using fallback track '{_settings.fallbackTrackId}'.");
+                Play(_settings.fallbackTrackId, fadeDuration);
             }
         }
 
@@ -120,7 +121,7 @@ namespace Features.Audio
             EnsureAudioRig();
             if (!_host || !_activeSource || !_idleSource) return;
             
-            var duration = Mathf.Max(0f, fadeDuration ?? settings.defaultFadeDuration);
+            var duration = Mathf.Max(0f, fadeDuration ?? _settings.defaultFadeDuration);
 
             StopAndClearCoroutine(ref _crossfadeRoutine);
 
@@ -185,13 +186,23 @@ namespace Features.Audio
 
         private void SafeUnsubscribe()
         {
-            try { UnsubscribeUnitySceneEvents(); }
+            try
+            {
+                UnsubscribeUnitySceneEvents();
+            }
             catch (Exception e)
-            { Debug.LogWarning($"[MusicManager] Failed to unsubscribe Unity scene events: {e}"); }
+            {
+                Debug.LogWarning($"[MusicManager] Failed to unsubscribe Unity scene events: {e}");
+            }
 
-            try { UnsubscribeEvents(); }
+            try
+            {
+                UnsubscribeEvents();
+            }
             catch (Exception e)
-            { Debug.LogWarning($"[MusicManager] Failed to unsubscribe MusicManager events: {e}"); }
+            {
+                Debug.LogWarning($"[MusicManager] Failed to unsubscribe MusicManager events: {e}");
+            }
         }
         
         private void UnsubscribeUnitySceneEvents()
@@ -206,7 +217,7 @@ namespace Features.Audio
             if (!EnsureInitialized()) return;
             EnsureAudioRig();
 
-            if (!settings.playOnLevelLoaded) return;
+            if (!_settings.playOnLevelLoaded) return;
             PlaySceneMusic(newScene.name);
         }
 
@@ -253,7 +264,7 @@ namespace Features.Audio
         private void HandleDialogueStarted()
         {
             if (!EnsureInitialized()) return;
-            StartDuck(Mathf.Clamp01(settings.dialogueDuckVolume), settings.duckFadeDuration);
+            StartDuck(Mathf.Clamp01(_settings.dialogueDuckVolume), _settings.duckFadeDuration);
         }
 
         private void HandleDialogueEnded()
@@ -262,7 +273,7 @@ namespace Features.Audio
             EnsureAudioRig();
             if (!_host || !_activeSource || !_idleSource) return;
 
-            StartDuck(1f, settings.duckFadeDuration);
+            StartDuck(1f, _settings.duckFadeDuration);
         }
 
         private void HandleLevelLoaded(Transform _)
@@ -270,13 +281,13 @@ namespace Features.Audio
             if (!EnsureInitialized()) return;
             EnsureAudioRig();
             if (!_host || !_activeSource || !_idleSource) return;
-            if (!settings.playOnLevelLoaded) return;
+            if (!_settings.playOnLevelLoaded) return;
 
             var sceneName = SceneManager.GetActiveScene().name;
             PlaySceneMusic(sceneName);
         }
 
-        private void HandleLevelExit(string nextSceneName, string _playerSpawn)
+        private void HandleLevelExit(string nextSceneName, string playerSpawn)
         {
             // Optional: pre-fade to next scene's music here if desired.
         }
@@ -284,7 +295,7 @@ namespace Features.Audio
         // Audio rig lifecycle
         private void CreateAudioRig()
         {
-            if (_audioRoot != null) return;
+            if (_audioRoot) return;
 
             _audioRoot = new GameObject("MusicManager_AudioRoot");
             UnityEngine.Object.DontDestroyOnLoad(_audioRoot);
@@ -302,12 +313,15 @@ namespace Features.Audio
 
         private void EnsureAudioRig()
         {
-            if (!_audioRoot || !_host || !_sourceA || !_sourceB || !_activeSource || !_idleSource)
+            if (_audioRoot && _host && _sourceA && _sourceB && _activeSource && _idleSource) return;
+
+            if (_audioRoot)
             {
-                if (_audioRoot) UnityEngine.Object.Destroy(_audioRoot);
-                ResetRigFields();
-                CreateAudioRig();
+                UnityEngine.Object.Destroy(_audioRoot);
             }
+            
+            ResetRigFields();
+            CreateAudioRig();
         }
 
         private void ResetRigFields()
@@ -340,8 +354,8 @@ namespace Features.Audio
 
         private IEnumerator DuckRoutine(float targetDuck, float duration)
         {
-            float start = _duckFactor;
-            float t = 0f;
+            var start = _duckFactor;
+            var t = 0f;
 
             while (t < duration)
             {
@@ -363,7 +377,7 @@ namespace Features.Audio
             EnsureAudioRig();
             if (!_host || !_activeSource || !_idleSource) return;
 
-            if (track == null || track.clip == null) return;
+            if (track == null || !track.clip) return;
 
             if (_activeSource.clip == track.clip && _activeSource.isPlaying)
             {
@@ -421,7 +435,7 @@ namespace Features.Audio
 
         private IEnumerator FadeOutAndStop(AudioSource src, float duration)
         {
-            if (src == null || !src.isPlaying) yield break;
+            if (!src || !src.isPlaying) yield break;
 
             var start = src.volume;
             var t = 0f;
@@ -452,14 +466,14 @@ namespace Features.Audio
             if (!_host || !_activeSource || !_idleSource) return;
 
             var activeTrackVol = 1f;
-            if (_activeSource.clip != null)
+            if (_activeSource.clip)
             {
                 var track = FindTrackByClip(_activeSource.clip);
                 if (track != null) activeTrackVol = track.volume;
             }
 
             var idleTrackVol = 1f;
-            if (_idleSource.clip != null)
+            if (_idleSource.clip)
             {
                 var track = FindTrackByClip(_idleSource.clip);
                 if (track != null) idleTrackVol = track.volume;
@@ -478,15 +492,8 @@ namespace Features.Audio
 
         private MusicManagerSettings.MusicTrack FindTrackByClip(AudioClip clip)
         {
-            if (clip == null || _trackLookup == null) return null;
-
-            foreach (var kv in _trackLookup)
-            {
-                if (kv.Value != null && kv.Value.clip == clip)
-                    return kv.Value;
-            }
-
-            return null;
+            if (!clip || _trackLookup == null) return null;
+            return _trackLookup.Values.FirstOrDefault(v => v?.clip == clip);
         }
 
         // Data setup
@@ -495,9 +502,9 @@ namespace Features.Audio
             _trackLookup = new Dictionary<string, MusicManagerSettings.MusicTrack>(StringComparer.Ordinal);
             _sceneToTrack = new Dictionary<string, string>(StringComparer.Ordinal);
 
-            if (settings.tracks != null)
+            if (_settings.tracks != null)
             {
-                foreach (var t in settings.tracks)
+                foreach (var t in _settings.tracks)
                 {
                     if (t == null || string.IsNullOrEmpty(t.id)) continue;
 
@@ -506,9 +513,9 @@ namespace Features.Audio
                 }
             }
 
-            if (settings.sceneBindings != null)
+            if (_settings.sceneBindings != null)
             {
-                foreach (var b in settings.sceneBindings)
+                foreach (var b in _settings.sceneBindings)
                 {
                     if (b == null || string.IsNullOrEmpty(b.sceneName) || string.IsNullOrEmpty(b.trackId)) continue;
 
@@ -523,7 +530,7 @@ namespace Features.Audio
         // Utility
         private void StopAndClearCoroutine(ref Coroutine routine)
         {
-            if (_host != null && routine != null)
+            if (_host && routine != null)
             {
                 _host.StopCoroutine(routine);
             }
