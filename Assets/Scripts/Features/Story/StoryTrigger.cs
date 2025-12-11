@@ -31,6 +31,7 @@ namespace Features.Story
         [Inject] private readonly IDialogueManager _dialogueManager;
         [Inject] private readonly ILevelManager _levelManager;
         [Inject] private readonly IInputManager _inputManager;
+        [Inject] private readonly ISfxManager _sfxManager;
         [Inject] private readonly GameState _gameState;
 
         // Internal state
@@ -132,7 +133,9 @@ namespace Features.Story
             {
                 StoryManager = _storyManager,
                 DialogueManager = _dialogueManager,
-                LevelManager = _levelManager,
+                SfxManager = _sfxManager,
+                GameState = _gameState,
+                Runner = this,
                 TriggerID = triggerID
             };
 

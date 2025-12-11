@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using VContainer;
 
+[Obsolete("Use AutoStoryTrigger/TransitionSceneAction instead")]
 public class LevelTransition : SceneTransition
 {
     [Header("VisualCue")]

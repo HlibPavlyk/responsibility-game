@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Core.Events;
 using UnityEngine;
 
 namespace Features.Story.Actions
@@ -6,8 +8,16 @@ namespace Features.Story.Actions
     [Serializable]
     public class TransitionSceneAction : StoryAction
     {
+        [Header("Scene")]
         [SerializeField] private string sceneName;
         [SerializeField] private string spawnPointName;
+        
+        [Header("Transition Animation")]
+        [SerializeField] private Animator transitionAnimator;
+        [SerializeField] private float transitionTime = 0.5f;
+        
+        [Header("SFX")]
+        [SerializeField] private string sfxTag = "door_open";
 
         public override void Execute(StoryActionContext context)
         {
@@ -17,10 +27,24 @@ namespace Features.Story.Actions
                 return;
             }
 
-            if (context.LevelManager != null)
+            if (context.Runner)
             {
-                context.LevelManager.OnLevelExit(sceneName, spawnPointName);
+                context.Runner.StartCoroutine(LoadLevel(context));
             }
+        }
+        
+        private IEnumerator LoadLevel(StoryActionContext context)
+        {
+            // door open SFX
+            context.SfxManager?.Play(sfxTag); // id from SfxLibrarySettings
+        
+            context.GameState.isTransitionAnimationPlaying = true;
+            transitionAnimator.SetTrigger("Start");
+
+             yield return new WaitForSeconds(transitionTime);
+
+            GameEvents.Level.LevelExit.Invoke(sceneName, spawnPointName);
+            context.GameState.isTransitionAnimationPlaying = false;
         }
     }
 }

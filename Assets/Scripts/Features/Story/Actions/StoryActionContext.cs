@@ -1,4 +1,6 @@
 using Core.Abstractions;
+using Systems.Game;
+using UnityEngine;
 
 namespace Features.Story.Actions
 {
@@ -6,7 +8,9 @@ namespace Features.Story.Actions
     {
         public IStoryManager StoryManager;
         public IDialogueManager DialogueManager;
-        public ILevelManager LevelManager;
+        public ISfxManager SfxManager;
+        public GameState GameState;
+        public MonoBehaviour Runner;
         public string TriggerID;
     }
 }

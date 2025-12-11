@@ -24,7 +24,7 @@ namespace Features.Story
 
         [Header("Activation Delay")]
         [Tooltip("Delay in seconds before trigger activates after player enters")]
-        [SerializeField] private float activationDelay = 0f;
+        [SerializeField] private float activationDelay;
 
         [Header("Conditions")]
         [SerializeReference] private StoryCondition[] conditions;
@@ -36,6 +36,7 @@ namespace Features.Story
         [Inject] private readonly IStoryManager _storyManager;
         [Inject] private readonly IDialogueManager _dialogueManager;
         [Inject] private readonly ILevelManager _levelManager;
+        [Inject] private readonly ISfxManager _sfxManager;
         [Inject] private readonly GameState _gameState;
 
         // Internal state
@@ -168,7 +169,9 @@ namespace Features.Story
             {
                 StoryManager = _storyManager,
                 DialogueManager = _dialogueManager,
-                LevelManager = _levelManager,
+                SfxManager = _sfxManager,
+                GameState = _gameState,
+                Runner = this,
                 TriggerID = triggerID
             };
 

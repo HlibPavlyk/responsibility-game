@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: StoryState
   m_EditorClassIdentifier: 
   activeFlagsList:
-  - unlock_admin
+  - boss_talk
   firedTriggersList:
-  - hall_day1_sofa
+  - admin_day1_talk1
+  - boss_day1_talk1
+  - admin_day1_talk2
+  - admin_day1_to_office
